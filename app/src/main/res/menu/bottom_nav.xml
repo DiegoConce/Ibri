@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/standard_events"
+        android:icon="@drawable/ic_baseline_cake_24"
+        android:title="@string/eventi" />
+
+    <item
+        android:id="@+id/commercial_events"
+        android:icon="@drawable/ic_baseline_cake_24"
+        android:title="@string/ufficiali" />
+
+    <item
+        android:id="@+id/subs_events"
+        android:icon="@drawable/ic_baseline_cake_24"
+        android:title="@string/iscrizioni" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_baseline_cake_24"
+        android:title="@string/profilo" />
+
+
+</menu>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Ibri</string>
+
+    <!--Bottom nav-->
+    <string name="eventi">Eventi</string>
+    <string name="ufficiali">Ufficiali</string>
+    <string name="iscrizioni">Iscrizioni</string>
+    <string name="profilo">Profilo</string>
+
 </resources>

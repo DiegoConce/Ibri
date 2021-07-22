@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_incoming_event"
+    app:startDestination="@id/incomingEventsFragment">
+
+    <fragment
+        android:id="@+id/incomingEventsFragment"
+        tools:layout="@layout/fragment_incoming_events"
+        android:name="com.ibri.ui.IncomingEventsFragment"
+        android:label="IncomingEventsFragment" />
+</navigation>
