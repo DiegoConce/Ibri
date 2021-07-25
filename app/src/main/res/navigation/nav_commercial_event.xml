@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/commercialEventsFragment"
         tools:layout="@layout/fragment_commercial_events"
-        android:name="com.ibri.ui.CommercialEventsFragment"
+        android:name="com.ibri.ui.event.commercial.CommercialEventsFragment"
         android:label="CommercialEventsFragment" />
 </navigation>

@@ -7,7 +7,17 @@
 
     <fragment
         android:id="@+id/standardEventsFragment"
-        tools:layout="@layout/fragment_standard_events"
-        android:name="com.ibri.ui.StandardEventsFragment"
-        android:label="StandardEventsFragment" />
+        android:name="com.ibri.ui.event.standard.StandardEventsFragment"
+        android:label="StandardEventsFragment"
+        tools:layout="@layout/fragment_standard_events">
+        <action
+            android:id="@+id/action_standardEventsFragment_to_standardEventDetail"
+            app:destination="@id/standardEventDetail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/standardEventDetail"
+        android:name="com.ibri.ui.event.standard.StandardEventDetailFragment"
+        android:label="StandardEventDetail"
+        tools:layout="@layout/fragment_standard_event_detail" />
 </navigation>

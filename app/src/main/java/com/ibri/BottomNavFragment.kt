@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ibri.databinding.FragmentBottomNavBinding
-import com.ibri.ui.CommercialEventsFragment
-import com.ibri.ui.IncomingEventsFragment
+import com.ibri.ui.event.commercial.CommercialEventsFragment
+import com.ibri.ui.event.IncomingEventsFragment
 import com.ibri.ui.ProfileFragment
-import com.ibri.ui.StandardEventsFragment
+import com.ibri.ui.event.standard.StandardEventsFragment
 
 class BottomNavFragment : Fragment() {
 

@@ -8,6 +8,6 @@
     <fragment
         android:id="@+id/incomingEventsFragment"
         tools:layout="@layout/fragment_incoming_events"
-        android:name="com.ibri.ui.IncomingEventsFragment"
+        android:name="com.ibri.ui.event.IncomingEventsFragment"
         android:label="IncomingEventsFragment" />
 </navigation>

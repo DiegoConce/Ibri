@@ -1,4 +1,4 @@
-package com.ibri.ui
+package com.ibri.ui.event.commercial
 
 import android.os.Bundle
 import android.view.LayoutInflater
