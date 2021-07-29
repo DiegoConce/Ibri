@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/standard_events"
+        android:id="@+id/standardEvents"
         android:icon="@drawable/ic_baseline_cake_24"
         android:title="@string/eventi" />
 
     <item
-        android:id="@+id/commercial_events"
+        android:id="@+id/commercialEvents"
         android:icon="@drawable/ic_baseline_cake_24"
         android:title="@string/ufficiali" />
 
     <item
-        android:id="@+id/subs_events"
+        android:id="@+id/incomingEvents"
         android:icon="@drawable/ic_baseline_cake_24"
         android:title="@string/iscrizioni" />
 

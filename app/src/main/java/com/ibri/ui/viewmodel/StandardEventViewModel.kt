@@ -12,4 +12,8 @@ class StandardEventViewModel : ViewModel() {
 
     fun getStandardEvents() = StandardEventRepository.getStandardEvent(eventList)
 
+    override fun onCleared() {
+        StandardEventRepository.closeVolley()
+        super.onCleared()
+    }
 }

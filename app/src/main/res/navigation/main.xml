@@ -12,11 +12,63 @@
         tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreenFragment_to_bottomNavFragment"
-            app:destination="@id/bottomNavFragment" />
+            app:destination="@id/bottomNavFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_login"
+            app:destination="@id/login"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/bottomNavFragment"
         android:name="com.ibri.BottomNavFragment"
         android:label="BottomNavFragment"
         tools:layout="@layout/fragment_bottom_nav" />
+    <fragment
+        android:id="@+id/login"
+        tools:layout="@layout/fragment_login"
+        android:name="com.ibri.ui.login.Login"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_registerUser"
+            app:destination="@id/registerUser"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_login_to_bottomNavFragment"
+            app:destination="@id/bottomNavFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_register_user"
+        android:id="@+id/registerUser"
+        android:name="com.ibri.ui.login.RegisterUser"
+        android:label="RegisterUser" >
+        <action
+            android:id="@+id/action_registerUser_to_registerCompany"
+            app:destination="@id/registerCompany"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_registerUser_to_bottomNavFragment"
+            app:destination="@id/bottomNavFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerCompany"
+        tools:layout="@layout/fragment_register_company"
+        android:name="com.ibri.ui.login.RegisterCompany"
+        android:label="RegisterCompany" >
+        <action
+            android:id="@+id/action_registerCompany_to_bottomNavFragment"
+            app:destination="@id/bottomNavFragment" />
+    </fragment>
+
+
+
 </navigation>

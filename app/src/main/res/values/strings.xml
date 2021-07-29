@@ -7,4 +7,32 @@
     <string name="iscrizioni">Iscrizioni</string>
     <string name="profilo">Profilo</string>
 
+    <!--Buttons-->
+    <string name="indietro">Indietro</string>
+
+    <!--Login e Registrazione -->
+    <string name="login">Login</string>
+    <string name="non_sei_ancora_iscritto_crea_un_nuovo_account">Non sei ancora iscritto? Crea un nuovo account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="conferma_password">Conferma Password</string>
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="data_di_nascita">Data di nascita</string>
+    <string name="gender">Gender</string>
+    <string name="oppure_registrati_come_azienda">Oppure registrati come azienda</string>
+    <string name="registrati">Registrati</string>
+    <string name="p_iva">P.Iva</string>
+    <string name="scegli_una_data">Scegli una data</string>
+    <string name="email_gia_in_uso">Email già in uso, prova ad accedere di nuovo</string>
+    <string name="inserisci_il_tuo_nome">Inserisci il tuo nome</string>
+    <string name="inserisci_il_tuo_cognome">Inserisci il tuo cognome</string>
+    <string name="inserisci_compleanno">Inserisci il tuo compleanno</string>
+    <string name="verifica_email">Verifica la tua email</string>
+    <string name="inserisci_email">Inserisci la tua email</string>
+    <string name="password_non_corrispondono">Le password non corrispondono</string>
+    <string name="inserisci_password">Inserisci la password</string>
+    <string name="inserisci_piva">Inserisci la tua Partita Iva</string>
+    <string name="verifica_dati_inseriti">Verifica i dati inseriti</string>
+
 </resources>

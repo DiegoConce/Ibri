@@ -35,7 +35,9 @@ class StandardEventRepository {
             volley.add(req)
         }
 
-
+        fun closeVolley() {
+            volley.stop()
+        }
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibri.R
 import com.ibri.databinding.FragmentStandardEventsBinding
+import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
 import com.ibri.ui.adapters.StandardEventAdapter
 import com.ibri.ui.event.SelectedItemListener
@@ -59,9 +60,12 @@ class StandardEventsFragment : Fragment(), SelectedItemListener {
     override fun onItemSelected(item: StandardEvent) {
         viewModel.selectedStandardEvent.value = item
 
-        Log.wtf(LOG_TEST,"item: ${item}")
+        Log.wtf(LOG_TEST,"item: $item")
         Log.wtf(LOG_TEST,"curr " + findNavController().currentDestination.toString())
         findNavController().navigate(R.id.action_standardEventsFragment_to_standardEventDetail)
+    }
+
+    override fun onItemSelected(item: CommercialEvent) {
     }
 
 
