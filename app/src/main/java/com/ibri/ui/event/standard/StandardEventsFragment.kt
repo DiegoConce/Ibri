@@ -1,7 +1,6 @@
 package com.ibri.ui.event.standard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,10 @@ import com.ibri.R
 import com.ibri.databinding.FragmentStandardEventsBinding
 import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
+import com.ibri.ui.profile.ProfileFragment
 import com.ibri.ui.adapters.StandardEventAdapter
 import com.ibri.ui.event.SelectedItemListener
 import com.ibri.ui.viewmodel.StandardEventViewModel
-import com.ibri.utils.LOG_TEST
 
 class StandardEventsFragment : Fragment(), SelectedItemListener {
 
@@ -33,7 +32,7 @@ class StandardEventsFragment : Fragment(), SelectedItemListener {
         binding = FragmentStandardEventsBinding.inflate(inflater, container, false)
         viewModel.getStandardEvents()
         setObservableVM()
-
+        setListeners()
         return binding.root
     }
 
@@ -41,17 +40,23 @@ class StandardEventsFragment : Fragment(), SelectedItemListener {
         viewModel.eventList.observe(viewLifecycleOwner) {
             setRecyclerView(it)
         }
+    }
 
+    private fun setListeners() {
+        binding.standEventSwipeRefresh.setOnRefreshListener {
+            viewModel.getStandardEvents()
+            if (binding.standEventSwipeRefresh.isRefreshing)
+                binding.standEventSwipeRefresh.isRefreshing = false
+        }
     }
 
     private fun setRecyclerView(it: ArrayList<StandardEvent>) {
-
         if (it.isNullOrEmpty())
             binding.noEventsCard.visibility = View.VISIBLE
         else
-            binding.noEventsCard.visibility = View.INVISIBLE
+            binding.noEventsCard.visibility = View.GONE
 
-        standardEventAdapter = StandardEventAdapter(requireContext(),this)
+        standardEventAdapter = StandardEventAdapter(requireContext(), this)
         standardEventAdapter.setData(it)
         binding.standEventRecyclerView.adapter = standardEventAdapter
         binding.standEventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -59,10 +64,13 @@ class StandardEventsFragment : Fragment(), SelectedItemListener {
 
     override fun onItemSelected(item: StandardEvent) {
         viewModel.selectedStandardEvent.value = item
-
-        Log.wtf(LOG_TEST,"item: $item")
-        Log.wtf(LOG_TEST,"curr " + findNavController().currentDestination.toString())
         findNavController().navigate(R.id.action_standardEventsFragment_to_standardEventDetail)
+    }
+
+    override fun onCreatorSelected(userId: String) {
+        val bundle = Bundle()
+        bundle.putString(ProfileFragment.USER_ID, userId)
+        findNavController().navigate(R.id.action_standardEventsFragment_to_profileFragment2, bundle)
     }
 
     override fun onItemSelected(item: CommercialEvent) {

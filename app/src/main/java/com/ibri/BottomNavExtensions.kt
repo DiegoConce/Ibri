@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, The Android Open Source Project
+ * Copyright 2019, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package it.bereadysoftware.topmarche.view
+package com.example.android.navigationadvancedsample
 
 import android.content.Intent
 import android.util.SparseArray
+import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
@@ -26,21 +27,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ibri.R
-import it.bereadysoftware.topmarche.view.BackButtonBehaviour.SHOW_STARTING_FRAGMENT
 
 /**
  * Manages the various graphs needed for a [BottomNavigationView].
  *
  * This sample is a workaround until the Navigation Component supports multiple back stacks.
- *
- * Your navGraphIds must have the same ids as your menuItem ids
  */
 fun BottomNavigationView.setupWithNavController(
-    fragmentManager: FragmentManager,
     navGraphIds: List<Int>,
-    backButtonBehaviour: BackButtonBehaviour,
+    fragmentManager: FragmentManager,
     containerId: Int,
-    firstItemId: Int,
     intent: Intent
 ): LiveData<NavController> {
 
@@ -48,6 +44,8 @@ fun BottomNavigationView.setupWithNavController(
     val graphIdToTagMap = SparseArray<String>()
     // Result. Mutable live data with the selected controlled
     val selectedNavController = MutableLiveData<NavController>()
+
+    var firstFragmentGraphId = 0
 
     // First create a NavHostFragment for each NavGraph ID
     navGraphIds.forEachIndexed { index, navGraphId ->
@@ -64,6 +62,10 @@ fun BottomNavigationView.setupWithNavController(
         // Obtain its id
         val graphId = navHostFragment.navController.graph.id
 
+        if (index == 0) {
+            firstFragmentGraphId = graphId
+        }
+
         // Save to the map
         graphIdToTagMap[graphId] = fragmentTag
 
@@ -71,7 +73,7 @@ fun BottomNavigationView.setupWithNavController(
         if (this.selectedItemId == graphId) {
             // Update livedata with the selected graph
             selectedNavController.value = navHostFragment.navController
-            attachNavHostFragment(fragmentManager, navHostFragment, graphId == firstItemId)
+            attachNavHostFragment(fragmentManager, navHostFragment, index == 0)
         } else {
             detachNavHostFragment(fragmentManager, navHostFragment)
         }
@@ -79,7 +81,7 @@ fun BottomNavigationView.setupWithNavController(
 
     // Now connect selecting an item with swapping Fragments
     var selectedItemTag = graphIdToTagMap[this.selectedItemId]
-    val firstFragmentTag = graphIdToTagMap[firstItemId]
+    val firstFragmentTag = graphIdToTagMap[firstFragmentGraphId]
     var isOnFirstFragment = selectedItemTag == firstFragmentTag
 
     // When a navigation item is selected
@@ -91,26 +93,34 @@ fun BottomNavigationView.setupWithNavController(
             val newlySelectedItemTag = graphIdToTagMap[item.itemId]
             if (selectedItemTag != newlySelectedItemTag) {
                 // Pop everything above the first fragment (the "fixed start destination")
-                fragmentManager.popBackStack(
-                    firstFragmentTag,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE
-                )
+                fragmentManager.popBackStack(firstFragmentTag,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 val selectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
                         as NavHostFragment
 
-                if (backButtonBehaviour == SHOW_STARTING_FRAGMENT) { // Back button goes to first
-                    // Exclude the first fragment tag because it's always in the back stack.
-                    if (firstFragmentTag != newlySelectedItemTag) {
-                        // Commit a transaction that cleans the back stack and adds the first fragment
-                        // to it, creating the fixed started destination.
-                        commitTransactionWithFixedStart(
-                            fragmentManager,
-                            selectedFragment,
-                            firstFragmentTag
-                        )
-                    }
-                } else { // Back button goes to previous 'main' graph destination
-                    commitTransaction(fragmentManager, selectedFragment, selectedItemTag)
+                // Exclude the first fragment tag because it's always in the back stack.
+                if (firstFragmentTag != newlySelectedItemTag) {
+                    // Commit a transaction that cleans the back stack and adds the first fragment
+                    // to it, creating the fixed started destination.
+                    fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.nav_default_enter_anim,
+                            R.anim.nav_default_exit_anim,
+                            R.anim.nav_default_pop_enter_anim,
+                            R.anim.nav_default_pop_exit_anim)
+                        .attach(selectedFragment)
+                        .setPrimaryNavigationFragment(selectedFragment)
+                        .apply {
+                            // Detach all other Fragments
+                            graphIdToTagMap.forEach { _, fragmentTagIter ->
+                                if (fragmentTagIter != newlySelectedItemTag) {
+                                    detach(fragmentManager.findFragmentByTag(firstFragmentTag)!!)
+                                }
+                            }
+                        }
+                        .addToBackStack(firstFragmentTag)
+                        .setReorderingAllowed(true)
+                        .commit()
                 }
                 selectedItemTag = newlySelectedItemTag
                 isOnFirstFragment = selectedItemTag == firstFragmentTag
@@ -125,13 +135,13 @@ fun BottomNavigationView.setupWithNavController(
     // Optional: on item reselected, pop back stack to the destination of the graph
     setupItemReselected(graphIdToTagMap, fragmentManager)
 
-    // Optional: handle deep links
+    // Handle deep link
     setupDeepLinks(navGraphIds, fragmentManager, containerId, intent)
 
     // Finally, ensure that we update our BottomNavigationView when the back stack changes
     fragmentManager.addOnBackStackChangedListener {
         if (!isOnFirstFragment && !fragmentManager.isOnBackStack(firstFragmentTag)) {
-            this.selectedItemId = firstItemId
+            this.selectedItemId = firstFragmentGraphId
         }
 
         // Reset the graph if the currentDestination is not valid (happens when the back
@@ -143,45 +153,6 @@ fun BottomNavigationView.setupWithNavController(
         }
     }
     return selectedNavController
-}
-
-private fun commitTransaction(
-    fragmentManager: FragmentManager,
-    selectedFragment: NavHostFragment,
-    selectedItemTag: String
-) {
-    fragmentManager.beginTransaction()
-        .setCustomAnimations(
-            R.anim.nav_default_enter_anim,
-            R.anim.nav_default_exit_anim,
-            R.anim.nav_default_pop_enter_anim,
-            R.anim.nav_default_pop_exit_anim
-        )
-        .attach(selectedFragment)
-        .setPrimaryNavigationFragment(selectedFragment)
-        .detach(fragmentManager.findFragmentByTag(selectedItemTag)!!)
-        .setReorderingAllowed(true)
-        .commit()
-}
-
-private fun commitTransactionWithFixedStart(
-    fragmentManager: FragmentManager,
-    selectedFragment: NavHostFragment,
-    firstFragmentTag: String
-) {
-    fragmentManager.beginTransaction()
-        .setCustomAnimations(
-            R.anim.nav_default_enter_anim,
-            R.anim.nav_default_exit_anim,
-            R.anim.nav_default_pop_enter_anim,
-            R.anim.nav_default_pop_exit_anim
-        )
-        .attach(selectedFragment)
-        .setPrimaryNavigationFragment(selectedFragment)
-        .detach(fragmentManager.findFragmentByTag(firstFragmentTag)!!)
-        .addToBackStack(firstFragmentTag)
-        .setReorderingAllowed(true)
-        .commit()
 }
 
 private fun BottomNavigationView.setupDeepLinks(
@@ -202,8 +173,7 @@ private fun BottomNavigationView.setupDeepLinks(
         )
         // Handle Intent
         if (navHostFragment.navController.handleDeepLink(intent)
-            && selectedItemId != navHostFragment.navController.graph.id
-        ) {
+            && selectedItemId != navHostFragment.navController.graph.id) {
             this.selectedItemId = navHostFragment.navController.graph.id
         }
     }
@@ -247,6 +217,7 @@ private fun attachNavHostFragment(
             }
         }
         .commitNow()
+
 }
 
 private fun obtainNavHostFragment(
@@ -278,8 +249,3 @@ private fun FragmentManager.isOnBackStack(backStackName: String): Boolean {
 }
 
 private fun getFragmentTag(index: Int) = "bottomNavigation#$index"
-
-enum class BackButtonBehaviour {
-    SHOW_STARTING_FRAGMENT,
-    POP_HOST_FRAGMENT
-}

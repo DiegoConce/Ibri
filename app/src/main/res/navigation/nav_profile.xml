@@ -8,6 +8,15 @@
     <fragment
         android:id="@+id/profileFragment"
         tools:layout="@layout/fragment_profile"
-        android:name="com.ibri.ui.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:name="com.ibri.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_profileSettingsFragment"
+            app:destination="@id/profileSettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSettingsFragment"
+        tools:layout="@layout/fragment_profile_settings"
+        android:name="com.ibri.ui.profile.ProfileSettingsFragment"
+        android:label="ProfileSettingsFragment" />
 </navigation>

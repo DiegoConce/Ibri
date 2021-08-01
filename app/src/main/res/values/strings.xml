@@ -35,4 +35,10 @@
     <string name="inserisci_piva">Inserisci la tua Partita Iva</string>
     <string name="verifica_dati_inseriti">Verifica i dati inseriti</string>
 
+    <!--Profile-->
+    <string name="questo_utente_non_ha_una_descrizione">Questo utente non ha una descrizione</string>
+    <string name="altri_obiettivi">Altri Obiettivi</string>
+    <string name="salva_le_modifiche">Salva le modifiche</string>
+    <string name="logout">Logout</string>
+
 </resources>

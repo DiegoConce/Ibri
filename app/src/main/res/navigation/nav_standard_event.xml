@@ -13,6 +13,13 @@
         <action
             android:id="@+id/action_standardEventsFragment_to_standardEventDetail"
             app:destination="@id/standardEventDetail" />
+        <action
+            android:id="@+id/action_standardEventsFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -20,4 +27,9 @@
         android:name="com.ibri.ui.event.standard.StandardEventDetailFragment"
         android:label="StandardEventDetail"
         tools:layout="@layout/fragment_standard_event_detail" />
+    <fragment
+        android:id="@+id/profileFragment2"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.ibri.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>
