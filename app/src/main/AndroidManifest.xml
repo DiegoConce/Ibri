@@ -14,17 +14,32 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Ibri">
+        android:theme="@style/Theme.Ibri"
+        android:usesCleartextTraffic="true">
 
-        <activity android:name=".MainActivity">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBwHnbf6Rpi4HuK3ErprPAnSCpZ3VGbZyQ" />
+
+        <activity
+            android:name=".ui.activity.MapActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity.TagsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity.NewCommercialEventActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity.NewStandardEventActivity"
+            android:exported="true" />
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

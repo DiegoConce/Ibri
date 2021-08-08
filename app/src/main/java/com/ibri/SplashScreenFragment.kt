@@ -27,7 +27,21 @@ class SplashScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        handlerAndGoToMain()
+        animateTitle()
+    }
+
+    private fun animateTitle() {
+        binding.splashAppLogo.scaleX = 0.2F
+        binding.splashAppLogo.scaleY = 0.2F
+        binding.splashAppLogo.animate()
+            .withEndAction {
+                findNavController().popBackStack(R.id.action_splashScreenFragment_to_bottomNavFragment, true)
+                checkLogged()
+            }
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(400)
+            .start()
     }
 
     private fun handlerAndGoToMain() =
@@ -47,10 +61,10 @@ class SplashScreenFragment : Fragment() {
     private fun checkLogged() {
         val sharedPref = PreferenceManager.getSharedPreferences(requireContext())
         if (sharedPref.getString(PreferenceManager.ACCOUNT_ID, "") == "") {
-            findNavController().navigate(R.id.action_splashScreenFragment_to_login)
+            findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToLogin())
         } else {
             DataPreloader.loadPersonalInfo()
-            findNavController().navigate(R.id.action_splashScreenFragment_to_bottomNavFragment)
+            findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToBottomNavFragment())
         }
     }
 }

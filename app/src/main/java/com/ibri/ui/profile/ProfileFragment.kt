@@ -1,5 +1,6 @@
 package com.ibri.ui.profile
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ibri.R
 import com.ibri.databinding.FragmentProfileBinding
 import com.ibri.model.Media
+import com.ibri.ui.activity.NewCommercialEventActivity
+import com.ibri.ui.activity.NewStandardEventActivity
 import com.ibri.ui.adapters.ProfilePagerAdapter
 import com.ibri.ui.viewmodel.ProfileViewModel
 import com.ibri.utils.GET_MEDIA_ENDPOINT
@@ -81,7 +84,12 @@ class ProfileFragment : Fragment() {
 
     private fun setListeners() {
         binding.profileBackButton.setOnClickListener { requireActivity().onBackPressed() }
-        binding.profileSettingsButton.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_profileSettingsFragment) }
+        binding.profileSettingsButton.setOnClickListener {
+            findNavController().navigate(
+                ProfileFragmentDirections.actionProfileFragmentToProfileSettingsFragment()
+            )
+        }
+        binding.profileNewEventButton.setOnClickListener { showNewEvent() }
     }
 
     private fun setViewPager() {
@@ -103,17 +111,18 @@ class ProfileFragment : Fragment() {
 
     private fun prepareMyProfile() {
         binding.profileBackButton.visibility = View.GONE
+        binding.profileNewEventButton.visibility = View.VISIBLE
         binding.profileNotificationButton.visibility = View.VISIBLE
         binding.profileSettingsButton.visibility = View.VISIBLE
 
         if (pref.getString(PreferenceManager.ACCOUNT_ROLE, "") == "COMPANY") {
             binding.profileCompanyIcon.visibility = View.VISIBLE
             viewModel.isCompany.value = true
-            viewModel.commercialEventsByUser(pref.getString(PreferenceManager.ACCOUNT_ID,"")!!)
+            viewModel.commercialEventsByUser(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
         } else {
             binding.profileCompanyIcon.visibility = View.GONE
             viewModel.isCompany.value = false
-            viewModel.standardEventsByUser(pref.getString(PreferenceManager.ACCOUNT_ID,"")!!)
+            viewModel.standardEventsByUser(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
         }
         setAvatar()
         setNameAndBio()
@@ -135,7 +144,7 @@ class ProfileFragment : Fragment() {
 
     private fun setNameAndBio() {
         binding.profileName.text = pref.getString(PreferenceManager.ACCOUNT_NAME, "Creator")
-        val a  =pref.getString(PreferenceManager.ACCOUNT_BIO, "")
+        val a = pref.getString(PreferenceManager.ACCOUNT_BIO, "")
         binding.profileBio.text = pref.getString(PreferenceManager.ACCOUNT_BIO, "")
         if (binding.profileBio.text.isNullOrEmpty())
             binding.profileBio.text = getString(R.string.questo_utente_non_ha_una_descrizione)
@@ -162,6 +171,8 @@ class ProfileFragment : Fragment() {
             viewModel.standardEventsByUser(id)
         }
 
+        binding.profileNewEventButton.visibility = View.GONE
+
         setGuestAvatar(avatar)
     }
 
@@ -175,6 +186,16 @@ class ProfileFragment : Fragment() {
                 .load(url)
                 .error(R.drawable.default_avatar)
                 .into(binding.profileAvatar)
+        }
+    }
+
+    private fun showNewEvent() {
+        if (viewModel.isCompany.value == true) {
+            val intent = Intent(requireContext(), NewCommercialEventActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(requireContext(), NewStandardEventActivity::class.java)
+            startActivity(intent)
         }
     }
 

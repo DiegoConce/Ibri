@@ -23,7 +23,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.ibri.MainActivity
+import com.ibri.ui.activity.MainActivity
 import com.ibri.R
 import com.ibri.databinding.FragmentProfileSettingsBinding
 import com.ibri.model.Media
@@ -227,6 +227,9 @@ class ProfileSettingsFragment : Fragment() {
     }
 
     private fun restoreData() {
+        viewModel.editCompanyResponse.value = ""
+        viewModel.editUserResponse.value = ""
+
         if (pref.contains(PreferenceManager.ACCOUNT_ID)) {
             setAvatar()
 

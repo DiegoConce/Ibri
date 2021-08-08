@@ -23,6 +23,7 @@ data class StandardEvent(
     override var lat: String,
     override var lon: String,
     override var address: String,
+    override var city: String,
     override var tags: ArrayList<Tag>?,
     override var createdDate: Date,
     override var subscribers: ArrayList<User>?,

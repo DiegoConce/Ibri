@@ -22,6 +22,7 @@ interface Event {
     var lat: String
     var lon: String
     var address: String
+    var city: String
     var tags: ArrayList<Tag>?
     var createdDate: Date
     var subscribers: ArrayList<User>?

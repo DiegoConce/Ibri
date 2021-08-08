@@ -1,10 +1,8 @@
-package com.ibri
+package com.ibri.ui.activity
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import com.ibri.R
 
 class MainActivity : AppCompatActivity() {
 

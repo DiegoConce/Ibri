@@ -11,7 +11,6 @@ class CommercialEventViewModel : ViewModel() {
     fun getCommercialEvents() = CommercialEventRepository.getCommercialEvent(comEventList)
 
     override fun onCleared() {
-        CommercialEventRepository.closeVolley()
         super.onCleared()
     }
 }

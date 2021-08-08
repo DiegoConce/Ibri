@@ -1,9 +1,11 @@
 package com.ibri.ui.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ibri.model.LoginResponse
 import com.ibri.repository.LoginRepository
+import com.ibri.utils.LOG_TEST
 
 class LoginViewModel : ViewModel() {
     var loginResponse = MutableLiveData<LoginResponse>()
@@ -21,6 +23,7 @@ class LoginViewModel : ViewModel() {
 
 
     fun performLogin() {
+        Log.wtf(LOG_TEST,"Perform Login")
         LoginRepository.findAccount(loginResponse, inputEmail, inputPassword)
     }
 
@@ -57,7 +60,6 @@ class LoginViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        LoginRepository.closeVolley()
         super.onCleared()
     }
 }

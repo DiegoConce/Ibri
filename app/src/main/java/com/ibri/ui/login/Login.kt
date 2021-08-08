@@ -1,15 +1,18 @@
 package com.ibri.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.util.LogTime
 import com.ibri.R
 import com.ibri.databinding.FragmentLoginBinding
 import com.ibri.utils.DataPreloader
+import com.ibri.utils.LOG_TEST
 
 class Login : Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -40,7 +43,6 @@ class Login : Fragment() {
 
             if (it == null)
                 viewModel.loginSuccess.value = false
-
         }
 
         viewModel.loginSuccess.observe(viewLifecycleOwner) {

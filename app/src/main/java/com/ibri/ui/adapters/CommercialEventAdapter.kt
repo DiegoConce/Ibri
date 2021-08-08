@@ -16,7 +16,7 @@ class CommercialEventAdapter(
     fun setData(list: List<CommercialEvent>) {
         commercialEventList.clear()
         commercialEventList.addAll(list)
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, commercialEventList.size)
     }
 
     inner class CommercialEventViewHolder(val binding: ItemCommercialEventBinding) :

@@ -25,7 +25,7 @@ class StandardEventAdapter(
     fun setData(list: List<StandardEvent>) {
         standardEventList.clear()
         standardEventList.addAll(list)
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, standardEventList.size)
     }
 
     inner class StandardEventViewHolder(val binding: ItemStandardEventBinding) :

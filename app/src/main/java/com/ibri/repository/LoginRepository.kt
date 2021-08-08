@@ -70,7 +70,6 @@ class LoginRepository {
                     mutableMedia.postValue(result)
                 },
                 {
-                    Log.wtf(LOG_TEST, "errore volley $it")
                 }
             ) {
                 override fun getParams(): MutableMap<String, String> {

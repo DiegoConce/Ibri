@@ -58,7 +58,6 @@ class ProfileViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        ProfileRepository.closeVolley()
         super.onCleared()
     }
 }

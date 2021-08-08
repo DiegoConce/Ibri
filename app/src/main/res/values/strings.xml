@@ -41,4 +41,12 @@
     <string name="salva_le_modifiche">Salva le modifiche</string>
     <string name="logout">Logout</string>
 
+    <!--TagsActivity-->
+    <string name="scegli_i_tag_per_il_tuo_evento">Scegli i tag per il tuo evento</string>
+    <string name="aggiungi_i_tag">Aggiungi i tag</string>
+    <string name="tag_selezionati">Tag selezionati:</string>
+    <!--MapActivity-->
+    <string name="controlla_connessione">Servizio non disponibile, controlla la connessione ad internet</string>
+    <string name="nessun_indirizzo_trovato">Nessun indirizzo trovato</string>
+
 </resources>
