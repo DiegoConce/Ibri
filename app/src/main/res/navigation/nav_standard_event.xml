@@ -26,10 +26,22 @@
         android:id="@+id/standardEventDetail"
         android:name="com.ibri.ui.event.standard.StandardEventDetailFragment"
         android:label="StandardEventDetail"
-        tools:layout="@layout/fragment_standard_event_detail" />
+        tools:layout="@layout/fragment_standard_event_detail" >
+        <action
+            android:id="@+id/action_standardEventDetail_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
+        <action
+            android:id="@+id/action_standardEventDetail_to_eventQuestionAnswerFragment"
+            app:destination="@id/eventQuestionAnswerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment2"
         tools:layout="@layout/fragment_profile"
         android:name="com.ibri.ui.profile.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/eventQuestionAnswerFragment"
+        tools:layout="@layout/fragment_event_question_answer"
+        android:name="com.ibri.ui.event.EventQuestionAnswerFragment"
+        android:label="EventQuestionAnswerFragment" />
 </navigation>

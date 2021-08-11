@@ -48,8 +48,8 @@
         android:id="@+id/stand_event_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
@@ -100,53 +100,52 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardView3"
                 app:srcCompat="@color/black" />
 
-            <TextView
-                android:id="@+id/stand_event_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:text="Milano"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/stand_event_day"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3" />
-
-            <TextView
-                android:id="@+id/stand_event_members"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="3/10"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stand_event_month"
-                app:layout_constraintStart_toStartOf="@+id/stand_event_location"
-                app:layout_constraintTop_toBottomOf="@+id/stand_event_location" />
-
-            <TextView
-                android:id="@+id/stand_event_day"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
-                android:text="19"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/stand_event_location"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3" />
-
-            <TextView
-                android:id="@+id/stand_event_month"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Nov"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="@+id/stand_event_day"
-                app:layout_constraintStart_toEndOf="@+id/stand_event_members"
-                app:layout_constraintTop_toBottomOf="@+id/stand_event_day" />
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView3"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:id="@+id/stand_event_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="Milano"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/stand_event_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:text="19"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/stand_event_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:text="Nov"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/stand_event_members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="3/10"
+                    android:textSize="30sp" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

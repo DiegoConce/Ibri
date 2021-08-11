@@ -50,7 +50,7 @@ class StandardEventAdapter(
 
         if (item.creator.avatar != null) {
             val path = item.creator.avatar!!.url
-            val url = GET_MEDIA_ENDPOINT.toString() + "/" + path
+            val url = "$GET_MEDIA_ENDPOINT/$path"
             Glide.with(context)
                 .load(url)
                 .error(R.drawable.default_avatar)
@@ -59,12 +59,20 @@ class StandardEventAdapter(
             holder.binding.standEventCreatorAvatar.setImageResource(R.drawable.default_avatar)
         }
 
-        holder.binding.standEventLocation.text = item.address
+        holder.binding.standEventLocation.text = item.city
         holder.binding.standEventMembers.text = "${item.guests} / ${item.maxGuests}"
         holder.binding.standEventDay.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
         holder.binding.standEventMonth.text = SimpleDateFormat("MMM", Locale.getDefault())
             .format(calendar.time)
 
+        if (item.media != null) {
+            val path = item.media!!.url
+            val url = "$GET_MEDIA_ENDPOINT/$path"
+            Glide.with(context)
+                .load(url)
+                .error(R.drawable.default_avatar)
+                .into(holder.binding.standEventImage)
+        }
 
         setListeners(holder, item)
     }

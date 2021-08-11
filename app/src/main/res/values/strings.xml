@@ -34,13 +34,11 @@
     <string name="inserisci_password">Inserisci la password</string>
     <string name="inserisci_piva">Inserisci la tua Partita Iva</string>
     <string name="verifica_dati_inseriti">Verifica i dati inseriti</string>
-
     <!--Profile-->
     <string name="questo_utente_non_ha_una_descrizione">Questo utente non ha una descrizione</string>
     <string name="altri_obiettivi">Altri Obiettivi</string>
     <string name="salva_le_modifiche">Salva le modifiche</string>
     <string name="logout">Logout</string>
-
     <!--TagsActivity-->
     <string name="scegli_i_tag_per_il_tuo_evento">Scegli i tag per il tuo evento</string>
     <string name="aggiungi_i_tag">Aggiungi i tag</string>
@@ -48,5 +46,23 @@
     <!--MapActivity-->
     <string name="controlla_connessione">Servizio non disponibile, controlla la connessione ad internet</string>
     <string name="nessun_indirizzo_trovato">Nessun indirizzo trovato</string>
+    <!--NewStandEventActivity-->
+    <string name="anteprima">Anteprima</string>
+    <string name="aggiungi_un_immagine">Aggiungi un\'immagine</string>
+    <string name="titolo_evento">Titolo evento</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="pubblico">Pubblico</string>
+    <string name="privato">Privato</string>
+    <string name="tags">Tags</string>
+    <string name="scegli_tag_con_cui_descriveresti_questo_evento">Scegli tag con cui descriveresti questo evento</string>
+    <string name="scegli_luogo">Scegli luogo</string>
+    <string name="via">Via…</string>
+    <string name="inizio_registrazioni_e_data_evento">Inizio registrazioni e data evento</string>
+    <string name="dovrai_scegliere_due_date_dove_la_prima_indica_l_inizio_delle_registrazioni_all_evento_e_che_valida_fino_alla_seconda_data_data_dell_evento_proprio">*Dovrai scegliere due date, dove la prima indica l\'inizio delle registrazioni all\'evento e che valida fino alla seconda data, data dell\'evento proprio</string>
+    <string name="ora_dell_evento">Ora dell\'evento</string>
+    <string name="numero_massimo_di_persone">Numero massimo di persone</string>
+    <string name="crea_evento">Crea Evento</string>
+    <string name="hai_scordato_di_inserire_qualcosa">Hai scordato di inserire qualcosa?</string>
+    <string name="nuovo_evento">Nuovo Evento</string>
 
 </resources>

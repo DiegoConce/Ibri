@@ -2,8 +2,9 @@ package com.ibri.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ibri.model.Media
+import com.ibri.model.Question
 import com.ibri.model.events.StandardEvent
+import com.ibri.repository.QuestionAnswerRepository
 import com.ibri.repository.StandardEventRepository
 import kotlin.collections.ArrayList
 
@@ -11,6 +12,11 @@ class StandardEventViewModel : ViewModel() {
     val eventList = MutableLiveData<ArrayList<StandardEvent>>()
     val selectedStandardEvent = MutableLiveData<StandardEvent>()
     val newStandEventResponse = MutableLiveData<String>()
+    var isMyEvent = MutableLiveData(false)
+    var isSubcribed = MutableLiveData(false)
+    val newQuestionResponse = MutableLiveData<String>()
+    val questionList = MutableLiveData<ArrayList<Question>>()
+
 
     fun getStandardEvents() = StandardEventRepository.getStandardEvent(eventList)
 
@@ -45,6 +51,38 @@ class StandardEventViewModel : ViewModel() {
             isPrivate,
             media
         )
+    }
+
+    fun subscribeToEventRequest(
+        userId: String,
+        eventId: String
+    ) {
+        StandardEventRepository.subscribeToStandardEvent(
+            selectedStandardEvent,
+            isSubcribed,
+            userId,
+            eventId
+        )
+    }
+
+    fun cancelSubscription(
+        userId: String,
+        eventId: String
+    ) {
+        StandardEventRepository.unsubscribeToStandardEvent(
+            selectedStandardEvent,
+            isSubcribed,
+            userId,
+            eventId
+        )
+    }
+
+    fun sendQuestion(question: String, eventId: String) {
+        QuestionAnswerRepository.MakeNewQuestion(newQuestionResponse, question, eventId)
+    }
+
+    fun getQuestions(eventId: String) {
+        QuestionAnswerRepository.getQna(questionList, eventId)
     }
 
     override fun onCleared() {

@@ -48,7 +48,6 @@ class NewStandardEventActivity : AppCompatActivity() {
     private lateinit var pref: SharedPreferences
     private lateinit var volley: RequestQueue
     private val viewModel: StandardEventViewModel by viewModels()
-
     private lateinit var eventDay: Date
     private lateinit var startSubscription: Date
     private lateinit var selectedMedia: String

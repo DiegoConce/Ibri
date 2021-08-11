@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_profileFragment_to_profileSettingsFragment"
             app:destination="@id/profileSettingsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_notificationCentreFragment"
+            app:destination="@id/notificationCentreFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileSettingsFragment"
         tools:layout="@layout/fragment_profile_settings"
         android:name="com.ibri.ui.profile.ProfileSettingsFragment"
         android:label="ProfileSettingsFragment" />
+    <fragment
+        android:id="@+id/notificationCentreFragment"
+        tools:layout="@layout/fragment_notification_centre"
+        android:name="com.ibri.ui.profile.NotificationCentreFragment"
+        android:label="NotificationCentreFragment" />
 </navigation>

@@ -90,6 +90,9 @@ class ProfileFragment : Fragment() {
             )
         }
         binding.profileNewEventButton.setOnClickListener { showNewEvent() }
+        binding.profileNotificationButton.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNotificationCentreFragment())
+        }
     }
 
     private fun setViewPager() {

@@ -2,17 +2,14 @@ package com.ibri.repository
 
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.ibri.MainApplication
-import com.ibri.model.Media
 import com.ibri.model.events.StandardEvent
 import com.ibri.utils.BASE_URL
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -22,6 +19,11 @@ class StandardEventRepository {
     companion object {
         private val ALL_STANDARD_EVENTS_ENDPOINT = Uri.parse("${BASE_URL}/event/private/all")
         private val NEW_PRIVATE_EVENTS_ENDPOINT = Uri.parse("${BASE_URL}/event/private/new")
+        private val PRIVATE_EVENT_SUBSCRIBE_ENDPOINT =
+            Uri.parse("${BASE_URL}/event/private/subscribe")
+        private val PRIVATE_EVENT_UNSUBSCRIBE_ENDPOINT =
+            Uri.parse("${BASE_URL}/event/private/unsubscribe")
+
         private val volley = Volley.newRequestQueue(MainApplication.applicationContext())
 
 
@@ -80,6 +82,61 @@ class StandardEventRepository {
                     map["tags"] = tags
                     map["isPrivate"] = isPrivate.toString()
                     map["media"] = media
+                    return map
+                }
+            }
+            volley.add(req)
+        }
+
+
+        fun subscribeToStandardEvent(
+            selectedStandardEvent: MutableLiveData<StandardEvent>,
+            isSubcribed: MutableLiveData<Boolean>,
+            userId: String,
+            eventId: String
+        ) {
+            val req = object : StringRequest(
+                Method.POST, PRIVATE_EVENT_SUBSCRIBE_ENDPOINT.toString(),
+                { result ->
+                    isSubcribed.value = true
+                    val a = Gson().fromJson(result, StandardEvent::class.java)
+                    selectedStandardEvent.postValue(a)
+                },
+                {
+
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["eventId"] = eventId
+                    map["userId"] = userId
+                    return map
+                }
+            }
+            volley.add(req)
+        }
+
+        fun unsubscribeToStandardEvent(
+            selectedStandardEvent: MutableLiveData<StandardEvent>,
+            isSubcribed: MutableLiveData<Boolean>,
+            userId: String,
+            eventId: String
+        ) {
+            val req = object : StringRequest(
+                Method.POST, PRIVATE_EVENT_UNSUBSCRIBE_ENDPOINT.toString(),
+                { result ->
+                    isSubcribed.value = false
+                    val a = Gson().fromJson(result, StandardEvent::class.java)
+                    selectedStandardEvent.postValue(a)
+                },
+                {
+
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["eventId"] = eventId
+                    map["userId"] = userId
                     return map
                 }
             }
