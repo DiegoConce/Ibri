@@ -1,11 +1,14 @@
 package com.ibri.model.events
 
+import android.os.Parcelable
 import com.ibri.model.Media
 import com.ibri.model.Tag
 import com.ibri.model.User
 import com.ibri.model.messaging.Chat
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 data class StandardEvent(
     override var id: String,
     override var title: String,
@@ -31,6 +34,5 @@ data class StandardEvent(
 
     var creator: User,
     var chat: Chat?,
-    var isPrivate:Boolean
-) : Event {
-}
+    var private: Boolean
+) : Event, Parcelable

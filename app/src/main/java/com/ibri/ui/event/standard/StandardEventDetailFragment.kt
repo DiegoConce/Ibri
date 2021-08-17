@@ -2,6 +2,7 @@ package com.ibri.ui.event.standard
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.ibri.R
 import com.ibri.databinding.FragmentStandardEventDetailBinding
 import com.ibri.model.events.StandardEvent
+import com.ibri.ui.activity.EditStandardEventActivity
 import com.ibri.ui.adapters.UserAdapter
 import com.ibri.ui.adapters.UserOnClickListener
 import com.ibri.ui.profile.ProfileFragment
@@ -61,6 +64,18 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
         return binding.root
     }
 
+    private var launcherEditStandActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                if (it.data != null) {
+                    viewModel.reloadEvent()
+                }
+            }
+            if (it.resultCode == Activity.RESULT_CANCELED) {
+                requireActivity().onBackPressed()
+            }
+        }
+
     private fun setObservableVM() {
         viewModel.selectedStandardEvent.observe(viewLifecycleOwner) {
             prepareStage(it)
@@ -74,10 +89,14 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
                 binding.standEventSubsButtonTextView.visibility = View.VISIBLE
                 binding.standEventEditButton.visibility = View.GONE
             }
-
         }
 
         viewModel.isSubcribed.observe(viewLifecycleOwner) {
+            if (viewModel.isMyEvent.value == true) {
+                binding.standEventSubsButtonTextView.visibility = View.GONE
+                binding.standEventEditButton.visibility = View.VISIBLE
+                return@observe
+            }
             if (it) {
                 binding.standEventChatButton.alpha = 1F
                 binding.standEventChatButton.isFocusable = true
@@ -96,12 +115,15 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
         binding.stantEventDetailBackButton.setOnClickListener { requireActivity().onBackPressed() }
         binding.standEventDetailAddress.setOnClickListener { showPlaceInNavigation() }
         binding.standEventSubscribeButton.setOnClickListener { subscribeToEvent() }
+        binding.standEventEditButton.setOnClickListener {
+            val intent = Intent(requireContext(), EditStandardEventActivity::class.java)
+                .putExtra(EditStandardEventActivity.EDIT_STAND_EVENT, standEvent)
+            launcherEditStandActivity.launch(intent)
+        }
         binding.standEventChatButton.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Cliccato",
-                Toast.LENGTH_LONG
-            ).show()
+            findNavController().navigate(
+                StandardEventDetailFragmentDirections.actionStandardEventDetailToStandardEventChatFragment()
+            )
         }
         binding.standEventQnaButton.setOnClickListener {
             findNavController().navigate(StandardEventDetailFragmentDirections.actionStandardEventDetailToEventQuestionAnswerFragment())

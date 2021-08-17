@@ -23,10 +23,14 @@ class StandardEventRepository {
             Uri.parse("${BASE_URL}/event/private/subscribe")
         private val PRIVATE_EVENT_UNSUBSCRIBE_ENDPOINT =
             Uri.parse("${BASE_URL}/event/private/unsubscribe")
+        private val UPDATE_PRIVATE_EVENT_ENDPOINT = Uri.parse("${BASE_URL}/event/private/update")
+        private val PRIVATE_EVENT_DELETE_ENDPOINT = Uri.parse("${BASE_URL}/event/private/delete")
+        private val PRIVATE_EVENT_BY_ID_ENDPOINT = Uri.parse("${BASE_URL}/event/private/get")
 
         private val volley = Volley.newRequestQueue(MainApplication.applicationContext())
 
 
+        //GetAllStandardEvents
         fun getStandardEvent(mutableMediaList: MutableLiveData<ArrayList<StandardEvent>>) {
             val req = StringRequest(
                 Request.Method.GET, ALL_STANDARD_EVENTS_ENDPOINT.toString(),
@@ -140,6 +144,79 @@ class StandardEventRepository {
                     return map
                 }
             }
+            volley.add(req)
+        }
+
+        fun updateStandardEvent(
+            mutableMedia: MutableLiveData<String>,
+            description: String,
+            startDate: String,
+            eventDate: String,
+            maxSubscribers: Int,
+            lat: String,
+            lon: String,
+            address: String,
+            city: String,
+            isPrivate: Boolean,
+            media: String?,
+            eventId: String
+        ) {
+            val req = object : StringRequest(
+                Method.POST, UPDATE_PRIVATE_EVENT_ENDPOINT.toString(),
+                { result ->
+                    mutableMedia.postValue(result)
+                },
+                {
+
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["description"] = description
+                    map["startDate"] = startDate
+                    map["eventDate"] = eventDate
+                    map["maxSubscribers"] = maxSubscribers.toString()
+                    map["lat"] = lat
+                    map["lon"] = lon
+                    map["address"] = address
+                    map["city"] = city
+                    map["isPrivate"] = isPrivate.toString()
+                    map["eventId"] = eventId
+                    map["media"] = media!!
+                    return map
+                }
+            }
+            volley.add(req)
+        }
+
+        fun deleteStandardEvent(mutableMedia: MutableLiveData<String>, eventId: String) {
+            val req = StringRequest(
+                Request.Method.GET,
+                PRIVATE_EVENT_DELETE_ENDPOINT.buildUpon().appendQueryParameter("event", eventId)
+                    .build().toString(),
+                { result ->
+                    mutableMedia.postValue(result)
+                },
+                {
+
+                }
+            )
+            volley.add(req)
+        }
+
+        fun getStandardEventById(mutableMedia: MutableLiveData<StandardEvent>, eventId: String) {
+            val req = StringRequest(
+                Request.Method.GET,
+                PRIVATE_EVENT_BY_ID_ENDPOINT.buildUpon().appendQueryParameter("eventId", eventId)
+                    .build().toString(),
+                { result ->
+                    val a = Gson().fromJson(result, StandardEvent::class.java)
+                    mutableMedia.postValue(a)
+                },
+                {
+
+                }
+            )
             volley.add(req)
         }
 

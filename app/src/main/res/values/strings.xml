@@ -62,7 +62,11 @@
     <string name="ora_dell_evento">Ora dell\'evento</string>
     <string name="numero_massimo_di_persone">Numero massimo di persone</string>
     <string name="crea_evento">Crea Evento</string>
-    <string name="hai_scordato_di_inserire_qualcosa">Hai scordato di inserire qualcosa?</string>
+    <string name="hai_dimenticato_di_inserire_qualcosa">Hai dimenticato di inserire qualcosa?</string>
     <string name="nuovo_evento">Nuovo Evento</string>
+    <string name="sei_sicuro_di_voler_cancellare_questo_evento">Sei sicuro di voler cancellare questo evento?</string>
+    <!--Chat-->
+    <string name="invia_un_messaggio">Invia un messaggio</string>
+    <string name="ancora_nessun_messaggio">Ancora nessun messaggio</string>
 
 </resources>

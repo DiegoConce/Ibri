@@ -1,5 +1,9 @@
 package com.ibri.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Company(
     var id: String,
     var name: String,
@@ -9,4 +13,4 @@ data class Company(
     var pIva: String,
     var bio: String,
     var deleted: Boolean
-)
+) : Parcelable

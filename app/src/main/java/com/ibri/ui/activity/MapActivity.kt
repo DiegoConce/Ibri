@@ -1,7 +1,9 @@
 package com.ibri.ui.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
@@ -12,6 +14,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -38,12 +42,35 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var selectedCity = ""
     private var errorMessage = ""
 
+    private val requestPermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            permissions.entries.forEach {
+                Log.wtf(LOG_TEST, "${it.key} = ${it.value}")
+                val permissionName = it.key
+                val isGranted = it.value
+                if (isGranted) {
+                    // Permission is granted
+                } else {
+                    // Permission is denied
+                }
+            }
+        }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        requestPermissions.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val mapFragment = SupportMapFragment.newInstance()
         mapFragment.getMapAsync(this)
@@ -53,10 +80,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             .commit()
     }
 
-    @SuppressLint("MissingPermission")
+
     override fun onMapReady(p0: GoogleMap) {
         map = p0
         mapReady = true
+
         map.isMyLocationEnabled = true
         map.uiSettings.isCompassEnabled = false
         binding.selectedAddressTextView.visibility = View.GONE

@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_standardEventDetail_to_eventQuestionAnswerFragment"
             app:destination="@id/eventQuestionAnswerFragment" />
+        <action
+            android:id="@+id/action_standardEventDetail_to_standardEventChatFragment"
+            app:destination="@id/standardEventChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
@@ -44,4 +47,9 @@
         tools:layout="@layout/fragment_event_question_answer"
         android:name="com.ibri.ui.event.EventQuestionAnswerFragment"
         android:label="EventQuestionAnswerFragment" />
+    <fragment
+        android:id="@+id/standardEventChatFragment"
+        tools:layout="@layout/fragment_standard_event_chat"
+        android:name="com.ibri.ui.event.standard.StandardEventChatFragment"
+        android:label="StandardEventChatFragment" />
 </navigation>

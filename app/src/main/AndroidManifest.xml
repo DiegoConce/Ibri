@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ibri"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.activity.EditStandardEventActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
