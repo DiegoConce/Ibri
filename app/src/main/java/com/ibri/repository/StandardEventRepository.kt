@@ -102,7 +102,10 @@ class StandardEventRepository {
             val req = object : StringRequest(
                 Method.POST, PRIVATE_EVENT_SUBSCRIBE_ENDPOINT.toString(),
                 { result ->
-                    isSubcribed.value = true
+
+                    if (!selectedStandardEvent.value?.private!!)
+                        isSubcribed.value = true
+
                     val a = Gson().fromJson(result, StandardEvent::class.java)
                     selectedStandardEvent.postValue(a)
                 },

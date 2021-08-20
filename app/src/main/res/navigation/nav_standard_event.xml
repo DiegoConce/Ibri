@@ -51,5 +51,9 @@
         android:id="@+id/standardEventChatFragment"
         tools:layout="@layout/fragment_standard_event_chat"
         android:name="com.ibri.ui.event.standard.StandardEventChatFragment"
-        android:label="StandardEventChatFragment" />
+        android:label="StandardEventChatFragment" >
+        <action
+            android:id="@+id/action_standardEventChatFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
+    </fragment>
 </navigation>

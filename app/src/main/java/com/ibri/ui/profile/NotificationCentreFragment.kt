@@ -10,10 +10,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ibri.R
 import com.ibri.databinding.FragmentNotificationCentreBinding
 import com.ibri.model.Question
+import com.ibri.model.events.SubscribeRequest
 import com.ibri.ui.adapters.NotificationAdapter
 import com.ibri.ui.adapters.NotificationClickListener
+import com.ibri.ui.adapters.SubRequestAdapter
 import com.ibri.ui.viewmodel.ProfileViewModel
 import com.ibri.utils.PreferenceManager
 
@@ -21,6 +24,7 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
     private val viewModel: ProfileViewModel by activityViewModels()
     private lateinit var binding: FragmentNotificationCentreBinding
     private lateinit var notificationAdapter: NotificationAdapter
+    private lateinit var subRequestAdapter: SubRequestAdapter
     private lateinit var pref: SharedPreferences
 
 
@@ -32,6 +36,10 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
         binding = FragmentNotificationCentreBinding.inflate(layoutInflater, container, false)
         pref = PreferenceManager.getSharedPreferences(requireContext())
         viewModel.loadQuestions(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
+        viewModel.loadSubscribeRequests(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
+        subRequestAdapter = SubRequestAdapter(this)
+        notificationAdapter = NotificationAdapter(requireContext(), this)
+
         setObservableVM()
         setListeners()
         return binding.root
@@ -39,29 +47,54 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
 
     private fun setObservableVM() {
         viewModel.questionList.observe(viewLifecycleOwner) {
-            setNotificationRecyclerView(it)
+            notificationAdapter.setData(it)
+        }
+
+        viewModel.subscribeRequestsList.observe(viewLifecycleOwner) {
+            subRequestAdapter.setData(it)
         }
 
     }
 
     private fun setListeners() {
         binding.notificationBackButton.setOnClickListener { requireActivity().onBackPressed() }
+
         binding.notificationSwipeRefresh.setOnRefreshListener {
             viewModel.loadQuestions(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
+            viewModel.loadSubscribeRequests(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
             if (binding.notificationSwipeRefresh.isRefreshing)
                 binding.notificationSwipeRefresh.isRefreshing = false
         }
+
+        binding.questionToggleButton.isChecked = true
+        prepareQuestionLayout()
+        binding.notificationToggleButtons.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.question_toggle_button -> prepareQuestionLayout()
+                    R.id.sub_request_toggle_button -> prepareSubRequestLayout()
+                }
+            }
+        }
     }
 
-    private fun setNotificationRecyclerView(it: ArrayList<Question>) {
-        if (it.isNullOrEmpty())
+    private fun prepareQuestionLayout() {
+        if (notificationAdapter.questionsListAdapter.isNullOrEmpty())
             binding.notificationNoItems.visibility = View.VISIBLE
         else
             binding.notificationNoItems.visibility = View.GONE
 
-        notificationAdapter = NotificationAdapter(requireContext(), this)
-        notificationAdapter.setData(it)
         binding.notificationRecyclerView.adapter = notificationAdapter
+        binding.notificationRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun prepareSubRequestLayout() {
+        if (subRequestAdapter.subRequestsList.isNullOrEmpty())
+            binding.notificationNoItems.visibility = View.VISIBLE
+        else
+            binding.notificationNoItems.visibility = View.GONE
+
+        binding.notificationRecyclerView.adapter = subRequestAdapter
         binding.notificationRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
@@ -92,9 +125,29 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
                 notificationAdapter.questionsListAdapter.remove(question)
                 notificationAdapter.notifyItemRemoved(position)
                 viewModel.questionList.value?.remove(question)
-            }
-            else
+            } else
                 answerProgressBar.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onAcceptSubRequestClickListener(
+        subscribeRequest: SubscribeRequest,
+        isAccepted: Boolean,
+        position: Int
+    ) {
+        viewModel.acceptSubscribeRequest(subscribeRequest.id, isAccepted)
+        viewModel.subscribeRequestResponse.value = ""
+        viewModel.subscribeRequestResponse.observe(viewLifecycleOwner) {
+            if (it == "ok") {
+                //dialog?
+                Toast.makeText(requireContext(), "Utente accettato", Toast.LENGTH_LONG)
+                    .show()
+                subRequestAdapter.subRequestsList.remove(subscribeRequest)
+                subRequestAdapter.notifyItemRemoved(position)
+            } else if (it == "declined") {
+                subRequestAdapter.subRequestsList.remove(subscribeRequest)
+                subRequestAdapter.notifyItemRemoved(position)
+            }
         }
     }
 

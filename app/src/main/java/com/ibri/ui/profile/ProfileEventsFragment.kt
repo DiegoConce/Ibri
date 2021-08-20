@@ -52,7 +52,6 @@ class ProfileEventsFragment : Fragment() {
     }
 
     private fun prepareEvents() {
-
         viewModel.standardEventList.observe(viewLifecycleOwner) {
             for (item in it) {
                 if (item.eventDay.before(now))

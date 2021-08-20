@@ -221,7 +221,7 @@
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/edit_stand_public_button"
                                 style="?attr/materialButtonOutlinedStyle"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/pubblico"
                                 app:cornerRadius="10dp" />

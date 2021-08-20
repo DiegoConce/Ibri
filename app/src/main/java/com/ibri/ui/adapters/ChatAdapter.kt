@@ -14,7 +14,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatAdapter(private val context: Context) :
+class ChatAdapter(
+    private val context: Context,
+    private val listener: UserOnClickListener
+) :
     RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
     private val messages = ArrayList<Message>()
@@ -45,9 +48,11 @@ class ChatAdapter(private val context: Context) :
             holder.binding.chatSender.text =
                 "${item.privateSender?.name} ${item.privateSender?.surname}"
             holder.binding.chatOwner.visibility = View.GONE
+            holder.binding.chatMessageSenderAvatar.setOnClickListener { listener.onUserClicked(item.privateSender!!.id) }
         } else if (item.commercialSender != null) {
             holder.binding.chatSender.text = "${item.commercialSender?.name}"
             holder.binding.chatOwner.visibility = View.VISIBLE
+            holder.binding.chatMessageSenderAvatar.setOnClickListener { listener.onUserClicked(item.commercialSender!!.id) }
         }
         holder.binding.chatMessage.text = item.message
         holder.binding.chatTime.text = SimpleDateFormat("HH:mm", Locale.getDefault())

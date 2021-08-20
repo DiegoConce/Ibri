@@ -21,6 +21,7 @@ class StandardEventViewModel : ViewModel() {
     val standEventMessageResponse = MutableLiveData<String>()
     var isMyEvent = MutableLiveData(false)
     var isSubcribed = MutableLiveData(false)
+    var isPending = MutableLiveData(false)
     val newQuestionResponse = MutableLiveData<String>()
 
 

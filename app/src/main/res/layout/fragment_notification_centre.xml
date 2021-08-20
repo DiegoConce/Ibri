@@ -111,13 +111,44 @@
             app:layout_constraintTop_toTopOf="@+id/notification_back_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/notification_toggle_buttons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/question_toggle_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:text="Domande"
+            app:cornerRadius="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sub_request_toggle_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="150dp"
+            android:text="Richieste"
+            app:cornerRadius="10dp" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/notification_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
+        app:layout_constraintTop_toBottomOf="@+id/notification_toggle_buttons">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notification_recycler_view"

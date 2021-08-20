@@ -8,5 +8,5 @@ data class Question(
     var question: String,
     var answer: String?,
     var responseDate: Date?,
-    var privateEvent: StandardEvent,
+    var privateEvent: StandardEvent
 )

@@ -24,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ibri.R
 import com.ibri.databinding.FragmentStandardEventDetailBinding
 import com.ibri.model.events.StandardEvent
@@ -97,11 +98,22 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
                 binding.standEventEditButton.visibility = View.VISIBLE
                 return@observe
             }
+            if (viewModel.isPending.value == true) {
+                binding.standEventSubscribeButton.alpha = 0.85F
+                binding.standEventSubscribeButton.isFocusable = false
+                binding.standEventSubscribeButton.isClickable = false
+                binding.standEventChatButton.alpha = 0.80F
+                binding.standEventChatButton.isFocusable = false
+                binding.standEventChatButton.isClickable = false
+                binding.standEventSubsButtonTextView.text = "In Attesa"
+                return@observe
+            }
             if (it) {
                 binding.standEventChatButton.alpha = 1F
                 binding.standEventChatButton.isFocusable = true
                 binding.standEventChatButton.isClickable = true
                 binding.standEventSubsButtonTextView.text = "- Lascia"
+                binding.standEventIsprivateMessage.visibility = View.GONE
             } else {
                 binding.standEventChatButton.alpha = 0.80F
                 binding.standEventChatButton.isFocusable = false
@@ -109,6 +121,7 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
                 binding.standEventSubsButtonTextView.text = "+ Unisciti"
             }
         }
+
     }
 
     private fun setListeners() {
@@ -149,10 +162,17 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
             if (user.id == myId) {
                 viewModel.isMyEvent.value = false
                 viewModel.isSubcribed.value = true
-            } else
+                viewModel.isPending.value = false
+            } else {
                 viewModel.isSubcribed.value = false
+            }
         }
         viewModel.isMyEvent.value = myId == standEvent.creator.id
+
+        if (standEvent.private)
+            binding.standEventIsprivateMessage.visibility = View.VISIBLE
+        else
+            binding.standEventIsprivateMessage.visibility = View.GONE
 
         if (standEvent.media != null) {
             val path = standEvent.media!!.url
@@ -210,9 +230,25 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
         val userId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
         if (viewModel.isSubcribed.value == false) {
             viewModel.subscribeToEventRequest(userId, standEvent.id)
+            if (standEvent.private) {
+                viewModel.isPending.value = true
+                showDialog()
+            } else
+                viewModel.isPending.value = false
+
         } else {
             viewModel.cancelSubscription(userId, standEvent.id)
         }
+    }
+
+    private fun showDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage("Richiesta di partecipazione inviata")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     private fun initMap() {

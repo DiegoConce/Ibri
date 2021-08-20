@@ -6,12 +6,16 @@ import com.ibri.model.LoginResponse
 import com.ibri.model.Question
 import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
+import com.ibri.model.events.SubscribeRequest
 import com.ibri.repository.ProfileRepository
 import com.ibri.repository.QuestionAnswerRepository
+import com.ibri.repository.SubscribeRequestRepository
 
 class ProfileViewModel : ViewModel() {
     val standardEventList = MutableLiveData<ArrayList<StandardEvent>>()
     val comEventList = MutableLiveData<ArrayList<CommercialEvent>>()
+    val subscribeRequestsList = MutableLiveData<ArrayList<SubscribeRequest>>()
+    val subscribeRequestResponse = MutableLiveData<String>()
     val accountResponse = MutableLiveData<LoginResponse>()
     val editUserResponse = MutableLiveData<String>()
     val editCompanyResponse = MutableLiveData<String>()
@@ -72,6 +76,21 @@ class ProfileViewModel : ViewModel() {
 
     fun answerQuestion(questionId: String, answer: String) {
         QuestionAnswerRepository.answerQuestion(answerQuestionResponse, questionId, answer)
+    }
+
+    fun loadSubscribeRequests(userId: String) {
+        SubscribeRequestRepository.getSubscribeRequests(subscribeRequestsList, userId)
+    }
+
+    fun acceptSubscribeRequest(
+        subRequestId: String,
+        isAccepted: Boolean
+    ) {
+        SubscribeRequestRepository.acceptSubscribeRequest(
+            subscribeRequestResponse,
+            subRequestId,
+            isAccepted
+        )
     }
 
     override fun onCleared() {

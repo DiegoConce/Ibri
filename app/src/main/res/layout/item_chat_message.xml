@@ -18,6 +18,9 @@
             android:id="@+id/chat_message_sender_avatar"
             android:layout_width="45dp"
             android:scaleType="centerCrop"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_height="45dp"
             app:srcCompat="@drawable/default_avatar" />
     </androidx.cardview.widget.CardView>

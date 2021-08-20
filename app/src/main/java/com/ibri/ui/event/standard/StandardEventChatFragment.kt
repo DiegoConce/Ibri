@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ibri.R
 import com.ibri.databinding.FragmentStandardEventChatBinding
 import com.ibri.model.messaging.Message
 import com.ibri.ui.adapters.ChatAdapter
+import com.ibri.ui.adapters.UserOnClickListener
+import com.ibri.ui.profile.ProfileFragment
 import com.ibri.ui.viewmodel.StandardEventViewModel
 import com.ibri.utils.PreferenceManager
 
-class StandardEventChatFragment : Fragment() {
+class StandardEventChatFragment : Fragment(), UserOnClickListener {
 
     private val viewModel: StandardEventViewModel by activityViewModels()
     private lateinit var binding: FragmentStandardEventChatBinding
@@ -89,7 +93,7 @@ class StandardEventChatFragment : Fragment() {
         else
             binding.chatNoMessagesTextView.visibility = View.GONE
 
-        chatAdapter = ChatAdapter(requireContext())
+        chatAdapter = ChatAdapter(requireContext(), this)
         chatAdapter.setData(it)
         binding.chatMessagesRecyclerView.adapter = chatAdapter
         binding.chatMessagesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -108,5 +112,14 @@ class StandardEventChatFragment : Fragment() {
     private fun goBack() {
         mainHandler.removeCallbacks(updateMessage)
         requireActivity().onBackPressed()
+    }
+
+    override fun onUserClicked(userId: String) {
+        val bundle = Bundle()
+        bundle.putString(ProfileFragment.USER_ID, userId)
+        findNavController().navigate(
+            R.id.action_standardEventChatFragment_to_profileFragment2,
+            bundle
+        )
     }
 }
