@@ -1,27 +1,35 @@
 package com.ibri.ui.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ibri.R
 import com.ibri.databinding.LayoutProfileEventsBinding
 import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.Event
 import com.ibri.model.events.StandardEvent
 import com.ibri.ui.adapters.CommercialEventAdapter
 import com.ibri.ui.adapters.StandardEventAdapter
+import com.ibri.ui.event.SelectedEventListener
 import com.ibri.ui.viewmodel.ProfileViewModel
+import com.ibri.ui.viewmodel.StandardEventViewModel
+import com.ibri.utils.LOG_TEST
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProfileEventsFragment : Fragment() {
+class ProfileEventsFragment(val listener: SelectedEventListener) : Fragment() {
     private lateinit var binding: LayoutProfileEventsBinding
     private lateinit var standardEventAdapter: StandardEventAdapter
     private lateinit var commercialEventAdapter: CommercialEventAdapter
     private val viewModel: ProfileViewModel by activityViewModels()
+
+
     private val now = Date()
     private val currentEvents = ArrayList<Event>()
     private val pastEvents = ArrayList<Event>()
@@ -32,14 +40,17 @@ class ProfileEventsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = LayoutProfileEventsBinding.inflate(inflater, container, false)
+
+        commercialEventAdapter = CommercialEventAdapter(requireContext(), listener)
+        standardEventAdapter = StandardEventAdapter(requireContext(), listener)
+
+
         prepareEvents()
         prepareStage()
         return binding.root
     }
 
     private fun prepareStage() {
-        currentEvents.clear()
-        pastEvents.clear()
         arguments?.let {
             when (it.getInt(ARG_STAGE)) {
                 0 -> setCurrentEvents()
@@ -53,6 +64,8 @@ class ProfileEventsFragment : Fragment() {
 
     private fun prepareEvents() {
         viewModel.standardEventList.observe(viewLifecycleOwner) {
+            currentEvents.clear()
+            pastEvents.clear()
             for (item in it) {
                 if (item.eventDay.before(now))
                     currentEvents.add(item)
@@ -67,6 +80,8 @@ class ProfileEventsFragment : Fragment() {
         }
 
         viewModel.comEventList.observe(viewLifecycleOwner) {
+            currentEvents.clear()
+            pastEvents.clear()
             for (item in it) {
                 if (item.eventDay.before(now))
                     currentEvents.add(item)
@@ -98,13 +113,11 @@ class ProfileEventsFragment : Fragment() {
     }
 
     private fun setStandardEventsAdapter() {
-        standardEventAdapter = StandardEventAdapter(requireContext(), null)
         binding.profileRecyperView.adapter = standardEventAdapter
         binding.profileRecyperView.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun setCommercialEventsAdapter() {
-        commercialEventAdapter = CommercialEventAdapter(requireContext())
         binding.profileRecyperView.adapter = commercialEventAdapter
         binding.profileRecyperView.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -113,12 +126,14 @@ class ProfileEventsFragment : Fragment() {
         const val ARG_STAGE = "ARG_STAGE"
 
         @JvmStatic
-        fun newInstance(position: Int): Fragment {
+        fun newInstance(position: Int, listener: SelectedEventListener): Fragment {
             val args = Bundle()
             args.putInt(ARG_STAGE, position)
-            val frag = ProfileEventsFragment()
+            val frag = ProfileEventsFragment(listener)
             frag.arguments = args
             return frag
         }
     }
+
+
 }

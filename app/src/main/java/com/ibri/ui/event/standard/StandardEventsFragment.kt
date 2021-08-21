@@ -14,10 +14,10 @@ import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
 import com.ibri.ui.profile.ProfileFragment
 import com.ibri.ui.adapters.StandardEventAdapter
-import com.ibri.ui.event.SelectedItemListener
+import com.ibri.ui.event.SelectedEventListener
 import com.ibri.ui.viewmodel.StandardEventViewModel
 
-class StandardEventsFragment : Fragment(), SelectedItemListener {
+class StandardEventsFragment : Fragment(), SelectedEventListener {
 
     private lateinit var binding: FragmentStandardEventsBinding
     private val viewModel: StandardEventViewModel by activityViewModels()

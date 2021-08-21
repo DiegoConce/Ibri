@@ -3,6 +3,7 @@ package com.ibri.ui.profile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +15,24 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ibri.R
 import com.ibri.databinding.FragmentProfileBinding
 import com.ibri.model.Media
+import com.ibri.model.events.CommercialEvent
+import com.ibri.model.events.StandardEvent
 import com.ibri.ui.activity.NewCommercialEventActivity
 import com.ibri.ui.activity.NewStandardEventActivity
 import com.ibri.ui.adapters.ProfilePagerAdapter
+import com.ibri.ui.event.SelectedEventListener
 import com.ibri.ui.viewmodel.ProfileViewModel
+import com.ibri.ui.viewmodel.StandardEventViewModel
 import com.ibri.utils.GET_MEDIA_ENDPOINT
+import com.ibri.utils.LOG_TEST
 import com.ibri.utils.PreferenceManager
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), SelectedEventListener {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var pref: SharedPreferences
     private lateinit var profilePagerAdapter: ProfilePagerAdapter
     private val viewModel: ProfileViewModel by activityViewModels()
+    private val standEventViewModel: StandardEventViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +41,8 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         pref = PreferenceManager.getSharedPreferences(requireContext())
+
+        Log.wtf(LOG_TEST," dest : ${findNavController().currentDestination}")
 
         checkArguments()
         setObservableVM()
@@ -96,7 +105,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setViewPager() {
-        profilePagerAdapter = ProfilePagerAdapter(requireActivity())
+        profilePagerAdapter = ProfilePagerAdapter(requireActivity(),this)
         binding.profileViewPager.adapter = profilePagerAdapter
 
         TabLayoutMediator(binding.profileTabLayout, binding.profileViewPager) { tab, position ->
@@ -200,6 +209,20 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), NewStandardEventActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onItemSelected(item: StandardEvent) {
+        standEventViewModel.selectedStandardEvent.value = item
+        findNavController().navigate(R.id.action_profileFragment_to_navigation)
+        Log.wtf(LOG_TEST," dest : ${findNavController().currentDestination}")
+    }
+
+    override fun onItemSelected(item: CommercialEvent) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCreatorSelected(userId: String) {
+        TODO("Not yet implemented")
     }
 
     companion object {

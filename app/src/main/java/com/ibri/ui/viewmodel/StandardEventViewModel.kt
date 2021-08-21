@@ -127,10 +127,7 @@ class StandardEventViewModel : ViewModel() {
 
     fun reloadEvent() {
         selectedStandardEvent.value?.let {
-            StandardEventRepository.getStandardEventById(
-                selectedStandardEvent,
-                it.id
-            )
+            StandardEventRepository.getStandardEventById(selectedStandardEvent, it.id)
         }
     }
 

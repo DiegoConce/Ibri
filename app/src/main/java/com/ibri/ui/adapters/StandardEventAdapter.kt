@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.ibri.R
 import com.ibri.databinding.ItemStandardEventBinding
 import com.ibri.model.events.StandardEvent
-import com.ibri.ui.event.SelectedItemListener
+import com.ibri.ui.event.SelectedEventListener
 import com.ibri.utils.GET_MEDIA_ENDPOINT
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 
 class StandardEventAdapter(
     private val context: Context,
-    private val listener: SelectedItemListener?
+    private val listener: SelectedEventListener
 ) :
     RecyclerView.Adapter<StandardEventAdapter.StandardEventViewHolder>() {
 
@@ -80,11 +80,15 @@ class StandardEventAdapter(
     private fun setListeners(holder: StandardEventViewHolder, item: StandardEvent) {
 
         holder.binding.standEventCard.setOnClickListener {
-            listener?.onItemSelected(item)
+            listener.onItemSelected(item)
         }
 
         holder.binding.standEventCreator.setOnClickListener {
-            listener?.onCreatorSelected(item.creator.id)
+            listener.onCreatorSelected(item.creator.id)
+        }
+
+        holder.binding.standEventCreatorAvatar.setOnClickListener {
+            listener.onCreatorSelected(item.creator.id)
         }
 
     }

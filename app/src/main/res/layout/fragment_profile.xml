@@ -60,7 +60,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/profile_settings_button"
                 app:layout_constraintEnd_toStartOf="@+id/profile_settings_button"
                 app:layout_constraintTop_toTopOf="@+id/profile_settings_button"
-                app:srcCompat="@drawable/ic_baseline_cake_24"
+                app:srcCompat="@drawable/ic_round_notifications_24"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageView

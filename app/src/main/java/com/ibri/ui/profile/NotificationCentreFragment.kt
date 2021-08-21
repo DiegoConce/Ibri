@@ -42,6 +42,7 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
 
         setObservableVM()
         setListeners()
+        prepareStage()
         return binding.root
     }
 
@@ -75,6 +76,14 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
                     R.id.sub_request_toggle_button -> prepareSubRequestLayout()
                 }
             }
+        }
+    }
+
+    private fun prepareStage() {
+        if (pref.getString(PreferenceManager.ACCOUNT_ROLE, "") == "COMPANY") {
+            binding.notificationToggleButtons.visibility = View.GONE
+        } else {
+            binding.notificationToggleButtons.visibility = View.VISIBLE
         }
     }
 

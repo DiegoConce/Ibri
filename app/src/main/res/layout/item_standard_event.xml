@@ -10,13 +10,11 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="200dp"
         app:layout_constraintBottom_toTopOf="@+id/stand_event_card"
-        app:layout_constraintEnd_toStartOf="@+id/stand_event_creator"
         app:layout_constraintStart_toStartOf="@+id/stand_event_card"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck">
@@ -35,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
@@ -48,10 +45,10 @@
         android:id="@+id/stand_event_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -103,8 +100,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +112,7 @@
                     android:id="@+id/stand_event_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:text="Milano"
                     android:textSize="30sp" />
 
@@ -124,8 +120,8 @@
                     android:id="@+id/stand_event_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
                     android:text="19"
                     android:textSize="30sp" />
 
@@ -133,8 +129,8 @@
                     android:id="@+id/stand_event_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
                     android:text="Nov"
                     android:textSize="30sp" />
 
@@ -142,7 +138,7 @@
                     android:id="@+id/stand_event_members"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:text="3/10"
                     android:textSize="30sp" />
             </LinearLayout>
