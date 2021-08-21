@@ -2,6 +2,7 @@ package com.ibri.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ class StandardEventAdapter(
     RecyclerView.Adapter<StandardEventAdapter.StandardEventViewHolder>() {
 
     private val standardEventList = ArrayList<StandardEvent>()
+    private var isProfileLayout = false
 
     fun setData(list: List<StandardEvent>) {
         standardEventList.clear()
@@ -44,6 +46,7 @@ class StandardEventAdapter(
     override fun onBindViewHolder(holder: StandardEventViewHolder, position: Int) {
         val calendar: Calendar = Calendar.getInstance()
         val item = standardEventList[position]
+        calendar.time = item.eventDay
 
         holder.binding.standEventCreator.text = item.creator.name
         holder.binding.standEventTitle.text = item.title
@@ -74,6 +77,14 @@ class StandardEventAdapter(
                 .into(holder.binding.standEventImage)
         }
 
+        if (isProfileLayout) {
+            holder.binding.standEventAvatarCard.visibility = View.GONE
+            holder.binding.standEventCreator.visibility = View.GONE
+        } else {
+            holder.binding.standEventAvatarCard.visibility = View.VISIBLE
+            holder.binding.standEventCreator.visibility = View.VISIBLE
+        }
+
         setListeners(holder, item)
     }
 
@@ -95,6 +106,10 @@ class StandardEventAdapter(
 
     override fun getItemCount(): Int {
         return standardEventList.size
+    }
+
+    fun setProfileLayout() {
+        isProfileLayout = true
     }
 
 }

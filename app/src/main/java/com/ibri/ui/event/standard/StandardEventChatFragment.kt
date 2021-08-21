@@ -118,7 +118,7 @@ class StandardEventChatFragment : Fragment(), UserOnClickListener {
         val bundle = Bundle()
         bundle.putString(ProfileFragment.USER_ID, userId)
         findNavController().navigate(
-            R.id.action_standardEventChatFragment_to_profileFragment2,
+            R.id.action_standardEventChatFragment2_to_profileFragment4,
             bundle
         )
     }

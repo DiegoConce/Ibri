@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_stand_event"
+    app:startDestination="@id/standardEventDetailFragment">
+
+    <fragment
+        android:id="@+id/standardEventDetailFragment"
+        tools:layout="@layout/fragment_standard_event_detail"
+        android:name="com.ibri.ui.event.standard.StandardEventDetailFragment"
+        android:label="StandardEventDetailFragment" >
+        <action
+            android:id="@+id/action_standardEventDetailFragment_to_standardEventChatFragment2"
+            app:destination="@id/standardEventChatFragment2" />
+        <action
+            android:id="@+id/action_standardEventDetailFragment_to_eventQuestionAnswerFragment2"
+            app:destination="@id/eventQuestionAnswerFragment2" />
+        <action
+            android:id="@+id/action_standardEventDetailFragment_to_profileFragment4"
+            app:destination="@id/profileFragment4" />
+    </fragment>
+    <fragment
+        android:id="@+id/standardEventChatFragment2"
+        tools:layout="@layout/fragment_standard_event_chat"
+        android:name="com.ibri.ui.event.standard.StandardEventChatFragment"
+        android:label="StandardEventChatFragment" >
+        <action
+            android:id="@+id/action_standardEventChatFragment2_to_profileFragment4"
+            app:destination="@id/profileFragment4" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventQuestionAnswerFragment2"
+        tools:layout="@layout/fragment_event_question_answer"
+        android:name="com.ibri.ui.event.EventQuestionAnswerFragment"
+        android:label="EventQuestionAnswerFragment" />
+    <fragment
+        android:id="@+id/profileFragment4"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.ibri.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>

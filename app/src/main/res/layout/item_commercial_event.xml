@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/stand_event_avatar_card"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:clickable="true"

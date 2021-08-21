@@ -10,9 +10,8 @@
         android:name="com.ibri.ui.event.standard.StandardEventsFragment"
         android:label="StandardEventsFragment"
         tools:layout="@layout/fragment_standard_events">
-        <action
-            android:id="@+id/action_standardEventsFragment_to_standardEventDetail"
-            app:destination="@id/standardEventDetail" />
+
+
         <action
             android:id="@+id/action_standardEventsFragment_to_profileFragment2"
             app:destination="@id/profileFragment2"
@@ -20,40 +19,16 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_standardEventsFragment_to_nav_stand_event2"
+            app:destination="@id/nav_stand_event" />
     </fragment>
 
-    <fragment
-        android:id="@+id/standardEventDetail"
-        android:name="com.ibri.ui.event.standard.StandardEventDetailFragment"
-        android:label="StandardEventDetail"
-        tools:layout="@layout/fragment_standard_event_detail" >
-        <action
-            android:id="@+id/action_standardEventDetail_to_profileFragment2"
-            app:destination="@id/profileFragment2" />
-        <action
-            android:id="@+id/action_standardEventDetail_to_eventQuestionAnswerFragment"
-            app:destination="@id/eventQuestionAnswerFragment" />
-        <action
-            android:id="@+id/action_standardEventDetail_to_standardEventChatFragment"
-            app:destination="@id/standardEventChatFragment" />
-    </fragment>
+    <include app:graph="@navigation/nav_stand_event_detail" />
     <fragment
         android:id="@+id/profileFragment2"
-        tools:layout="@layout/fragment_profile"
         android:name="com.ibri.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" />
-    <fragment
-        android:id="@+id/eventQuestionAnswerFragment"
-        tools:layout="@layout/fragment_event_question_answer"
-        android:name="com.ibri.ui.event.EventQuestionAnswerFragment"
-        android:label="EventQuestionAnswerFragment" />
-    <fragment
-        android:id="@+id/standardEventChatFragment"
-        tools:layout="@layout/fragment_standard_event_chat"
-        android:name="com.ibri.ui.event.standard.StandardEventChatFragment"
-        android:label="StandardEventChatFragment" >
-        <action
-            android:id="@+id/action_standardEventChatFragment_to_profileFragment2"
-            app:destination="@id/profileFragment2" />
-    </fragment>
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -135,17 +135,17 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
         }
         binding.standEventChatButton.setOnClickListener {
             findNavController().navigate(
-                StandardEventDetailFragmentDirections.actionStandardEventDetailToStandardEventChatFragment()
+                StandardEventDetailFragmentDirections.actionStandardEventDetailFragmentToStandardEventChatFragment2()
             )
         }
         binding.standEventQnaButton.setOnClickListener {
-            findNavController().navigate(StandardEventDetailFragmentDirections.actionStandardEventDetailToEventQuestionAnswerFragment())
+            findNavController().navigate(StandardEventDetailFragmentDirections.actionStandardEventDetailFragmentToEventQuestionAnswerFragment2())
         }
         binding.standEventCreatorButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(ProfileFragment.USER_ID, standEvent.creator.id)
             findNavController().navigate(
-                R.id.action_standardEventDetail_to_profileFragment2,
+                R.id.action_standardEventDetailFragment_to_profileFragment4,
                 bundle
             )
         }
@@ -352,7 +352,7 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
         val bundle = Bundle()
         bundle.putString(ProfileFragment.USER_ID, userId)
         findNavController().navigate(
-            R.id.action_standardEventDetail_to_profileFragment2,
+            R.id.action_standardEventDetailFragment_to_profileFragment4,
             bundle
         )
     }

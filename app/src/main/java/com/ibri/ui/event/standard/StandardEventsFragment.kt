@@ -64,7 +64,7 @@ class StandardEventsFragment : Fragment(), SelectedEventListener {
 
     override fun onItemSelected(item: StandardEvent) {
         viewModel.selectedStandardEvent.value = item
-        findNavController().navigate(R.id.action_standardEventsFragment_to_standardEventDetail)
+        findNavController().navigate(StandardEventsFragmentDirections.actionStandardEventsFragmentToNavStandEvent2())
     }
 
     override fun onCreatorSelected(userId: String) {

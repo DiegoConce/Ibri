@@ -113,6 +113,7 @@ class ProfileEventsFragment(val listener: SelectedEventListener) : Fragment() {
     }
 
     private fun setStandardEventsAdapter() {
+        standardEventAdapter.setProfileLayout()
         binding.profileRecyperView.adapter = standardEventAdapter
         binding.profileRecyperView.layoutManager = LinearLayoutManager(requireContext())
     }

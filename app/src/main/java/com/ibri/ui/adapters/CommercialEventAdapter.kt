@@ -43,6 +43,7 @@ class CommercialEventAdapter(
     override fun onBindViewHolder(holder: CommercialEventViewHolder, position: Int) {
         val calendar: Calendar = Calendar.getInstance()
         val item = commercialEventList[position]
+        calendar.time = item.eventDay
 
         var rooms = "0"
         if (!item.rooms.isNullOrEmpty())

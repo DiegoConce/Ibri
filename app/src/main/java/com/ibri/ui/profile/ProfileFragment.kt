@@ -213,7 +213,7 @@ class ProfileFragment : Fragment(), SelectedEventListener {
 
     override fun onItemSelected(item: StandardEvent) {
         standEventViewModel.selectedStandardEvent.value = item
-        findNavController().navigate(R.id.action_profileFragment_to_navigation)
+       findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNavStandEvent())
         Log.wtf(LOG_TEST," dest : ${findNavController().currentDestination}")
     }
 
@@ -222,7 +222,6 @@ class ProfileFragment : Fragment(), SelectedEventListener {
     }
 
     override fun onCreatorSelected(userId: String) {
-        TODO("Not yet implemented")
     }
 
     companion object {

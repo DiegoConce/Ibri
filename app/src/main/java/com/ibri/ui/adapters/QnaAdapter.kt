@@ -37,7 +37,7 @@ class QnaAdapter(private val context: Context) : RecyclerView.Adapter<QnaAdapter
         val simpleDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         holder.binding.qnaQuestionText.text = item.question
         holder.binding.qnaAnswerText.text = item.answer
-        holder.binding.qnaResponseTime.text = simpleDateFormat.format(item.responseDate!!)
+       holder.binding.qnaResponseTime.text = simpleDateFormat.format(item.responseDate!!)
     }
 
     override fun getItemCount(): Int {
