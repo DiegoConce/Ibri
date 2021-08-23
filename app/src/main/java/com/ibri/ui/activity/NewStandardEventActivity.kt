@@ -66,10 +66,9 @@ class NewStandardEventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewStandardEventBinding.inflate(layoutInflater)
-        volley = Volley.newRequestQueue(this)
-
         setContentView(binding.root)
         pref = PreferenceManager.getSharedPreferences(this)
+        volley = Volley.newRequestQueue(this)
 
         setObservableVM()
         setListeners()

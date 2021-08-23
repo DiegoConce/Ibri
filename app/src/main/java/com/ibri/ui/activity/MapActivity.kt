@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -43,10 +44,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var errorMessage = ""
 
     private val requestPermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.forEach {
-                Log.wtf(LOG_TEST, "${it.key} = ${it.value}")
-                val permissionName = it.key
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { perms ->
+            perms.entries.forEach {
                 val isGranted = it.value
                 if (isGranted) {
                     // Permission is granted
@@ -61,14 +60,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        requestPermissions.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
-
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -178,15 +169,33 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.selectedAddressTextView.text = selectedAddress
     }
 
-    @SuppressLint("MissingPermission")
     fun showMyPosition() {
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener(this) { location ->
-                if (location != null) {
-                    setAnimatedPosition(LatLng(location.latitude, location.longitude), 10f)
-                    addMarker(location.latitude, location.longitude, "test")!!
-                }
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                fusedLocationClient.lastLocation
+                    .addOnSuccessListener(this) { location ->
+                        if (location != null) {
+                            setAnimatedPosition(LatLng(location.latitude, location.longitude), 10f)
+                            addMarker(location.latitude, location.longitude, "test")!!
+                        }
+                    }
             }
+            //shouldShowRequestPermissionRationale
+            else -> {
+                requestPermissions.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+        }
     }
 
     private fun setAnimatedPosition(pos: LatLng, zoom: Float) {

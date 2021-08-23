@@ -174,6 +174,13 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
         else
             binding.standEventIsprivateMessage.visibility = View.GONE
 
+
+        if (pref.getString(PreferenceManager.ACCOUNT_ROLE, "") == "COMPANY")
+            binding.standEventSubscribeButton.visibility = View.GONE
+        else
+            binding.standEventSubscribeButton.visibility = View.VISIBLE
+
+
         if (standEvent.media != null) {
             val path = standEvent.media!!.url
             val url = "$GET_MEDIA_ENDPOINT/$path"

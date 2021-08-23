@@ -3,10 +3,9 @@ package com.ibri.ui.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ibri.ui.event.SelectedEventListener
 import com.ibri.ui.profile.ProfileEventsFragment
 
-class ProfilePagerAdapter(fa: FragmentActivity, val listener: SelectedEventListener) :
+class ProfilePagerAdapter(fa: FragmentActivity, val listener: EventsOnClickListener) :
     FragmentStateAdapter(fa) {
 
     private var pages: Int = 2

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_com_event_detail">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_com_event_detail"
+    app:startDestination="@id/commercialEventDetailFragment">
 
+    <fragment
+        android:id="@+id/commercialEventDetailFragment"
+        tools:layout="@layout/fragment_commercial_event_detail"
+        android:name="com.ibri.ui.event.commercial.CommercialEventDetailFragment"
+        android:label="CommercialEventDetailFragment" />
 </navigation>

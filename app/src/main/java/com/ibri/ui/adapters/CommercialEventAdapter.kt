@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 import com.ibri.R
 import com.ibri.databinding.ItemCommercialEventBinding
 import com.ibri.model.events.CommercialEvent
-import com.ibri.ui.event.SelectedEventListener
 import com.ibri.utils.GET_MEDIA_ENDPOINT
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,14 +15,17 @@ import kotlin.collections.ArrayList
 
 class CommercialEventAdapter(
     private val context: Context,
-    private val listener: SelectedEventListener
+    private val listener: EventsOnClickListener
 ) : RecyclerView.Adapter<CommercialEventAdapter.CommercialEventViewHolder>() {
 
     private val commercialEventList = ArrayList<CommercialEvent>()
+    private val unfilteredList = ArrayList<CommercialEvent>()
 
     fun setData(list: List<CommercialEvent>) {
         commercialEventList.clear()
+        unfilteredList.clear()
         commercialEventList.addAll(list)
+        unfilteredList.addAll(list)
         notifyItemRangeChanged(0, commercialEventList.size)
     }
 
@@ -98,5 +100,23 @@ class CommercialEventAdapter(
         return commercialEventList.size
     }
 
+    fun filter(s: String) {
+        var query = s
+        commercialEventList.clear()
+        if (query.isEmpty()) {
+            commercialEventList.addAll(unfilteredList)
+        } else {
+            query = query.lowercase()
+            for (item in unfilteredList) {
+                if (item.title.lowercase().contains(query) || item.creator.name.lowercase()
+                        .contains(query)
+                ) {
+                    commercialEventList.add(item)
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+    }
 
 }

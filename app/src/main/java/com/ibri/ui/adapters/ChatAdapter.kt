@@ -1,6 +1,5 @@
 package com.ibri.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatAdapter(
-    private val context: Context,
     private val listener: UserOnClickListener
 ) :
     RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {

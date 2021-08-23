@@ -93,7 +93,7 @@ class StandardEventChatFragment : Fragment(), UserOnClickListener {
         else
             binding.chatNoMessagesTextView.visibility = View.GONE
 
-        chatAdapter = ChatAdapter(requireContext(), this)
+        chatAdapter = ChatAdapter(this)
         chatAdapter.setData(it)
         binding.chatMessagesRecyclerView.adapter = chatAdapter
         binding.chatMessagesRecyclerView.layoutManager = LinearLayoutManager(requireContext())

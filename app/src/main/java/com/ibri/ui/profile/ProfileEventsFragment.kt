@@ -1,29 +1,24 @@
 package com.ibri.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ibri.R
 import com.ibri.databinding.LayoutProfileEventsBinding
 import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.Event
 import com.ibri.model.events.StandardEvent
 import com.ibri.ui.adapters.CommercialEventAdapter
 import com.ibri.ui.adapters.StandardEventAdapter
-import com.ibri.ui.event.SelectedEventListener
+import com.ibri.ui.adapters.EventsOnClickListener
 import com.ibri.ui.viewmodel.ProfileViewModel
-import com.ibri.ui.viewmodel.StandardEventViewModel
-import com.ibri.utils.LOG_TEST
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProfileEventsFragment(val listener: SelectedEventListener) : Fragment() {
+class ProfileEventsFragment(val listener: EventsOnClickListener) : Fragment() {
     private lateinit var binding: LayoutProfileEventsBinding
     private lateinit var standardEventAdapter: StandardEventAdapter
     private lateinit var commercialEventAdapter: CommercialEventAdapter
@@ -127,7 +122,7 @@ class ProfileEventsFragment(val listener: SelectedEventListener) : Fragment() {
         const val ARG_STAGE = "ARG_STAGE"
 
         @JvmStatic
-        fun newInstance(position: Int, listener: SelectedEventListener): Fragment {
+        fun newInstance(position: Int, listener: EventsOnClickListener): Fragment {
             val args = Bundle()
             args.putInt(ARG_STAGE, position)
             val frag = ProfileEventsFragment(listener)

@@ -18,6 +18,8 @@ class StandardEventRepository {
 
     companion object {
         private val ALL_STANDARD_EVENTS_ENDPOINT = Uri.parse("${BASE_URL}/event/private/all")
+        private val PRIVATE_POSITION_EVENTS_ENDPOINT =
+            Uri.parse("${BASE_URL}/event/private/all/position")
         private val NEW_PRIVATE_EVENTS_ENDPOINT = Uri.parse("${BASE_URL}/event/private/new")
         private val PRIVATE_EVENT_SUBSCRIBE_ENDPOINT =
             Uri.parse("${BASE_URL}/event/private/subscribe")
@@ -34,6 +36,30 @@ class StandardEventRepository {
         fun getStandardEvent(mutableMediaList: MutableLiveData<ArrayList<StandardEvent>>) {
             val req = StringRequest(
                 Request.Method.GET, ALL_STANDARD_EVENTS_ENDPOINT.toString(),
+                { result ->
+                    val a = Gson().fromJson(result, Array<StandardEvent>::class.java)
+                        .toCollection(ArrayList())
+                    mutableMediaList.postValue(a)
+                },
+                {
+
+                }
+            )
+            volley.add(req)
+        }
+
+        fun getStandEventsByPosition(
+            mutableMediaList: MutableLiveData<ArrayList<StandardEvent>>,
+            lat: String,
+            lon: String,
+            distanceInM: Int
+        ) {
+            val req = StringRequest(
+                Request.Method.GET, PRIVATE_POSITION_EVENTS_ENDPOINT.buildUpon()
+                    .appendQueryParameter("lat", lat)
+                    .appendQueryParameter("lon", lon)
+                    .appendQueryParameter("distanceInM", distanceInM.toString())
+                    .build().toString(),
                 { result ->
                     val a = Gson().fromJson(result, Array<StandardEvent>::class.java)
                         .toCollection(ArrayList())

@@ -1,10 +1,13 @@
 package com.ibri.ui.viewmodel
 
 import android.app.VoiceInteractor
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ibri.model.Tag
 import com.ibri.model.events.CommercialEvent
 import com.ibri.repository.CommercialEventRepository
+import com.ibri.utils.LOG_TEST
 
 class CommercialEventViewModel : ViewModel() {
     val comEventList = MutableLiveData<ArrayList<CommercialEvent>>()
@@ -16,6 +19,23 @@ class CommercialEventViewModel : ViewModel() {
 
 
     fun getCommercialEvents() = CommercialEventRepository.getCommercialEvent(comEventList)
+
+    fun getCommercialEventsByPosition(lat: String, lon: String, distanceInM: Int) {
+        CommercialEventRepository.getCommercialEventsByPosition(comEventList, lat, lon, distanceInM)
+    }
+
+    fun filterListByTag(tag: Tag) {
+        val filteredList = ArrayList<CommercialEvent>()
+
+        for (event in comEventList.value!!) {
+            if (event.tags?.contains(tag) == true)
+                filteredList.add(event)
+        }
+
+        comEventList.value!!.clear()
+        if (!filteredList.isNullOrEmpty())
+            comEventList.value!!.addAll(filteredList)
+    }
 
     fun createCommercialEvent(
         userId: String,

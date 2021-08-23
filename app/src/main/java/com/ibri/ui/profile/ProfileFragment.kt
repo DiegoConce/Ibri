@@ -3,7 +3,6 @@ package com.ibri.ui.profile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,19 +19,20 @@ import com.ibri.model.events.StandardEvent
 import com.ibri.ui.activity.NewCommercialEventActivity
 import com.ibri.ui.activity.NewStandardEventActivity
 import com.ibri.ui.adapters.ProfilePagerAdapter
-import com.ibri.ui.event.SelectedEventListener
+import com.ibri.ui.adapters.EventsOnClickListener
+import com.ibri.ui.viewmodel.CommercialEventViewModel
 import com.ibri.ui.viewmodel.ProfileViewModel
 import com.ibri.ui.viewmodel.StandardEventViewModel
 import com.ibri.utils.GET_MEDIA_ENDPOINT
-import com.ibri.utils.LOG_TEST
 import com.ibri.utils.PreferenceManager
 
-class ProfileFragment : Fragment(), SelectedEventListener {
+class ProfileFragment : Fragment(), EventsOnClickListener {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var pref: SharedPreferences
     private lateinit var profilePagerAdapter: ProfilePagerAdapter
     private val viewModel: ProfileViewModel by activityViewModels()
     private val standEventViewModel: StandardEventViewModel by activityViewModels()
+    private val comEventViewModel : CommercialEventViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,8 +41,6 @@ class ProfileFragment : Fragment(), SelectedEventListener {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         pref = PreferenceManager.getSharedPreferences(requireContext())
-
-        Log.wtf(LOG_TEST," dest : ${findNavController().currentDestination}")
 
         checkArguments()
         setObservableVM()
@@ -89,6 +87,7 @@ class ProfileFragment : Fragment(), SelectedEventListener {
             }
         }
 
+
     }
 
     private fun setListeners() {
@@ -105,7 +104,7 @@ class ProfileFragment : Fragment(), SelectedEventListener {
     }
 
     private fun setViewPager() {
-        profilePagerAdapter = ProfilePagerAdapter(requireActivity(),this)
+        profilePagerAdapter = ProfilePagerAdapter(requireActivity(), this)
         binding.profileViewPager.adapter = profilePagerAdapter
 
         TabLayoutMediator(binding.profileTabLayout, binding.profileViewPager) { tab, position ->
@@ -213,12 +212,12 @@ class ProfileFragment : Fragment(), SelectedEventListener {
 
     override fun onItemSelected(item: StandardEvent) {
         standEventViewModel.selectedStandardEvent.value = item
-       findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNavStandEvent())
-        Log.wtf(LOG_TEST," dest : ${findNavController().currentDestination}")
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNavStandEvent())
     }
 
     override fun onItemSelected(item: CommercialEvent) {
-        TODO("Not yet implemented")
+        comEventViewModel.selectedCommercialEvent.value = item
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNavComEventDetail())
     }
 
     override fun onCreatorSelected(userId: String) {

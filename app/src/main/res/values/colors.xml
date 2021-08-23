@@ -10,5 +10,6 @@
 
     <color name="ghost_white">#F8F8FF</color>
     <color name="red">#C10000</color>
+    <color name="light_grey">#efefee</color>
 
 </resources>

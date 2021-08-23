@@ -15,6 +15,8 @@ class CommercialEventRepository {
 
     companion object {
         private val COMMERCIAL_EVENTS_ENDPOINT = Uri.parse("${BASE_URL}/event/commercial/all")
+        private val COMMERCIAL_POSITION_EVENTS_ENDPOINT =
+            Uri.parse("${BASE_URL}/event/commercial/all/position")
         private val NEW_COMMERCIAL_EVENT_ENDPOINT = Uri.parse("${BASE_URL}/event/commercial/new")
         private val GET_COMMERCIAL_EVENT_ENDPOINT = Uri.parse("${BASE_URL}/event/commercial/get/id")
         private val COMMERCIAL_EVENT_SUBSCRIBE_ENDPOINT =
@@ -28,6 +30,30 @@ class CommercialEventRepository {
         fun getCommercialEvent(mutableMediaList: MutableLiveData<ArrayList<CommercialEvent>>) {
             val req = StringRequest(
                 Request.Method.GET, COMMERCIAL_EVENTS_ENDPOINT.toString(),
+                { result ->
+                    val a = Gson().fromJson(result, Array<CommercialEvent>::class.java)
+                        .toCollection(ArrayList())
+                    mutableMediaList.postValue(a)
+                },
+                {
+
+                }
+            )
+            volley.add(req)
+        }
+
+        fun getCommercialEventsByPosition(
+            mutableMediaList: MutableLiveData<ArrayList<CommercialEvent>>,
+            lat: String,
+            lon: String,
+            distanceInM: Int
+        ) {
+            val req = StringRequest(
+                Request.Method.GET, COMMERCIAL_POSITION_EVENTS_ENDPOINT.buildUpon()
+                    .appendQueryParameter("lat", lat)
+                    .appendQueryParameter("lon", lon)
+                    .appendQueryParameter("distanceInM", distanceInM.toString())
+                    .build().toString(),
                 { result ->
                     val a = Gson().fromJson(result, Array<CommercialEvent>::class.java)
                         .toCollection(ArrayList())

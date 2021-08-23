@@ -7,16 +7,24 @@
 
     <fragment
         android:id="@+id/commercialEventsFragment"
-        tools:layout="@layout/fragment_commercial_events"
         android:name="com.ibri.ui.event.commercial.CommercialEventsFragment"
-        android:label="CommercialEventsFragment" >
+        android:label="CommercialEventsFragment"
+        tools:layout="@layout/fragment_commercial_events">
         <action
             android:id="@+id/action_commercialEventsFragment_to_profileFragment3"
             app:destination="@id/profileFragment3" />
+        <action
+            android:id="@+id/action_commercialEventsFragment_to_nav_com_event_detail"
+            app:destination="@id/nav_com_event_detail" />
+        <action
+            android:id="@+id/action_commercialEventsFragment_to_nav_search"
+            app:destination="@id/nav_search" />
     </fragment>
+    <include app:graph="@navigation/nav_com_event_detail" />
+    <include app:graph="@navigation/nav_search" />
     <fragment
         android:id="@+id/profileFragment3"
-        tools:layout="@layout/fragment_profile"
         android:name="com.ibri.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

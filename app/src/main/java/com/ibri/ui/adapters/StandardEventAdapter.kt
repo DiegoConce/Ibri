@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.ibri.R
 import com.ibri.databinding.ItemStandardEventBinding
 import com.ibri.model.events.StandardEvent
-import com.ibri.ui.event.SelectedEventListener
 import com.ibri.utils.GET_MEDIA_ENDPOINT
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,16 +16,19 @@ import kotlin.collections.ArrayList
 
 class StandardEventAdapter(
     private val context: Context,
-    private val listener: SelectedEventListener
+    private val listener: EventsOnClickListener
 ) :
     RecyclerView.Adapter<StandardEventAdapter.StandardEventViewHolder>() {
 
     private val standardEventList = ArrayList<StandardEvent>()
+    private val unfilteredList = ArrayList<StandardEvent>()
     private var isProfileLayout = false
 
     fun setData(list: List<StandardEvent>) {
         standardEventList.clear()
         standardEventList.addAll(list)
+        unfilteredList.clear()
+        unfilteredList.addAll(list)
         notifyItemRangeChanged(0, standardEventList.size)
     }
 
@@ -110,6 +112,27 @@ class StandardEventAdapter(
 
     fun setProfileLayout() {
         isProfileLayout = true
+    }
+
+    fun filter(s: String) {
+        var query = s
+        standardEventList.clear()
+        if (query.isEmpty()) {
+            standardEventList.addAll(unfilteredList)
+        } else {
+            query = query.lowercase()
+            for (item in unfilteredList) {
+                val fullName = item.creator.name + item.creator.surname
+
+                if (item.title.lowercase().contains(query) || fullName.lowercase()
+                        .contains(query)
+                ) {
+                    standardEventList.add(item)
+                }
+            }
+        }
+
+        notifyDataSetChanged()
     }
 
 }

@@ -23,9 +23,14 @@
         <action
             android:id="@+id/action_standardEventsFragment_to_nav_stand_event2"
             app:destination="@id/nav_stand_event" />
+        <action
+            android:id="@+id/action_standardEventsFragment_to_nav_search"
+            app:destination="@id/nav_search" />
     </fragment>
 
     <include app:graph="@navigation/nav_stand_event_detail" />
+    <include app:graph="@navigation/nav_search" />
+
     <fragment
         android:id="@+id/profileFragment2"
         android:name="com.ibri.ui.profile.ProfileFragment"
