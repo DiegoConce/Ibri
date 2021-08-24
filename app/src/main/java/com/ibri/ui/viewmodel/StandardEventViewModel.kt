@@ -15,7 +15,6 @@ import kotlin.collections.ArrayList
 
 class StandardEventViewModel : ViewModel() {
     val eventList = MutableLiveData<ArrayList<StandardEvent>>()
-    val questionList = MutableLiveData<ArrayList<Question>>()
     val messagesList = MutableLiveData<ArrayList<Message>>()
     val selectedStandardEvent = MutableLiveData<StandardEvent>()
     val newStandEventResponse = MutableLiveData<String>()
@@ -25,7 +24,6 @@ class StandardEventViewModel : ViewModel() {
     var isMyEvent = MutableLiveData(false)
     var isSubcribed = MutableLiveData(false)
     var isPending = MutableLiveData(false)
-    val newQuestionResponse = MutableLiveData<String>()
 
 
     fun getStandardEvents() = StandardEventRepository.getStandardEvent(eventList)
@@ -106,13 +104,7 @@ class StandardEventViewModel : ViewModel() {
         )
     }
 
-    fun sendQuestion(question: String, eventId: String) {
-        QuestionAnswerRepository.MakeNewQuestion(newQuestionResponse, question, eventId)
-    }
 
-    fun getQuestions(eventId: String) {
-        QuestionAnswerRepository.getQna(questionList, eventId)
-    }
 
     fun editStandardEvent(
         description: String,

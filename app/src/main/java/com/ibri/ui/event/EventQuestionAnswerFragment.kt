@@ -13,15 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ibri.databinding.FragmentEventQuestionAnswerBinding
 import com.ibri.model.Question
 import com.ibri.ui.adapters.QnaAdapter
+import com.ibri.ui.viewmodel.QnAViewModel
 import com.ibri.ui.viewmodel.StandardEventViewModel
 
 class EventQuestionAnswerFragment : Fragment() {
 
-    private val viewModel: StandardEventViewModel by activityViewModels()
+    private val viewModel: QnAViewModel by activityViewModels()
     private lateinit var binding: FragmentEventQuestionAnswerBinding
     private lateinit var qnaAdapter: QnaAdapter
 
     private var inputQuestion = ""
+    private lateinit var eventId: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,10 +31,17 @@ class EventQuestionAnswerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEventQuestionAnswerBinding.inflate(inflater, container, false)
-        viewModel.getQuestions(viewModel.selectedStandardEvent.value?.id!!)
+        checkArguments()
         setObservableVM()
         setListeners()
         return binding.root
+    }
+
+    private fun checkArguments() {
+        if (arguments?.containsKey(EVENT_ID) == true) {
+            eventId = arguments?.getString(EVENT_ID)!!
+            viewModel.getQuestions(eventId)
+        }
     }
 
     private fun setObservableVM() {
@@ -60,7 +69,7 @@ class EventQuestionAnswerFragment : Fragment() {
         binding.qnaSendBtn.setOnClickListener {
             viewModel.sendQuestion(
                 inputQuestion,
-                viewModel.selectedStandardEvent.value?.id!!
+                eventId
             )
         }
 
@@ -90,6 +99,10 @@ class EventQuestionAnswerFragment : Fragment() {
         qnaAdapter.setData(it)
         binding.qnaRecycler.adapter = qnaAdapter
         binding.qnaRecycler.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    companion object {
+        val EVENT_ID = "EVENT_ID"
     }
 
 }

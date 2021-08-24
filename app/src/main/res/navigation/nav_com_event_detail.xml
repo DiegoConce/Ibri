@@ -9,5 +9,22 @@
         android:id="@+id/commercialEventDetailFragment"
         tools:layout="@layout/fragment_commercial_event_detail"
         android:name="com.ibri.ui.event.commercial.CommercialEventDetailFragment"
-        android:label="CommercialEventDetailFragment" />
+        android:label="CommercialEventDetailFragment" >
+        <action
+            android:id="@+id/action_commercialEventDetailFragment_to_profileFragment7"
+            app:destination="@id/profileFragment7" />
+        <action
+            android:id="@+id/action_commercialEventDetailFragment_to_eventQuestionAnswerFragment"
+            app:destination="@id/eventQuestionAnswerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment7"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.ibri.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        tools:layout="@layout/fragment_event_question_answer"
+        android:id="@+id/eventQuestionAnswerFragment"
+        android:name="com.ibri.ui.event.EventQuestionAnswerFragment"
+        android:label="EventQuestionAnswerFragment" />
 </navigation>

@@ -31,6 +31,7 @@ import com.ibri.model.events.StandardEvent
 import com.ibri.ui.activity.EditStandardEventActivity
 import com.ibri.ui.adapters.UserAdapter
 import com.ibri.ui.adapters.UserOnClickListener
+import com.ibri.ui.event.EventQuestionAnswerFragment
 import com.ibri.ui.profile.ProfileFragment
 import com.ibri.ui.viewmodel.StandardEventViewModel
 import com.ibri.utils.GET_MEDIA_ENDPOINT
@@ -139,7 +140,12 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
             )
         }
         binding.standEventQnaButton.setOnClickListener {
-            findNavController().navigate(StandardEventDetailFragmentDirections.actionStandardEventDetailFragmentToEventQuestionAnswerFragment2())
+            val bundle = Bundle()
+            bundle.putString(EventQuestionAnswerFragment.EVENT_ID, standEvent.id)
+            findNavController().navigate(
+                R.id.action_standardEventDetailFragment_to_eventQuestionAnswerFragment2,
+                bundle
+            )
         }
         binding.standEventCreatorButton.setOnClickListener {
             val bundle = Bundle()
