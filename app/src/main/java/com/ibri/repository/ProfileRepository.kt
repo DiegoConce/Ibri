@@ -11,6 +11,7 @@ import com.ibri.MainApplication
 import com.ibri.model.LoginResponse
 import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
+import com.ibri.model.events.SubscribedEventResponse
 import com.ibri.utils.BASE_URL
 import com.ibri.utils.LOG_TEST
 
@@ -18,11 +19,12 @@ class ProfileRepository {
 
     companion object {
         private val ACCOUNT_ENDPOINT = Uri.parse("${BASE_URL}/account/get")
+        private val SUBSCRIBED_EVENTS_BY_USER_ENDPOINT =
+            Uri.parse("${BASE_URL}/event/get/user/subscribed")
         private val COMMERCIAL_EVENTS_BY_USER_ENDPOINT = Uri.parse("${BASE_URL}/event/get/company")
         private val EVENTS_BY_USER_ENDPOINT = Uri.parse("${BASE_URL}/event/get/user")
         private val COMPANY_EDIT_ENDPOINT = Uri.parse("${BASE_URL}/company/profile/edit")
         private val USER_EDIT_ENDPOINT = Uri.parse("${BASE_URL}/user/profile/edit")
-
         private val volley = Volley.newRequestQueue(MainApplication.applicationContext())
 
 
@@ -74,6 +76,26 @@ class ProfileRepository {
                     .build().toString(),
                 { result ->
                     val a = Gson().fromJson(result, Array<CommercialEvent>::class.java)
+                        .toCollection(ArrayList())
+                    mutableMediaList.postValue(a)
+                },
+                {
+
+                }
+            )
+            volley.add(req)
+        }
+
+        fun getSubscribedEvents(
+            mutableMediaList: MutableLiveData<ArrayList<SubscribedEventResponse>>,
+            userId: String
+        ) {
+            val req = StringRequest(
+                Request.Method.GET,
+                SUBSCRIBED_EVENTS_BY_USER_ENDPOINT.buildUpon().appendQueryParameter("id", userId)
+                    .build().toString(),
+                { result ->
+                    val a = Gson().fromJson(result, Array<SubscribedEventResponse>::class.java)
                         .toCollection(ArrayList())
                     mutableMediaList.postValue(a)
                 },

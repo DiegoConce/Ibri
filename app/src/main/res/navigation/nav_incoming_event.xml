@@ -5,9 +5,28 @@
     android:id="@+id/incomingEvents"
     app:startDestination="@id/incomingEventsFragment">
 
+
+    <include app:graph="@navigation/nav_stand_event_detail" />
+    <include app:graph="@navigation/nav_com_event_detail" />
+
     <fragment
         android:id="@+id/incomingEventsFragment"
         tools:layout="@layout/fragment_incoming_events"
         android:name="com.ibri.ui.event.IncomingEventsFragment"
-        android:label="IncomingEventsFragment" />
+        android:label="IncomingEventsFragment" >
+        <action
+            android:id="@+id/action_incomingEventsFragment_to_nav_com_event_detail"
+            app:destination="@id/nav_com_event_detail" />
+        <action
+            android:id="@+id/action_incomingEventsFragment_to_nav_stand_event"
+            app:destination="@id/nav_stand_event" />
+        <action
+            android:id="@+id/action_incomingEventsFragment_to_profileFragment6"
+            app:destination="@id/profileFragment6" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment6"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.ibri.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>
