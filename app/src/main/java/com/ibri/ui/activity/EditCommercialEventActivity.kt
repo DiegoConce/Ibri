@@ -27,10 +27,10 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.gson.Gson
 import com.ibri.R
-import com.ibri.databinding.ActivityEditStandardEventBinding
+import com.ibri.databinding.ActivityEditCommercialEventBinding
 import com.ibri.model.Media
-import com.ibri.model.events.StandardEvent
-import com.ibri.ui.viewmodel.StandardEventViewModel
+import com.ibri.model.events.CommercialEvent
+import com.ibri.ui.viewmodel.CommercialEventViewModel
 import com.ibri.utils.DataPart
 import com.ibri.utils.GET_MEDIA_ENDPOINT
 import com.ibri.utils.UPLOAD_MEDIA_ENDPOINT
@@ -42,11 +42,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class EditStandardEventActivity : AppCompatActivity() {
+class EditCommercialEventActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityEditStandardEventBinding
-    private val viewModel: StandardEventViewModel by viewModels()
-    private lateinit var standEvent: StandardEvent
+    private lateinit var binding: ActivityEditCommercialEventBinding
+    private val viewModel: CommercialEventViewModel by viewModels()
+    private lateinit var comEvent: CommercialEvent
     private lateinit var volley: RequestQueue
 
     private var calendar: Calendar = Calendar.getInstance()
@@ -57,20 +57,20 @@ class EditStandardEventActivity : AppCompatActivity() {
     private lateinit var selectedMedia: String
     private lateinit var eventDay: Date
     private var maxSubscribers: Int = 0
+    private var maxRooms: Int = 0
     private lateinit var lat: String
     private lateinit var lon: String
     private lateinit var address: String
     private lateinit var city: String
     private var eventHour: Int = 0
     private var eventMinute: Int = 0
-    private var isPrivate = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEditStandardEventBinding.inflate(layoutInflater)
+        binding = ActivityEditCommercialEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
         volley = Volley.newRequestQueue(this)
-        standEvent = intent.getParcelableExtra(EDIT_STAND_EVENT)!!
+        comEvent = intent.getParcelableExtra(EDIT_COM_EVENT)!!
 
         prepareStage()
         setObservableVM()
@@ -78,16 +78,16 @@ class EditStandardEventActivity : AppCompatActivity() {
     }
 
     private fun setObservableVM() {
-        viewModel.deleteStandEventResponse.value = ""
-        viewModel.deleteStandEventResponse.observe(this) {
+        viewModel.deleteComEventResponse.value = ""
+        viewModel.deleteComEventResponse.observe(this) {
             if (it == "ok") {
                 setResult(RESULT_CANCELED, intent)
                 finish()
             }
         }
 
-        viewModel.editStandEventResponse.value = ""
-        viewModel.editStandEventResponse.observe(this) {
+        viewModel.editComEventResponse.value = ""
+        viewModel.editComEventResponse.observe(this) {
             if (it == "ok") {
                 setResult(RESULT_OK, intent)
                 finish()
@@ -96,82 +96,64 @@ class EditStandardEventActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.editStandBackButton.setOnClickListener { onBackPressed() }
-        binding.editStandSubmitButton.setOnClickListener { checkDataAndCommit() }
-        binding.editStandDeleteLayout.setOnClickListener { deleteEvent() }
-        binding.editStandPlaceLayout.setOnClickListener { pickLocation() }
-        binding.editStandDateLayout.setOnClickListener { pickDate() }
-        binding.editStandTimeLayout.setOnClickListener { pickTime() }
-        binding.editStandSubscribersLayout.setOnClickListener { pickMaxSubscribers() }
-        binding.editStandAddImage.setOnClickListener { pickImage() }
+        binding.editComBackButton.setOnClickListener { onBackPressed() }
+        binding.editComSubmitButton.setOnClickListener { checkDataAndCommit() }
+        binding.editComDeleteLayout.setOnClickListener { deleteEvent() }
+        binding.editComAddImage.setOnClickListener { pickImage() }
+        binding.editComPlaceLayout.setOnClickListener { pickLocation() }
+        binding.editComDateLayout.setOnClickListener { pickDate() }
+        binding.editComTimeLayout.setOnClickListener { pickTime() }
+        binding.editComSubscribersLayout.setOnClickListener { pickMaxSubscribers() }
+        binding.editComMaxRoomsLayout.setOnClickListener { pickMaxRooms() }
 
-        binding.editStandDescriptionInput.doOnTextChanged { text, start, before, count ->
+        binding.editComInputDescription.doOnTextChanged { text, start, before, count ->
             description = text.toString()
-        }
-
-        binding.toggleButtons.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.edit_stand_public_button -> isPrivate = false
-                    R.id.edit_stand_private_button -> isPrivate = true
-                }
-            }
         }
     }
 
     private fun prepareStage() {
-        calendar.time = standEvent.eventDay
-        binding.itemStandardEvent.standEventCreator.text = standEvent.creator.name
-        binding.itemStandardEvent.standEventTitle.text = standEvent.title
-        binding.itemStandardEvent.standEventLocation.text = standEvent.city
-        binding.itemStandardEvent.standEventMembers.text =
-            "${standEvent.guests} / ${standEvent.maxGuests}"
-        binding.itemStandardEvent.standEventDay.text =
-            calendar.get(Calendar.DAY_OF_MONTH).toString()
-        binding.itemStandardEvent.standEventMonth.text =
-            SimpleDateFormat("MMM", Locale.getDefault())
-                .format(calendar.time)
-
+        calendar.time = comEvent.eventDay
+        binding.itemComEvent.comEventCreator.text = comEvent.creator.name
+        binding.itemComEvent.comEventTitle.text = comEvent.title
+        binding.itemComEvent.comEventCity.text = comEvent.city
+        binding.itemComEvent.comEventLocation.text = comEvent.address
+        binding.itemComEvent.comEventMembers.text = "${comEvent.guests} / ${comEvent.maxGuests}"
+        binding.itemComEvent.comEventDay.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
+        binding.itemComEvent.comEventMonth.text = SimpleDateFormat("MMM", Locale.getDefault())
+            .format(calendar.time)
+        binding.itemComEvent.comEventRooms.text = "${comEvent.rooms.size} / ${comEvent.maxRooms}"
         showImages()
 
-        binding.editStandDescriptionInput.setText(standEvent.description)
-        binding.standEventPlace.text = standEvent.address
-        binding.eventMaxPersonSelected.text = "${standEvent.guests} / ${standEvent.maxGuests}"
-        binding.eventTimeSelected.text = hoursMinutesDateFormat.format(standEvent.eventDay)
+        binding.editComInputDescription.setText(comEvent.description)
+        binding.comEventPlace.text = comEvent.address
+        binding.eventMaxPersonSelected.text = "${comEvent.guests} / ${comEvent.maxGuests}"
+        binding.eventTimeSelected.text = hoursMinutesDateFormat.format(comEvent.eventDay)
+        maxSubscribers = comEvent.maxGuests
+        maxRooms = comEvent.maxRooms
 
-        maxSubscribers = standEvent.maxGuests
-        isPrivate = standEvent.private
-        if (isPrivate) {
-            binding.editStandPrivateButton.isChecked = true
-            binding.editStandPublicButton.isChecked = false
-        } else {
-            binding.editStandPublicButton.isChecked = true
-            binding.editStandPrivateButton.isChecked = false
-        }
     }
 
     private fun showImages() {
-        if (standEvent.media != null) {
-            val path = standEvent.media!!.url
+        if (comEvent.media != null) {
+            val path = comEvent.media!!.url
             val url = "$GET_MEDIA_ENDPOINT/$path"
             Glide.with(this)
                 .load(url)
                 .error(R.drawable.default_avatar)
-                .into(binding.itemStandardEvent.standEventImage)
+                .into(binding.itemComEvent.comEventImage)
         }
 
-        if (standEvent.creator.avatar != null) {
-            val path = standEvent.creator.avatar!!.url
+        if (comEvent.creator.avatar != null) {
+            val path = comEvent.creator.avatar!!.url
             val url = "$GET_MEDIA_ENDPOINT/$path"
             Glide.with(this)
                 .load(url)
                 .error(R.drawable.default_avatar)
-                .into(binding.itemStandardEvent.standEventCreatorAvatar)
+                .into(binding.itemComEvent.comEventCreatorAvatar)
         } else {
-            binding.itemStandardEvent.standEventCreatorAvatar.setImageResource(R.drawable.default_avatar)
+            binding.itemComEvent.comEventCreatorAvatar.setImageResource(R.drawable.default_avatar)
         }
     }
-
 
     private fun pickLocation() {
         val intent = Intent(this, MapActivity::class.java)
@@ -189,8 +171,8 @@ class EditStandardEventActivity : AppCompatActivity() {
             startSubscription = Date(dateRangePicker.selection?.first!!)
             eventDay = Date(dateRangePicker.selection?.second!!)
             calendar.time = eventDay
-            binding.itemStandardEvent.standEventDay.text = "${calendar.get(Calendar.DAY_OF_MONTH)}"
-            binding.itemStandardEvent.standEventMonth.text =
+            binding.itemComEvent.comEventDay.text = "${calendar.get(Calendar.DAY_OF_MONTH)}"
+            binding.itemComEvent.comEventMonth.text =
                 calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         }
         dateRangePicker.show(this.supportFragmentManager, dateRangePicker.toString())
@@ -226,9 +208,9 @@ class EditStandardEventActivity : AppCompatActivity() {
         builder.setMessage("Scegli il numero")
         builder.setPositiveButton("OK") { dialog, which ->
             maxSubscribers = numberPicker.value
-            binding.itemStandardEvent.standEventMembers.text =
-                "${standEvent.guests}/ ${maxSubscribers}"
-            binding.eventMaxPersonSelected.text = "${standEvent.guests}/ ${maxSubscribers}"
+            binding.itemComEvent.comEventMembers.text =
+                "${comEvent.guests}/ ${maxSubscribers}"
+            binding.eventMaxPersonSelected.text = "${comEvent.guests}/ ${maxSubscribers}"
         }
         builder.setNegativeButton("CANCEL") { dialog, _ ->
             dialog.dismiss()
@@ -236,34 +218,56 @@ class EditStandardEventActivity : AppCompatActivity() {
         builder.show()
     }
 
+    private fun pickMaxRooms() {
+        val numberPicker = NumberPicker(this)
+        numberPicker.maxValue = 500
+        numberPicker.minValue = 2
+        numberPicker.value = 5
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(numberPicker)
+        builder.setTitle(R.string.numero_massimo_di_persone)
+        builder.setMessage("Scegli il numero")
+        builder.setPositiveButton("OK") { dialog, which ->
+            maxRooms = numberPicker.value
+            binding.itemComEvent.comEventRooms.text = "0/${maxRooms}"
+            binding.eventMaxRoomsSelected.text = "0/${maxRooms}"
+        }
+        builder.setNegativeButton("CANCEL") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+
     private fun pickImage() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         launcherImagePickerActivity.launch(photoPickerIntent)
     }
 
-
     private fun checkDataAndCommit() {
+        //maxSubs maxRooms?
         if (!this::lat.isInitialized)
-            lat = standEvent.lat
+            lat = comEvent.lat
 
         if (!this::lon.isInitialized)
-            lon = standEvent.lon
+            lon = comEvent.lon
 
         if (!this::address.isInitialized)
-            address = standEvent.address
+            address = comEvent.address
 
         if (!this::city.isInitialized)
-            city = standEvent.city
+            city = comEvent.city
 
         if (!this::description.isInitialized)
-            description = standEvent.description
+            description = comEvent.description
 
         if (!this::eventDay.isInitialized)
-            eventDay = standEvent.eventDay
+            eventDay = comEvent.eventDay
 
         if (!this::startSubscription.isInitialized)
-            startSubscription = standEvent.startSubscription
+            startSubscription = comEvent.startSubscription
 
         if (!this::selectedMedia.isInitialized)
             selectedMedia = ""
@@ -272,18 +276,18 @@ class EditStandardEventActivity : AppCompatActivity() {
     }
 
     private fun commitData() {
-        viewModel.editStandardEvent(
+        viewModel.editCommercialEvent(
             description,
             simpleDateFormat.format(startSubscription),
             simpleDateFormat.format(eventDay),
             maxSubscribers,
+            maxRooms,
             lat,
             lon,
             address,
             city,
-            isPrivate,
             selectedMedia,
-            standEvent.id
+            comEvent.id
         )
     }
 
@@ -293,7 +297,7 @@ class EditStandardEventActivity : AppCompatActivity() {
             builder.setMessage(getString(R.string.sei_sicuro_di_voler_cancellare_questo_evento))
                 .setCancelable(false)
                 .setPositiveButton("SI") { _, _ ->
-                    viewModel.deleteStandardEvent(standEvent.id)
+                    viewModel.deleteCommercialEvent(comEvent.id)
                 }
                 .setNegativeButton("NO") { dialog, _ ->
                     dialog.dismiss()
@@ -315,7 +319,7 @@ class EditStandardEventActivity : AppCompatActivity() {
     }
 
     private fun isItPossibleToDelete(): Boolean {
-        return getDifferenceDays(Date(), standEvent.eventDay) >= 2
+        return getDifferenceDays(Date(), comEvent.eventDay) >= 2
     }
 
     private fun getDifferenceDays(today: Date, eDate: Date): Long {
@@ -323,23 +327,22 @@ class EditStandardEventActivity : AppCompatActivity() {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
     }
 
-
     private var launcherMapActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 if (it.data != null) {
-                    binding.itemStandardEvent.standEventLocation.text =
-                        it.data!!.getStringExtra(MapActivity.SELECTED_ADDRESS)
-
                     address = it.data!!.getStringExtra(MapActivity.SELECTED_ADDRESS).toString()
-                    binding.standEventPlace.text = address
+                    binding.comEventPlace.text = address
+                    binding.itemComEvent.comEventLocation.text = address
 
                     city = it.data!!.getStringExtra(MapActivity.SELECTED_CITY).toString()
+                    binding.itemComEvent.comEventCity.text = city
                     lat = it.data!!.getStringExtra(MapActivity.LOCATION_LAT).toString()
                     lon = it.data!!.getStringExtra(MapActivity.LOCATION_LON).toString()
                 }
             }
         }
+
 
     private val launcherImagePickerActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -372,7 +375,7 @@ class EditStandardEventActivity : AppCompatActivity() {
                         }
                     }
                     volley.add(req)
-                    binding.itemStandardEvent.standEventImage.setImageBitmap(selectedImage)
+                    binding.itemComEvent.comEventImage.setImageBitmap(selectedImage)
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show()
@@ -401,6 +404,7 @@ class EditStandardEventActivity : AppCompatActivity() {
         return byteArrayOutputStream.toByteArray()
     }
 
+
     fun getFileName(uri: Uri): String? {
         var result: String? = null
         if (uri.scheme == "content") {
@@ -424,6 +428,6 @@ class EditStandardEventActivity : AppCompatActivity() {
     }
 
     companion object {
-        val EDIT_STAND_EVENT = "EDIT_STAND_EVENT"
+        val EDIT_COM_EVENT = "EDIT_COM_EVENT"
     }
 }

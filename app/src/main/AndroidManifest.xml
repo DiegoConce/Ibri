@@ -17,6 +17,12 @@
         android:theme="@style/Theme.Ibri"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.NewRoomActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activity.EditCommercialEventActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activity.EditStandardEventActivity"
             android:exported="true" />
 

@@ -18,7 +18,9 @@ class CommercialEventRepository {
         private val COMMERCIAL_POSITION_EVENTS_ENDPOINT =
             Uri.parse("${BASE_URL}/event/commercial/all/position")
         private val NEW_COMMERCIAL_EVENT_ENDPOINT = Uri.parse("${BASE_URL}/event/commercial/new")
-        private val GET_COMMERCIAL_EVENT_ENDPOINT = Uri.parse("${BASE_URL}/event/commercial/get/id")
+        private val UPDATE_COMMERCIAL_EVENT_ENDPOINT =
+            Uri.parse("${BASE_URL}/event/commercial/update")
+        private val GET_COMMERCIAL_EVENT_ENDPOINT = Uri.parse("${BASE_URL}/event/commercial/get")
         private val COMMERCIAL_EVENT_SUBSCRIBE_ENDPOINT =
             Uri.parse("${BASE_URL}/event/commercial/subscribe")
         private val COMMERCIAL_EVENT_UNSUBSCRIBE_ENDPOINT =
@@ -166,8 +168,46 @@ class CommercialEventRepository {
             volley.add(req)
         }
 
-        fun updateCommercialEvent() {
+        fun updateCommercialEvent(
+            mutableMedia: MutableLiveData<String>,
+            description: String,
+            startDate: String,
+            eventDate: String,
+            maxSubscribers: Int,
+            maxRooms: Int,
+            lat: String,
+            lon: String,
+            address: String,
+            city: String,
+            media: String?,
+            eventId: String
+        ) {
+            val req = object : StringRequest(
+                Method.POST, UPDATE_COMMERCIAL_EVENT_ENDPOINT.toString(),
+                { result ->
+                    mutableMedia.postValue(result)
+                },
+                {
 
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["description"] = description
+                    map["startDate"] = startDate
+                    map["eventDate"] = eventDate
+                    map["maxSubscribers"] = maxSubscribers.toString()
+                    map["maxRooms"] = maxRooms.toString()
+                    map["lat"] = lat
+                    map["lon"] = lon
+                    map["address"] = address
+                    map["city"] = city
+                    map["eventId"] = eventId
+                    map["media"] = media!!
+                    return map
+                }
+            }
+            volley.add(req)
         }
 
         fun deleteCommercialEvent(

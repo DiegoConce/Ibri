@@ -2,6 +2,7 @@ package com.ibri.ui.event.commercial
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -9,6 +10,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -24,6 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.ibri.R
 import com.ibri.databinding.FragmentCommercialEventDetailBinding
 import com.ibri.model.events.CommercialEvent
+import com.ibri.ui.activity.EditCommercialEventActivity
+import com.ibri.ui.activity.NewRoomActivity
 import com.ibri.ui.adapters.RoomAdapter
 import com.ibri.ui.adapters.UserAdapter
 import com.ibri.ui.adapters.UserOnClickListener
@@ -65,6 +70,27 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
         return binding.root
     }
 
+    private var launcherEditComEvent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                if (it.data != null) {
+                    viewModel.reloadEvent()
+                }
+            }
+            if (it.resultCode == Activity.RESULT_CANCELED) {
+                requireActivity().onBackPressed()
+            }
+        }
+
+    private var launcherNewRoomActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                if (it.data != null) {
+                    viewModel.reloadEvent()
+                }
+            }
+        }
+
     private fun setObservableVM() {
         viewModel.selectedCommercialEvent.observe(viewLifecycleOwner) {
             prepareStage(it)
@@ -79,12 +105,44 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
                 binding.comEventEditButton.visibility = View.GONE
             }
         }
+
+        viewModel.isSubcribed.observe(viewLifecycleOwner) {
+            if (viewModel.isMyEvent.value == true) {
+                binding.comEventSubscribeButton.visibility = View.GONE
+                binding.comEventEditButton.visibility = View.VISIBLE
+                return@observe
+            }
+            if (it) {
+                binding.comEventDetailNewRoom.alpha = 1F
+                binding.comEventDetailNewRoom.isFocusable = true
+                binding.comEventDetailNewRoom.isClickable = true
+                binding.comEventSubsButtonTextView.text = "- Lascia"
+            } else {
+                binding.comEventDetailNewRoom.alpha = 0.80F
+                binding.comEventDetailNewRoom.isFocusable = false
+                binding.comEventDetailNewRoom.isClickable = false
+                binding.comEventSubsButtonTextView.text = "+ Unisciti"
+            }
+        }
     }
 
     private fun setListeners() {
         binding.comEventDetailBackButton.setOnClickListener { requireActivity().onBackPressed() }
         binding.comEventDetailAddress.setOnClickListener { showPlaceInNavigation() }
+        binding.comEventSubscribeButton.setOnClickListener { subscribeToEvent() }
 
+        binding.comEventDetailNewRoom.setOnClickListener {
+            val intent = Intent(requireContext(), NewRoomActivity::class.java)
+                .putExtra(NewRoomActivity.EVENT_ID, comEvent.id)
+                .putExtra(NewRoomActivity.MAX_MEMBERS, comEvent.maxGuests)
+            launcherNewRoomActivity.launch(intent)
+        }
+
+        binding.comEventEditButton.setOnClickListener {
+            val intent = Intent(requireContext(), EditCommercialEventActivity::class.java)
+                .putExtra(EditCommercialEventActivity.EDIT_COM_EVENT, comEvent)
+            launcherEditComEvent.launch(intent)
+        }
         binding.comEventQnaButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(EventQuestionAnswerFragment.EVENT_ID, comEvent.id)
@@ -113,9 +171,10 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
         for (user in comEvent.subscribers!!) {
             if (user.id == myId) {
                 viewModel.isMyEvent.value = false
-                viewModel.isSubcribed.value = false
-            } else
                 viewModel.isSubcribed.value = true
+            } else {
+                viewModel.isSubcribed.value = false
+            }
         }
         viewModel.isMyEvent.value = myId == comEvent.creator.id
 
@@ -180,6 +239,15 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
         roomAdapter.setData(item.rooms)
         binding.roomRecyclerView.adapter = roomAdapter
         binding.roomRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun subscribeToEvent() {
+        val userId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
+
+        if (viewModel.isSubcribed.value == false)
+            viewModel.subscribeToCommercialEvent(userId, comEvent.id)
+        else
+            viewModel.cancelSubscription(userId, comEvent.id)
     }
 
     private fun initMap() {

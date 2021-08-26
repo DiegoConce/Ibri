@@ -14,6 +14,7 @@ class CommercialEventViewModel : ViewModel() {
     val selectedCommercialEvent = MutableLiveData<CommercialEvent>()
     val newComEventResponse = MutableLiveData<String>()
     val deleteComEventResponse = MutableLiveData<String>()
+    val editComEventResponse = MutableLiveData<String>()
     var isMyEvent = MutableLiveData(false)
     var isSubcribed = MutableLiveData(false)
 
@@ -88,16 +89,33 @@ class CommercialEventViewModel : ViewModel() {
         )
     }
 
-    fun sendQuestion() {
-
-    }
-
-    fun getQuestions() {
-
-    }
-
-    fun editCommercialEvent() {
-
+    fun editCommercialEvent(
+        description: String,
+        startDate: String,
+        eventDate: String,
+        maxSubscribers: Int,
+        maxRooms: Int,
+        lat: String,
+        lon: String,
+        address: String,
+        city: String,
+        media: String?,
+        eventId: String
+    ) {
+        CommercialEventRepository.updateCommercialEvent(
+            editComEventResponse,
+            description,
+            startDate,
+            eventDate,
+            maxSubscribers,
+            maxRooms,
+            lat,
+            lon,
+            address,
+            city,
+            media,
+            eventId
+        )
     }
 
     fun deleteCommercialEvent(eventId: String) {
