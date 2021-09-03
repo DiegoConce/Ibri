@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_commercialEventDetailFragment_to_eventQuestionAnswerFragment"
             app:destination="@id/eventQuestionAnswerFragment" />
+        <action
+            android:id="@+id/action_commercialEventDetailFragment_to_roomFragment"
+            app:destination="@id/roomFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment7"
@@ -27,4 +30,25 @@
         android:id="@+id/eventQuestionAnswerFragment"
         android:name="com.ibri.ui.event.EventQuestionAnswerFragment"
         android:label="EventQuestionAnswerFragment" />
+    <fragment
+        android:id="@+id/roomFragment"
+        tools:layout="@layout/fragment_room"
+        android:name="com.ibri.ui.event.commercial.RoomFragment"
+        android:label="RoomFragment" >
+        <action
+            android:id="@+id/action_roomFragment_to_profileFragment7"
+            app:destination="@id/profileFragment7" />
+        <action
+            android:id="@+id/action_roomFragment_to_roomDetailFragment"
+            app:destination="@id/roomDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomDetailFragment"
+        tools:layout="@layout/fragment_room_detail"
+        android:name="com.ibri.ui.event.commercial.RoomDetailFragment"
+        android:label="RoomDetailFragment" >
+        <action
+            android:id="@+id/action_roomDetailFragment_to_profileFragment7"
+            app:destination="@id/profileFragment7" />
+    </fragment>
 </navigation>

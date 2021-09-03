@@ -27,20 +27,24 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.ibri.R
 import com.ibri.databinding.FragmentCommercialEventDetailBinding
 import com.ibri.model.events.CommercialEvent
+import com.ibri.model.messaging.Room
 import com.ibri.ui.activity.EditCommercialEventActivity
 import com.ibri.ui.activity.NewRoomActivity
 import com.ibri.ui.adapters.RoomAdapter
+import com.ibri.ui.adapters.RoomOnClickListener
 import com.ibri.ui.adapters.UserAdapter
 import com.ibri.ui.adapters.UserOnClickListener
 import com.ibri.ui.event.EventQuestionAnswerFragment
 import com.ibri.ui.profile.ProfileFragment
 import com.ibri.ui.viewmodel.CommercialEventViewModel
+import com.ibri.ui.viewmodel.RoomViewModel
 import com.ibri.utils.GET_MEDIA_ENDPOINT
 import com.ibri.utils.PreferenceManager
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickListener {
+class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickListener,
+    RoomOnClickListener {
 
     private lateinit var binding: FragmentCommercialEventDetailBinding
     private lateinit var pref: SharedPreferences
@@ -48,6 +52,7 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
     private lateinit var userAdapter: UserAdapter
     private lateinit var mMap: GoogleMap
     private val viewModel: CommercialEventViewModel by activityViewModels()
+    private val roomViewModel: RoomViewModel by activityViewModels()
 
     private var topBarAnimationFinished: Boolean = true
     private var topBarHidden: Boolean = false
@@ -230,7 +235,7 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
     }
 
     private fun setRoomsRecyclerView(item: CommercialEvent) {
-        roomAdapter = RoomAdapter(requireContext())
+        roomAdapter = RoomAdapter(requireContext(),this)
         if (item.rooms.isNullOrEmpty())
             binding.comNoRoomsTextView.visibility = View.VISIBLE
         else
@@ -353,6 +358,11 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
             R.id.action_commercialEventDetailFragment_to_profileFragment7,
             bundle
         )
+    }
+
+    override fun onRoomClicked(item: Room) {
+        roomViewModel.selectedRoom.value = item
+        findNavController().navigate(CommercialEventDetailFragmentDirections.actionCommercialEventDetailFragmentToRoomFragment())
     }
 
 }

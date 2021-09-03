@@ -50,21 +50,28 @@ class RoomRepository {
             volley.add(req)
         }
 
-        fun enterRoom(mutableMedia: MutableLiveData<Room>, userId: String, roomId: String) {
-            val req = StringRequest(
-                Request.Method.GET, ENTER_ROOM_ENDPOINT.buildUpon()
-                    .appendQueryParameter("user", userId)
-                    .appendQueryParameter("room", roomId)
-                    .build().toString(),
+        fun enterRoom(
+            mutableMedia: MutableLiveData<Room>,
+            userId: String,
+            roomId: String
+        ) {
+            val req = object : StringRequest(
+                Method.POST, ENTER_ROOM_ENDPOINT.toString(),
                 { result ->
-                    //forse deve tornare "ok"
                     val a = Gson().fromJson(result, Room::class.java)
                     mutableMedia.postValue(a)
                 },
                 {
 
                 }
-            )
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["userId"] = userId
+                    map["roomId"] = roomId
+                    return map
+                }
+            }
             volley.add(req)
         }
 

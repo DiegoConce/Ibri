@@ -10,7 +10,10 @@ import com.ibri.databinding.ItemRoomBinding
 import com.ibri.model.messaging.Room
 import com.ibri.utils.GET_MEDIA_ENDPOINT
 
-class RoomAdapter(private val context: Context) :
+class RoomAdapter(
+    private val context: Context,
+    private val listener: RoomOnClickListener
+) :
     RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
 
     private val roomList = ArrayList<Room>()
@@ -48,6 +51,8 @@ class RoomAdapter(private val context: Context) :
         } else {
             holder.binding.itemRoomAvatar.setImageResource(R.drawable.default_avatar)
         }
+
+        holder.binding.roomCard.setOnClickListener { listener.onRoomClicked(item) }
     }
 
     override fun getItemCount(): Int {

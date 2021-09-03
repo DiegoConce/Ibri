@@ -62,5 +62,31 @@ class ChatRepository {
             }
             volley.add(req)
         }
+
+        fun sendCommercialMessage(
+            mutableMedia: MutableLiveData<String>,
+            chatId: String,
+            message: String,
+            sender: String,
+        ) {
+            val req = object : StringRequest(
+                Method.POST, CHAT_SEND_COMMERCIAL_MESSAGE_ENDPOINT.toString(),
+                { result ->
+                    mutableMedia.postValue(result)
+                },
+                {
+
+                }
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["chat"] = chatId
+                    map["message"] = message
+                    map["sender"] = sender
+                    return map
+                }
+            }
+            volley.add(req)
+        }
     }
 }
