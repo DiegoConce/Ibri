@@ -2,14 +2,18 @@ package com.ibri.repository
 
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.bumptech.glide.util.Util
 import com.google.gson.Gson
 import com.ibri.MainApplication
 import com.ibri.model.events.StandardEvent
 import com.ibri.utils.BASE_URL
+import com.ibri.utils.LOG_TEST
+import com.ibri.utils.Utils
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -41,8 +45,8 @@ class StandardEventRepository {
                         .toCollection(ArrayList())
                     mutableMediaList.postValue(a)
                 },
-                {
-
+                { throwable ->
+                    Log.wtf(LOG_TEST, "Volley error : ${throwable}")
                 }
             )
             volley.add(req)
@@ -66,7 +70,7 @@ class StandardEventRepository {
                     mutableMediaList.postValue(a)
                 },
                 {
-
+                    Log.wtf(LOG_TEST, "Volley error : ${it}")
                 }
             )
             volley.add(req)

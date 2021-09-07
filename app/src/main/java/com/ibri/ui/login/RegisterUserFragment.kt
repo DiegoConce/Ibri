@@ -18,7 +18,7 @@ import com.ibri.utils.DataPreloader
 import java.util.*
 
 //Da mettere conferma pass
-class RegisterUser : Fragment() {
+class RegisterUserFragment : Fragment() {
     private lateinit var binding: FragmentRegisterUserBinding
     private val viewModel: LoginViewModel by activityViewModels()
 

@@ -14,7 +14,7 @@ import com.ibri.databinding.FragmentLoginBinding
 import com.ibri.utils.DataPreloader
 import com.ibri.utils.LOG_TEST
 
-class Login : Fragment() {
+class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by activityViewModels()
 
@@ -47,7 +47,7 @@ class Login : Fragment() {
 
         viewModel.loginSuccess.observe(viewLifecycleOwner) {
             if (it)
-                findNavController().navigate(R.id.action_login_to_bottomNavFragment)
+                findNavController().navigate(LoginFragmentDirections.actionLoginToBottomNavFragment())
             else {
                 binding.loginEmailField.error = "Controlla se hai inserito una email valida"
                 binding.loginPasswordField.error = "Controlla se hai inserito una password valida"

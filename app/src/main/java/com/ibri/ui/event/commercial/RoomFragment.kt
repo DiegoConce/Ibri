@@ -37,6 +37,7 @@ class RoomFragment : Fragment(), UserOnClickListener {
     private lateinit var roomId: String
     private lateinit var chatId: String
     private lateinit var message: String
+    private lateinit var popupMenu: PopupMenu
 
     private val updateMessages = object : Runnable {
         override fun run() {
@@ -56,6 +57,7 @@ class RoomFragment : Fragment(), UserOnClickListener {
         mainHandler = Handler(Looper.getMainLooper())
         pref = PreferenceManager.getSharedPreferences(requireContext())
         userId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
+        popupMenu = PopupMenu(requireContext(), binding.roomMenu)
 
         setObservableVM()
         setListeners()
@@ -114,13 +116,6 @@ class RoomFragment : Fragment(), UserOnClickListener {
     }
 
     private fun setListeners() {
-        val popupMenu = PopupMenu(requireContext(), binding.roomMenu)
-        if (viewModel.isUserSubscribed.value == true)
-            popupMenu.menu.add("Abbandona Stanza").setOnMenuItemClickListener { leaveRoom() }
-
-        if (viewModel.isCreator.value == true || viewModel.isOwner.value == true)
-            popupMenu.menu.add("Elimina Stanza").setOnMenuItemClickListener { deleteRoom() }
-
         binding.roomMenu.setOnClickListener { popupMenu.show() }
         binding.roomBackBtn.setOnClickListener { goBack() }
         binding.roomEnterBtn.setOnClickListener { enterRoom() }
@@ -129,7 +124,7 @@ class RoomFragment : Fragment(), UserOnClickListener {
         }
 
         binding.roomChatSentMessageBtn.setOnClickListener {
-            if (!message.isEmpty()) {
+            if (message.isNotEmpty()) {
                 if (viewModel.isOwner.value == true)
                     viewModel.sendCommercialMessage(chatId, message, userId)
                 else
@@ -187,6 +182,12 @@ class RoomFragment : Fragment(), UserOnClickListener {
             viewModel.isUserSubscribed.value = user.id == userId
         }
 
+        if (viewModel.isUserSubscribed.value == true)
+            popupMenu.menu.add("Abbandona Stanza").setOnMenuItemClickListener { leaveRoom() }
+
+        if (viewModel.isCreator.value == true || viewModel.isOwner.value == true)
+            popupMenu.menu.add("Elimina Stanza").setOnMenuItemClickListener { deleteRoom() }
+
         Log.wtf(LOG_TEST, "isCreator ${viewModel.isCreator.value}")
         Log.wtf(LOG_TEST, "isOwner ${viewModel.isOwner.value}")
         Log.wtf(LOG_TEST, "isUserSubscribed ${viewModel.isUserSubscribed.value}")
@@ -195,7 +196,6 @@ class RoomFragment : Fragment(), UserOnClickListener {
 
     private fun enterRoom() {
         viewModel.enterRoom(userId, roomId)
-       // viewModel.isUserSubscribed.value = true
     }
 
     private fun leaveRoom(): Boolean {

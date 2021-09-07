@@ -52,6 +52,7 @@ class RoomRepository {
 
         fun enterRoom(
             mutableMedia: MutableLiveData<Room>,
+            isUserSubcribed: MutableLiveData<Boolean>,
             userId: String,
             roomId: String
         ) {
@@ -60,6 +61,7 @@ class RoomRepository {
                 { result ->
                     val a = Gson().fromJson(result, Room::class.java)
                     mutableMedia.postValue(a)
+                    isUserSubcribed.value = true
                 },
                 {
 
@@ -75,19 +77,27 @@ class RoomRepository {
             volley.add(req)
         }
 
-        fun leaveRoom(mutableMedia: MutableLiveData<String>, userId: String, roomId: String) {
-            val req = StringRequest(
-                Request.Method.GET, LEAVE_ROOM_ENDPOINT.buildUpon()
-                    .appendQueryParameter("user", userId)
-                    .appendQueryParameter("room", roomId)
-                    .build().toString(),
+        fun leaveRoom(
+            mutableMedia: MutableLiveData<String>,
+            userId: String,
+            roomId: String
+        ) {
+            val req = object : StringRequest(
+                Method.POST, LEAVE_ROOM_ENDPOINT.toString(),
                 { result ->
                     mutableMedia.postValue(result)
                 },
                 {
 
                 }
-            )
+            ) {
+                override fun getParams(): MutableMap<String, String> {
+                    val map = HashMap<String, String>()
+                    map["userId"] = userId
+                    map["roomId"] = roomId
+                    return map
+                }
+            }
             volley.add(req)
         }
 

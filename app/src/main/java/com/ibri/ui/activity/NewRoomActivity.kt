@@ -33,7 +33,8 @@ import com.ibri.utils.VolleyMultipartRequest
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
-import java.util.HashMap
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NewRoomActivity : AppCompatActivity() {
 
@@ -61,6 +62,7 @@ class NewRoomActivity : AppCompatActivity() {
 
         setObservableVM()
         setListeners()
+        prepareStage()
     }
 
     private fun setObservableVM() {
@@ -81,11 +83,29 @@ class NewRoomActivity : AppCompatActivity() {
 
         binding.inputNewRoomTitle.doOnTextChanged { text, start, before, count ->
             name = text.toString()
+            if (count == 0)
+                binding.roomDetailsTitle.text = "Titolo Stanza"
+            else
+                binding.roomDetailsTitle.text = name
         }
 
         binding.inputNewRoomDescription.doOnTextChanged { text, start, before, count ->
             description = text.toString()
+            if (count == 0)
+                binding.roomDetailsDescription2.text = "Titolo Stanza"
+            else
+                binding.roomDetailsDescription2.text = description
         }
+    }
+
+    private fun prepareStage() {
+        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        val now = Date()
+        val userName = pref.getString(PreferenceManager.ACCOUNT_NAME, "") + " " +
+                pref.getString(PreferenceManager.USER_SURNAME, "")
+
+        binding.roomDetailsCreator.text = userName
+        binding.roomDetailsCreationDate.text = simpleDateFormat.format(now)
     }
 
     private fun checkDataAndCommit() {

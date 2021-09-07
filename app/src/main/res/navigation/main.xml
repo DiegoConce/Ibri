@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/login"
         tools:layout="@layout/fragment_login"
-        android:name="com.ibri.ui.login.Login"
+        android:name="com.ibri.ui.login.LoginFragment"
         android:label="Login" >
         <action
             android:id="@+id/action_login_to_registerUser"
@@ -46,7 +46,7 @@
     <fragment
         tools:layout="@layout/fragment_register_user"
         android:id="@+id/registerUser"
-        android:name="com.ibri.ui.login.RegisterUser"
+        android:name="com.ibri.ui.login.RegisterUserFragment"
         android:label="RegisterUser" >
         <action
             android:id="@+id/action_registerUser_to_registerCompany"
@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/registerCompany"
         tools:layout="@layout/fragment_register_company"
-        android:name="com.ibri.ui.login.RegisterCompany"
+        android:name="com.ibri.ui.login.RegisterCompanyFragment"
         android:label="RegisterCompany" >
         <action
             android:id="@+id/action_registerCompany_to_bottomNavFragment"

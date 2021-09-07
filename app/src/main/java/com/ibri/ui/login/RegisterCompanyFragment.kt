@@ -15,7 +15,7 @@ import com.ibri.utils.DataPreloader
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class RegisterCompany : Fragment() {
+class RegisterCompanyFragment : Fragment() {
     private lateinit var binding: FragmentRegisterCompanyBinding
     private val viewModel: LoginViewModel by activityViewModels()
 

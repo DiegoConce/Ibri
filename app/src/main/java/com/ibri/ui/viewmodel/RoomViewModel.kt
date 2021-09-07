@@ -42,7 +42,7 @@ class RoomViewModel : ViewModel() {
 
     fun enterRoom(userId: String, roomId: String) {
         selectedRoom.value?.let {
-            RoomRepository.enterRoom(selectedRoom, userId, roomId)
+            RoomRepository.enterRoom(selectedRoom, isUserSubscribed, userId, roomId)
         }
     }
 
