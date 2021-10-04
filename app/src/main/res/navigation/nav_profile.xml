@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_profileFragment_to_nav_com_event_detail"
             app:destination="@id/nav_com_event_detail" />
+        <action
+            android:id="@+id/action_profileFragment_to_achievementsFragment"
+            app:destination="@id/achievementsFragment" />
     </fragment>
 
     <include app:graph="@navigation/nav_stand_event_detail" />
@@ -37,4 +40,9 @@
         tools:layout="@layout/fragment_notification_centre"
         android:name="com.ibri.ui.profile.NotificationCentreFragment"
         android:label="NotificationCentreFragment" />
+    <fragment
+        android:id="@+id/achievementsFragment"
+        tools:layout="@layout/fragment_achievements"
+        android:name="com.ibri.ui.profile.AchievementsFragment"
+        android:label="AchievementsFragment" />
 </navigation>

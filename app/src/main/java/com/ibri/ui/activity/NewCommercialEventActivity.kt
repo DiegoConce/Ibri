@@ -160,7 +160,7 @@ class NewCommercialEventActivity : AppCompatActivity() {
             (!this::selectedMedia.isInitialized) or
             (!this::tags.isInitialized)
         ) {
-            // binding.newEventError.visibility = View.VISIBLE anche stanze ecc
+            //binding.newEventError.visibility = View.VISIBLE anche stanze ecc
         } else {
             //   binding.newEventSubmitButton.visibility = View.GONE
             binding.newEventProgressBar.visibility = View.VISIBLE
@@ -171,6 +171,10 @@ class NewCommercialEventActivity : AppCompatActivity() {
     private fun commitData() {
         val userId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        startSubscription.hours = eventHour
+        startSubscription.minutes = eventMinute
+        eventDay.hours = eventHour
+        eventDay.minutes = eventMinute
 
         viewModel.createCommercialEvent(
             userId,

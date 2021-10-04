@@ -48,10 +48,24 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
 
     private fun setObservableVM() {
         viewModel.questionList.observe(viewLifecycleOwner) {
+//            if (binding.questionToggleButton.isChecked) {
+//                if (it.isNullOrEmpty())
+//                    binding.notificationNoItems.visibility = View.VISIBLE
+//                else {
+//                    binding.notificationNoItems.visibility = View.GONE
+//                }
+//            }
             notificationAdapter.setData(it)
         }
 
         viewModel.subscribeRequestsList.observe(viewLifecycleOwner) {
+//            if (binding.subRequestToggleButton.isChecked) {
+//                if (it.isNullOrEmpty())
+//                    binding.notificationNoItems.visibility = View.VISIBLE
+//                else {
+//                    binding.notificationNoItems.visibility = View.GONE
+//                }
+//            }
             subRequestAdapter.setData(it)
         }
 
@@ -67,8 +81,7 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
                 binding.notificationSwipeRefresh.isRefreshing = false
         }
 
-        binding.questionToggleButton.isChecked = true
-        prepareQuestionLayout()
+        // prepareQuestionLayout()
         binding.notificationToggleButtons.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
@@ -85,6 +98,8 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
         } else {
             binding.notificationToggleButtons.visibility = View.VISIBLE
         }
+        binding.questionToggleButton.isChecked = true
+        prepareQuestionLayout()
     }
 
     private fun prepareQuestionLayout() {

@@ -12,4 +12,11 @@
     <color name="red">#C10000</color>
     <color name="light_grey">#efefee</color>
 
+    <!-- palette -->
+    <color name="darkblue">#0E3854</color>
+    <color name="blue">#067EED</color>
+    <color name="orange">#FF7C1F</color>
+    <color name="lightblue">#73FFFF</color> <!-- #D9FFFF-->
+    <color name="grey_green">#f1faee</color>
+
 </resources>

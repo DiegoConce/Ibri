@@ -82,7 +82,8 @@ class StandardEventsFragment : Fragment(), EventsOnClickListener {
         binding.searchButton.setOnClickListener {
             searchViewModel.isStandardEvent.value = true
             searchViewModel.distanceInM.value = distanceInM
-            searchViewModel.location.value = location
+            if (this::location.isInitialized)
+                searchViewModel.location.value = location
             findNavController().navigate(
                 StandardEventsFragmentDirections.actionStandardEventsFragmentToNavSearch()
             )
@@ -129,7 +130,8 @@ class StandardEventsFragment : Fragment(), EventsOnClickListener {
     }
 
     private fun showPositionDialog() {
-        bindingDialog = ItemPositionSelectorBinding.inflate(LayoutInflater.from(context),null,false)
+        bindingDialog =
+            ItemPositionSelectorBinding.inflate(LayoutInflater.from(context), null, false)
 
         val distanceInKm = distanceInM / 1000
         bindingDialog.textViewKm.text = distanceInKm.toString() + "Km"

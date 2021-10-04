@@ -18,5 +18,5 @@ data class User(
     var numOfEvents: Int,
     var birthday: Date,
     var gender: Gender,
-    var deleted: Boolean
+    var deleted: Boolean,
 ) : Parcelable

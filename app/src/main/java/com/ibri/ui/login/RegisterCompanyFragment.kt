@@ -12,8 +12,6 @@ import com.ibri.R
 import com.ibri.databinding.FragmentRegisterCompanyBinding
 import com.ibri.model.Company
 import com.ibri.utils.DataPreloader
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class RegisterCompanyFragment : Fragment() {
     private lateinit var binding: FragmentRegisterCompanyBinding
@@ -25,7 +23,6 @@ class RegisterCompanyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegisterCompanyBinding.inflate(inflater, container, false)
-        viewModel.clearInputFields()
 
         setObservableVM()
         setListeners()
@@ -33,12 +30,11 @@ class RegisterCompanyFragment : Fragment() {
     }
 
     private fun setObservableVM() {
-        viewModel.registerCompanySuccess.observe(viewLifecycleOwner) {
+        viewModel.registerCompanyResponse.observe(viewLifecycleOwner) {
             if (it == "email occupata") {
                 binding.registerCompanyError.text = getString(R.string.email_gia_in_uso)
                 binding.registerCompanyError.visibility = View.VISIBLE
             } else {
-                val a = it
                 val gson = GsonBuilder().setDateFormat("MMM dd, yyyy, hh:mm:ss a").create()
                 val company = gson.fromJson(it, Company::class.java)
                 DataPreloader.registerCompany(company)
@@ -51,11 +47,12 @@ class RegisterCompanyFragment : Fragment() {
         binding.registerCompanyBackButton.setOnClickListener { requireActivity().onBackPressed() }
         binding.registerCompanySubmitBtn.setOnClickListener {
             if (checkValues()) {
-                viewModel.inputName = binding.registerCompanyName.text.toString()
-                viewModel.inputEmail = binding.registerCompanyEmail.text.toString()
-                viewModel.inputPiva = binding.registerCompanyPiva.text.toString()
-                viewModel.inputPassword = binding.registerCompanyPassword.text.toString()
-                viewModel.performRegisterCompany()
+                viewModel.performRegisterCompany(
+                    binding.registerCompanyName.text.toString(),
+                    binding.registerCompanyEmail.text.toString(),
+                    binding.registerCompanyPiva.text.toString(),
+                    binding.registerCompanyPassword.text.toString()
+                )
             }
         }
     }

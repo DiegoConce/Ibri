@@ -72,12 +72,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(p0: GoogleMap) {
         map = p0
         mapReady = true
 
         map.isMyLocationEnabled = true
         map.uiSettings.isCompassEnabled = false
+        map.uiSettings.isMyLocationButtonEnabled = false
         binding.selectedAddressTextView.visibility = View.GONE
 
         showMyPosition()
@@ -95,6 +97,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         map.setOnCameraMoveListener {
             binding.selectedAddressTextView.visibility = View.GONE
             binding.progressBar.visibility = View.VISIBLE
+        }
+
+        binding.mapPositionButton.setOnClickListener {
+            showMyPosition()
         }
     }
 
@@ -218,6 +224,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(point)
                     .title(title)
+                    .visible(false)
                     .icon(bitmapDescriptorFromVector(drawable))
             )
         }

@@ -1,19 +1,14 @@
 package com.ibri.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.ibri.model.Question
 import com.ibri.model.Tag
 import com.ibri.model.events.StandardEvent
 import com.ibri.model.messaging.Message
 import com.ibri.repository.ChatRepository
-import com.ibri.repository.QuestionAnswerRepository
 import com.ibri.repository.StandardEventRepository
-import com.ibri.utils.LOG_TEST
 import kotlin.collections.ArrayList
 
-class StandardEventViewModel : ViewModel() {
+class StandardEventViewModel : BaseViewModel() {
     val eventList = MutableLiveData<ArrayList<StandardEvent>>()
     val messagesList = MutableLiveData<ArrayList<Message>>()
     val selectedStandardEvent = MutableLiveData<StandardEvent>()
@@ -26,7 +21,7 @@ class StandardEventViewModel : ViewModel() {
     var isPending = MutableLiveData(false)
 
 
-    fun getStandardEvents() = StandardEventRepository.getStandardEvent(eventList)
+    fun getStandardEvents() = StandardEventRepository.getStandardEvent(eventList, ::funErrorGeneric)
 
     fun getStandEventByPosition(lat: String, lon: String, distanceInM: Int) {
         StandardEventRepository.getStandEventsByPosition(eventList, lat, lon, distanceInM)

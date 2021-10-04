@@ -1,5 +1,6 @@
 package com.ibri.ui.profile
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.android.volley.NetworkResponse
@@ -49,7 +51,6 @@ class ProfileSettingsFragment : Fragment() {
         binding = FragmentProfileSettingsBinding.inflate(inflater, container, false)
         pref = PreferenceManager.getSharedPreferences(requireContext())
         volley = Volley.newRequestQueue(requireContext())
-        viewModel.clearFields()
         restoreData()
         setObservableVM()
         setListeners()
@@ -59,15 +60,15 @@ class ProfileSettingsFragment : Fragment() {
     private fun setObservableVM() {
         viewModel.editUserResponse.observe(viewLifecycleOwner) {
             if (it == "success") {
-                Log.wtf(LOG_TEST,"Modifica effettuata con successo")
-                DataPreloader.loadPersonalInfo()
+                Log.wtf(LOG_TEST, "Modifica effettuata con successo")
+                DataPreloader.loadPersonalInfo() //mhhh
                 requireActivity().onBackPressed()
             }
         }
 
         viewModel.editCompanyResponse.observe(viewLifecycleOwner) {
             if (it == "success") {
-                Log.wtf(LOG_TEST,"Modifica effettuata con successo")
+                Log.wtf(LOG_TEST, "Modifica effettuata con successo")
                 DataPreloader.loadPersonalInfo()
                 requireActivity().onBackPressed()
             }
@@ -83,16 +84,22 @@ class ProfileSettingsFragment : Fragment() {
 
     private fun saveChanges() {
         if (pref.contains(PreferenceManager.ACCOUNT_ID)) {
-            val accountId = pref.getString(PreferenceManager.ACCOUNT_ID, "")
-            viewModel.inputName = binding.profileEditName.text.toString()
-            viewModel.inputSurname = binding.profileEditSurname.text.toString()
-            viewModel.inputBio = binding.profileEditBio.text.toString()
-            viewModel.userId = accountId!!
+            val accountId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
 
-            if (viewModel.isCompany.value == true)
-                viewModel.performEditCompany()
-            else
-                viewModel.performEditUser()
+            if (viewModel.isCompany.value == true) {
+                viewModel.performEditCompany(
+                    accountId,
+                    binding.profileEditName.text.toString(),
+                    binding.profileEditBio.text.toString()
+                )
+            } else {
+                viewModel.performEditUser(
+                    accountId,
+                    binding.profileEditName.text.toString(),
+                    binding.profileEditSurname.text.toString(),
+                    binding.profileEditBio.text.toString()
+                )
+            }
         }
     }
 
@@ -115,21 +122,20 @@ class ProfileSettingsFragment : Fragment() {
     private fun changeAvatar() {
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
-        startActivityForResult(photoPickerIntent, resultLoadImg)
+        launcherImagePickerActivity.launch(photoPickerIntent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            if (requestCode == resultLoadImg) {
+    private var launcherImagePickerActivity =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
+            if (it.resultCode == Activity.RESULT_OK) {
                 try {
-                    val imageUri: Uri? = data?.data
-                    val imageStream: InputStream? = imageUri?.let {
-                        requireActivity().contentResolver.openInputStream(it)
+                    val imageUri: Uri? = it.data?.data
+                    val imageStream: InputStream? = imageUri?.let { uri ->
+                        requireActivity().contentResolver.openInputStream(uri)
                     }
                     val selectedImage = BitmapFactory.decodeStream(imageStream)
                     val req = object : VolleyMultipartRequest(
-                        Request.Method.POST,
+                        Method.POST,
                         UPLOAD_MEDIA_ENDPOINT.toString(),
                         {
                             registerMedia(it)
@@ -138,7 +144,7 @@ class ProfileSettingsFragment : Fragment() {
                             it
                         }) {
                         override fun getByteData(): MutableMap<String, DataPart> {
-                            val map = HashMap<String, DataPart>()
+                            val map = java.util.HashMap<String, DataPart>()
                             if (imageUri != null) {
                                 val fileName = getFileName(imageUri)
                                 map["file"] = DataPart(
@@ -150,6 +156,7 @@ class ProfileSettingsFragment : Fragment() {
                         }
                     }
                     volley.add(req)
+                    binding.settingsAvatar.setImageBitmap(selectedImage)
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
                     Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_LONG)
@@ -157,7 +164,6 @@ class ProfileSettingsFragment : Fragment() {
                 }
             }
         }
-    }
 
     private fun registerMedia(it: NetworkResponse?) {
         if (it?.data != null) {

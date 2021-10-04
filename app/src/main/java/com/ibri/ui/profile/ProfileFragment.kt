@@ -3,9 +3,11 @@ package com.ibri.ui.profile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -32,7 +34,7 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
     private lateinit var profilePagerAdapter: ProfilePagerAdapter
     private val viewModel: ProfileViewModel by activityViewModels()
     private val standEventViewModel: StandardEventViewModel by activityViewModels()
-    private val comEventViewModel : CommercialEventViewModel by activityViewModels()
+    private val comEventViewModel: CommercialEventViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,12 +43,10 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         pref = PreferenceManager.getSharedPreferences(requireContext())
-
         checkArguments()
         setObservableVM()
         setListeners()
         setViewPager()
-
         return binding.root
     }
 
@@ -74,7 +74,8 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
                     it.user!!.avatar,
                     it.user!!.bio,
                     it.user!!.name,
-                    it.user!!.id
+                    it.user!!.id,
+                    it.user!!.numOfEvents.toString()
                 )
             } else if (it.company != null) {
                 viewModel.isCompany.value = true
@@ -82,11 +83,35 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
                     it.company!!.avatar,
                     it.company!!.bio,
                     it.company!!.name,
-                    it.company!!.id
+                    it.company!!.id,
+                    it.company!!.numOfEvents.toString()
                 )
             }
         }
 
+        viewModel.achievementList.observe(viewLifecycleOwner) {
+            val images = arrayOf(
+                binding.firstAchievementImage,
+                binding.secondAchievementImage,
+                binding.thirdAchievementImage
+            )
+            val subList = it.subList(0, 3)
+            subList.forEachIndexed { index, item ->
+                val url = GET_MEDIA_ENDPOINT.toString() + "/" + item.image?.url
+                if (item.unlocked) {
+                    Glide.with(this)
+                        .load(url)
+                        .error(R.drawable.default_background)
+                        .into(images[index])
+                } else {
+                    Glide.with(this)
+                        .load(url)
+                        .error(R.drawable.default_background)
+                        .into(images[index])
+                    images[index].alpha = 0.4F
+                }
+            }
+        }
 
     }
 
@@ -101,6 +126,11 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
         binding.profileNotificationButton.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNotificationCentreFragment())
         }
+
+        binding.achievementButton.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAchievementsFragment())
+        }
+
     }
 
     private fun setViewPager() {
@@ -128,13 +158,20 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
 
         if (pref.getString(PreferenceManager.ACCOUNT_ROLE, "") == "COMPANY") {
             binding.profileCompanyIcon.visibility = View.VISIBLE
+            binding.achievementLayout.visibility = View.GONE
             viewModel.isCompany.value = true
             viewModel.commercialEventsByUser(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
         } else {
             binding.profileCompanyIcon.visibility = View.GONE
+            binding.achievementLayout.visibility = View.VISIBLE
             viewModel.isCompany.value = false
             viewModel.standardEventsByUser(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
+            setAchievements()
         }
+
+        binding.profileNumberOfEvents.text =
+            pref.getString(PreferenceManager.ACCOUNT_NUM_OF_EVENTS, "")!!
+
         setAvatar()
         setNameAndBio()
     }
@@ -161,13 +198,26 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
             binding.profileBio.text = getString(R.string.questo_utente_non_ha_una_descrizione)
     }
 
+    private fun setAchievements() {
+        val userId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
+        viewModel.getUserAchievements(userId)
+    }
+
     private fun hideLayouts() {
         binding.profileBackButton.visibility = View.VISIBLE
         binding.profileNotificationButton.visibility = View.GONE
         binding.profileSettingsButton.visibility = View.GONE
+        binding.achievementButton.visibility = View.GONE
+        binding.achievementLinearLayout.gravity = Gravity.CENTER
     }
 
-    private fun prepareGuestProfile(avatar: Media?, bio: String?, name: String, id: String) {
+    private fun prepareGuestProfile(
+        avatar: Media?,
+        bio: String?,
+        name: String,
+        id: String,
+        numOfEvents: String
+    ) {
         binding.profileName.text = name
         if (bio.isNullOrEmpty())
             binding.profileBio.text = getString(R.string.questo_utente_non_ha_una_descrizione)
@@ -176,13 +226,17 @@ class ProfileFragment : Fragment(), EventsOnClickListener {
 
         if (viewModel.isCompany.value == true) {
             binding.profileCompanyIcon.visibility = View.VISIBLE
+            binding.achievementLayout.visibility = View.GONE
             viewModel.commercialEventsByUser(id)
         } else {
             binding.profileCompanyIcon.visibility = View.GONE
+            binding.achievementLayout.visibility = View.VISIBLE
             viewModel.standardEventsByUser(id)
+            viewModel.getUserAchievements(id);
         }
 
         binding.profileNewEventButton.visibility = View.GONE
+        binding.profileNumberOfEvents.text = numOfEvents
 
         setGuestAvatar(avatar)
     }

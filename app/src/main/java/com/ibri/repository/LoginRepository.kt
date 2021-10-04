@@ -60,8 +60,8 @@ class LoginRepository {
             name: String,
             surname: String,
             birthday: String,
-            email: String,
             gender: String,
+            email: String,
             password: String,
         ) {
             val req = object : StringRequest(

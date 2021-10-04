@@ -89,12 +89,12 @@
                 <TextView
                     android:id="@+id/stand_event_detail_title"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="TitoloEvento"
                     android:textAlignment="center"
-                    android:textSize="20sp"
+                    android:textSize="34sp"
                     app:layout_constraintBottom_toTopOf="@+id/stand_event_creator_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/stand_event_avatar_card"
@@ -381,8 +381,11 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/no_subs_card"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/ghost_white"
                     app:cardCornerRadius="16dp"
@@ -399,8 +402,7 @@
                         <ImageView
                             android:id="@+id/imageView15"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_height="44dp"
                             android:padding="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -409,10 +411,11 @@
 
                         <TextView
                             android:id="@+id/textView19"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="8dp"
                             android:text="Attualmente non ci sono iscritti a questo evento"
+                            android:textAlignment="center"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView15"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView15"

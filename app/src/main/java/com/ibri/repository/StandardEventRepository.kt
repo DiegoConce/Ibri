@@ -5,18 +5,18 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.bumptech.glide.util.Util
 import com.google.gson.Gson
 import com.ibri.MainApplication
 import com.ibri.model.events.StandardEvent
 import com.ibri.utils.BASE_URL
 import com.ibri.utils.LOG_TEST
-import com.ibri.utils.Utils
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.reflect.KFunction1
 
 class StandardEventRepository {
 
@@ -37,7 +37,10 @@ class StandardEventRepository {
 
 
         //GetAllStandardEvents
-        fun getStandardEvent(mutableMediaList: MutableLiveData<ArrayList<StandardEvent>>) {
+        fun getStandardEvent(
+            mutableMediaList: MutableLiveData<ArrayList<StandardEvent>>,
+            funError: (VolleyError) -> Unit,
+        ) {
             val req = StringRequest(
                 Request.Method.GET, ALL_STANDARD_EVENTS_ENDPOINT.toString(),
                 { result ->
@@ -46,6 +49,7 @@ class StandardEventRepository {
                     mutableMediaList.postValue(a)
                 },
                 { throwable ->
+                    funError(throwable)
                     Log.wtf(LOG_TEST, "Volley error : ${throwable}")
                 }
             )

@@ -10,56 +10,33 @@ import com.ibri.utils.LOG_TEST
 class LoginViewModel : ViewModel() {
     var loginResponse = MutableLiveData<LoginResponse>()
     val loginSuccess = MutableLiveData<Boolean>()
-    val registerUserSuccess = MutableLiveData<String>()
-    val registerCompanySuccess = MutableLiveData<String>()
+    val registerUserResponse = MutableLiveData<String>()
+    val registerCompanyResponse = MutableLiveData<String>()
 
-    var inputEmail: String = ""
-    var inputPassword: String = ""
-    var inputName: String = ""
-    var inputSurname: String = ""
-    var inputGender: String = ""
-    var inputBirthday: String = ""
-    var inputPiva: String = ""
+    fun performLogin(email: String, password: String) =
+        LoginRepository.findAccount(loginResponse, email, password)
 
 
-    fun performLogin() {
-        Log.wtf(LOG_TEST,"Perform Login")
-        LoginRepository.findAccount(loginResponse, inputEmail, inputPassword)
-    }
-
-    fun performRegisterUser() {
+    fun performRegisterUser(
+        name: String,
+        surname: String,
+        birthday: String,
+        gender: String,
+        email: String,
+        password: String
+    ) =
         LoginRepository.registerAccount(
-            registerUserSuccess,
-            inputName,
-            inputSurname,
-            inputBirthday,
-            inputEmail,
-            inputGender,
-            inputPassword
+            registerUserResponse,
+            name,
+            surname,
+            birthday,
+            gender,
+            email,
+            password
         )
-    }
 
-    fun performRegisterCompany() {
-        LoginRepository.registerCompany(
-            registerCompanySuccess,
-            inputName,
-            inputEmail,
-            inputPiva,
-            inputPassword
-        )
-    }
 
-    fun clearInputFields() {
-        inputEmail = ""
-        inputPassword = ""
-        inputName = ""
-        inputSurname = ""
-        inputGender = ""
-        inputBirthday = ""
-        inputPiva = ""
-    }
+    fun performRegisterCompany(name: String, email: String, pIva: String, password: String) =
+        LoginRepository.registerCompany(registerCompanyResponse, name, email, pIva, password)
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

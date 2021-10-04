@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.Toast
@@ -169,9 +170,9 @@ class NewStandardEventActivity : AppCompatActivity() {
             (!this::selectedMedia.isInitialized) or
             (!this::tags.isInitialized)
         ) {
-            binding.newEventError.visibility = View.VISIBLE
+            //binding.newEventError.visibility = View.VISIBLE
         } else {
-            binding.newEventSubmitButton.visibility = View.GONE
+            //binding.newEventSubmitButton.visibility = View.GONE
             binding.newEventProgressBar.visibility = View.VISIBLE
             commitData()
         }
@@ -180,6 +181,13 @@ class NewStandardEventActivity : AppCompatActivity() {
     private fun commitData() {
         val userId = pref.getString(PreferenceManager.ACCOUNT_ID, "")!!
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        startSubscription.hours = eventHour
+        startSubscription.minutes = eventMinute
+        eventDay.hours = eventHour
+        eventDay.minutes = eventMinute
+
+        Log.wtf(LOG_TEST,"startSubscription -> ${simpleDateFormat.format(startSubscription)}")
+        Log.wtf(LOG_TEST,"eventDay -> ${simpleDateFormat.format(eventDay)}")
 
         viewModel.createStandardEvent(
             userId,

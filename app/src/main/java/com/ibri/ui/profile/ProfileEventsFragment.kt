@@ -62,30 +62,55 @@ class ProfileEventsFragment(val listener: EventsOnClickListener) : Fragment() {
             currentEvents.clear()
             pastEvents.clear()
             for (item in it) {
-                if (item.eventDay.before(now))
+                if (item.eventDay.after(now))
                     currentEvents.add(item)
-                else if (item.eventDay.after(now))
+                else if (item.eventDay.before(now))
                     pastEvents.add(item)
             }
 
             when (arguments?.getInt(ARG_STAGE)) {
-                0 -> standardEventAdapter.setData(currentEvents.map { event -> event as StandardEvent })
-                1 -> standardEventAdapter.setData(pastEvents.map { event -> event as StandardEvent })
+                0 -> {
+                    if (currentEvents.isNullOrEmpty())
+                        binding.profileNoEventsCard.visibility = View.VISIBLE
+                    else
+                        binding.profileNoEventsCard.visibility = View.GONE
+                    standardEventAdapter.setData(currentEvents.map { event -> event as StandardEvent })
+                }
+                1 -> {
+                    if (pastEvents.isNullOrEmpty())
+                        binding.profileNoEventsCard.visibility = View.VISIBLE
+                    else
+                        binding.profileNoEventsCard.visibility = View.GONE
+                    standardEventAdapter.setData(pastEvents.map { event -> event as StandardEvent })
+                }
             }
         }
 
         viewModel.comEventList.observe(viewLifecycleOwner) {
             currentEvents.clear()
             pastEvents.clear()
+            val a = Date()
             for (item in it) {
-                if (item.eventDay.before(now))
+                if (item.eventDay.after(now))
                     currentEvents.add(item)
-                else if (item.eventDay.after(now))
+                else if (item.eventDay.before(now))
                     pastEvents.add(item)
 
                 when (arguments?.getInt(ARG_STAGE)) {
-                    0 -> commercialEventAdapter.setData(currentEvents.map { event -> event as CommercialEvent })
-                    1 -> commercialEventAdapter.setData(pastEvents.map { event -> event as CommercialEvent })
+                    0 -> {
+                        if (currentEvents.isNullOrEmpty())
+                            binding.profileNoEventsCard.visibility = View.VISIBLE
+                        else
+                            binding.profileNoEventsCard.visibility = View.GONE
+                        commercialEventAdapter.setData(currentEvents.map { event -> event as CommercialEvent })
+                    }
+                    1 -> {
+                        if (pastEvents.isNullOrEmpty())
+                            binding.profileNoEventsCard.visibility = View.VISIBLE
+                        else
+                            binding.profileNoEventsCard.visibility = View.GONE
+                        commercialEventAdapter.setData(pastEvents.map { event -> event as CommercialEvent })
+                    }
 
                 }
             }
@@ -114,6 +139,7 @@ class ProfileEventsFragment(val listener: EventsOnClickListener) : Fragment() {
     }
 
     private fun setCommercialEventsAdapter() {
+        commercialEventAdapter.setProfileLayout()
         binding.profileRecyperView.adapter = commercialEventAdapter
         binding.profileRecyperView.layoutManager = LinearLayoutManager(requireContext())
     }

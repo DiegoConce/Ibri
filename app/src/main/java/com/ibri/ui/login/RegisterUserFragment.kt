@@ -28,7 +28,6 @@ class RegisterUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegisterUserBinding.inflate(inflater, container, false)
-        viewModel.clearInputFields()
 
         setObservableVM()
         setListener()
@@ -43,19 +42,20 @@ class RegisterUserFragment : Fragment() {
 
         binding.registerSubmitButton.setOnClickListener {
             if (checkValues()) {
-                viewModel.inputName = binding.registerUserName.text.toString().trim()
-                viewModel.inputSurname = binding.registerUserSurname.text.toString().trim()
-                viewModel.inputGender = binding.registerGender.text.toString().trim()
-                viewModel.inputBirthday = binding.registerUserBirthday.text.toString().trim()
-                viewModel.inputEmail = binding.registerUserEmail.text.toString().trim()
-                viewModel.inputPassword = binding.registerUserPassword.text.toString().trim()
-                viewModel.performRegisterUser()
+                viewModel.performRegisterUser(
+                    binding.registerUserName.text.toString().trim(),
+                    binding.registerUserSurname.text.toString().trim(),
+                    binding.registerUserBirthday.text.toString().trim(),
+                    binding.registerGender.text.toString().trim(),
+                    binding.registerUserEmail.text.toString().trim(),
+                    binding.registerUserPassword.text.toString().trim(),
+                )
             }
         }
     }
 
     private fun setObservableVM() {
-        viewModel.registerUserSuccess.observe(viewLifecycleOwner) {
+        viewModel.registerUserResponse.observe(viewLifecycleOwner) {
             if (it == "email occupata") {
                 binding.registerError.text = getString(R.string.email_gia_in_uso)
                 binding.registerError.visibility = View.VISIBLE

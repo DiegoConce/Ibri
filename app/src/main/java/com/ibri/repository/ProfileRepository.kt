@@ -8,6 +8,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.ibri.MainApplication
+import com.ibri.model.Achievement
 import com.ibri.model.LoginResponse
 import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
@@ -25,6 +26,7 @@ class ProfileRepository {
         private val EVENTS_BY_USER_ENDPOINT = Uri.parse("${BASE_URL}/event/get/user")
         private val COMPANY_EDIT_ENDPOINT = Uri.parse("${BASE_URL}/company/profile/edit")
         private val USER_EDIT_ENDPOINT = Uri.parse("${BASE_URL}/user/profile/edit")
+        private val USER_ACHIEVEMENT_ENDPOINT = Uri.parse("${BASE_URL}/user/get/achivements")
         private val volley = Volley.newRequestQueue(MainApplication.applicationContext())
 
 
@@ -160,9 +162,25 @@ class ProfileRepository {
             volley.add(req)
         }
 
+        fun getAchievements(
+            mutableMediaList: MutableLiveData<ArrayList<Achievement>>,
+            userId: String
+        ) {
+            val req = StringRequest(
+                Request.Method.GET,
+                USER_ACHIEVEMENT_ENDPOINT.buildUpon().appendQueryParameter("userId", userId)
+                    .build().toString(),
+                { result ->
+                    val a = Gson().fromJson(result, Array<Achievement>::class.java)
+                        .toCollection(ArrayList())
+                    mutableMediaList.postValue(a)
+                },
+                {
 
-        fun closeVolley() {
-            volley.stop()
+                }
+            )
+            volley.add(req)
         }
+
     }
 }

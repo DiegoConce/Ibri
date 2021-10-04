@@ -2,6 +2,7 @@ package com.ibri.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,6 +21,7 @@ class CommercialEventAdapter(
 
     private val commercialEventList = ArrayList<CommercialEvent>()
     private val unfilteredList = ArrayList<CommercialEvent>()
+    private var isProfileLayout = false
 
     fun setData(list: List<CommercialEvent>) {
         commercialEventList.clear()
@@ -68,7 +70,7 @@ class CommercialEventAdapter(
         holder.binding.comEventCity.text = item.city
         holder.binding.comEventLocation.text = item.address
         holder.binding.comEventMembers.text = "${item.guests} / ${item.maxGuests}"
-        holder.binding.comEventRooms.text = rooms + " / ${item.maxRooms}"
+        holder.binding.comEventRooms.text = rooms //+ " / ${item.maxRooms}"
         holder.binding.comEventDay.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
         holder.binding.comEventMonth.text = SimpleDateFormat("MMM", Locale.getDefault())
             .format(calendar.time)
@@ -82,6 +84,15 @@ class CommercialEventAdapter(
                 .into(holder.binding.comEventImage)
         }
 
+        if (isProfileLayout) {
+            holder.binding.standEventAvatarCard.visibility = View.GONE
+            holder.binding.comEventCreator.visibility = View.GONE
+            holder.binding.comEventCompanyIcon.visibility = View.GONE
+        } else {
+            holder.binding.standEventAvatarCard.visibility = View.VISIBLE
+            holder.binding.comEventCreator.visibility = View.VISIBLE
+            holder.binding.comEventCompanyIcon.visibility = View.VISIBLE
+        }
 
         setListeners(holder, item)
     }
@@ -98,6 +109,10 @@ class CommercialEventAdapter(
 
     override fun getItemCount(): Int {
         return commercialEventList.size
+    }
+
+    fun setProfileLayout() {
+        isProfileLayout = true
     }
 
     fun filter(s: String) {

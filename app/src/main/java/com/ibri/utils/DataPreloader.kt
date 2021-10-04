@@ -20,7 +20,8 @@ class DataPreloader {
         private val USER_INFO_ENDPOINT = Uri.parse("${BASE_URL}/user/get")
         private val COMPANY_INFO_ENDPOINT = Uri.parse("${BASE_URL}/company/get")
         private val volley = Volley.newRequestQueue(MainApplication.applicationContext())
-        private val pref: SharedPreferences = PreferenceManager.getSharedPreferences(MainApplication.applicationContext()!!)
+        private val pref: SharedPreferences =
+            PreferenceManager.getSharedPreferences(MainApplication.applicationContext()!!)
 
 
         fun loadPersonalInfo() {
@@ -86,6 +87,7 @@ class DataPreloader {
                     putString(PreferenceManager.ACCOUNT_NAME, company.name)
                     putString(PreferenceManager.COMPANY_PIVA, company.pIva)
                     putString(PreferenceManager.ACCOUNT_BIO, company.bio)
+                    putString(PreferenceManager.ACCOUNT_NUM_OF_EVENTS, company.numOfEvents.toString())
                     if (company.avatar != null) {
                         putString(PreferenceManager.ACCOUNT_AVATAR, company.avatar!!.url)
                         putString(PreferenceManager.ACCOUNT_AVATAR_ID, company.avatar!!.id)
@@ -103,6 +105,7 @@ class DataPreloader {
                     putString(PreferenceManager.ACCOUNT_BIO, user.bio)
                     putString(PreferenceManager.ACCOUNT_NAME, user.name)
                     putString(PreferenceManager.USER_SURNAME, user.surname)
+                    putString(PreferenceManager.ACCOUNT_NUM_OF_EVENTS, user.numOfEvents.toString())
                     putString(
                         PreferenceManager.USER_BIRTHDAY,
                         SimpleDateFormat(

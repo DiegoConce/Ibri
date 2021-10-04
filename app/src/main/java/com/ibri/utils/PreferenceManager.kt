@@ -11,6 +11,7 @@ class PreferenceManager {
         const val ACCOUNT_BIO = "IBRIUSERBIO"
         const val ACCOUNT_AVATAR = "IBRIUSERAVATAR"
         const val ACCOUNT_AVATAR_ID = "IBRIUSERAVATARID"
+        const val ACCOUNT_NUM_OF_EVENTS = "IBRINUMOFEVENTS"
 
         const val USER_SURNAME = "IBRIUSERSURNAME"
         const val USER_BIRTHDAY = "IBRIUSERBBD"

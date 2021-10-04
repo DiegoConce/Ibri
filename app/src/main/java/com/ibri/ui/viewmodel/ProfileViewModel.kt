@@ -2,6 +2,7 @@ package com.ibri.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ibri.model.Achievement
 import com.ibri.model.LoginResponse
 import com.ibri.model.Question
 import com.ibri.model.events.CommercialEvent
@@ -17,18 +18,13 @@ class ProfileViewModel : ViewModel() {
     val comEventList = MutableLiveData<ArrayList<CommercialEvent>>()
     val subscribeRequestsList = MutableLiveData<ArrayList<SubscribeRequest>>()
     val subscribedEventsList = MutableLiveData<ArrayList<SubscribedEventResponse>>()
+    val achievementList = MutableLiveData<ArrayList<Achievement>>()
     val subscribeRequestResponse = MutableLiveData<String>()
     val accountResponse = MutableLiveData<LoginResponse>()
     val editUserResponse = MutableLiveData<String>()
     val editCompanyResponse = MutableLiveData<String>()
     var isMyProfile = MutableLiveData(true)
     var isCompany = MutableLiveData(false)
-
-    var userId = ""
-    var inputName = ""
-    var inputSurname = ""
-    var inputBio = ""
-
     val questionList = MutableLiveData<ArrayList<Question>>()
     val deleteQuestionResponse = MutableLiveData<String>()
     val answerQuestionResponse = MutableLiveData<String>()
@@ -47,25 +43,12 @@ class ProfileViewModel : ViewModel() {
         ProfileRepository.getCommercialEventsByUser(comEventList, userId)
     }
 
-    fun performEditUser() {
-        ProfileRepository.editUser(
-            editUserResponse,
-            userId, inputName, inputSurname, inputBio
-        )
+    fun performEditUser(userId: String, name: String, surname: String, bio: String) {
+        ProfileRepository.editUser(editUserResponse, userId, name, surname, bio)
     }
 
-    fun performEditCompany() {
-        ProfileRepository.editCompany(
-            editCompanyResponse,
-            userId, inputName, inputBio
-        )
-    }
-
-    fun clearFields() {
-        userId = ""
-        inputName = ""
-        inputSurname = ""
-        inputBio = ""
+    fun performEditCompany(userId: String, name: String, bio: String) {
+        ProfileRepository.editCompany(editCompanyResponse, userId, name, bio)
     }
 
     fun loadQuestions(userId: String) {
@@ -99,7 +82,7 @@ class ProfileViewModel : ViewModel() {
         ProfileRepository.getSubscribedEvents(subscribedEventsList, userId)
     }
 
-    override fun onCleared() {
-        super.onCleared()
+    fun getUserAchievements(userId: String) {
+        ProfileRepository.getAchievements(achievementList, userId)
     }
 }

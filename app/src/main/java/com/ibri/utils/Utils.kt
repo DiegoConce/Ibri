@@ -8,7 +8,7 @@ class Utils {
     companion object {
 
 
-        fun showErrorAler(context: Context, msg: String) {
+        fun showErrorMessage(context: Context, msg: String) {
             AlertDialog.Builder(context)
                 .setTitle("Errore Generico")
                 .setMessage(msg)

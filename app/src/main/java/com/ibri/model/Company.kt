@@ -12,5 +12,6 @@ data class Company(
     var avatar: Media?,
     var pIva: String,
     var bio: String,
-    var deleted: Boolean
+    var deleted: Boolean,
+    var numOfEvents: Int
 ) : Parcelable

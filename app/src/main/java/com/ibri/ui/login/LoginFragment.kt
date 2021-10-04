@@ -61,15 +61,16 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginSignInButton.setOnClickListener {
-            viewModel.inputEmail = binding.loginEmail.text.toString()
-            viewModel.inputPassword = binding.loginPassword.text.toString()
             if (checkValues())
-                viewModel.performLogin()
+                viewModel.performLogin(
+                    binding.loginEmail.text.toString(),
+                    binding.loginPassword.text.toString()
+                )
         }
     }
 
     private fun checkValues(): Boolean {
-        return if (viewModel.inputEmail.isEmpty() || viewModel.inputPassword.isEmpty()) {
+        return if (binding.loginEmail.text?.isEmpty() == true || binding.loginPassword.text?.isEmpty() == true) {
             binding.loginEmailField.error = "Perfavore inserisci una email"
             binding.loginPasswordField.error = "Perfavore inserisci una password"
             false
