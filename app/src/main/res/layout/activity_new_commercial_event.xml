@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/nuovo_evento"
-                    android:textColor="@color/black"
+                    android:textColor="@color/darkblue"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/orange_200"
                     app:cardCornerRadius="32dp"
                     app:cardPreventCornerOverlap="true"
                     app:cardUseCompatPadding="true"
@@ -63,7 +64,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+                            app:srcCompat="@drawable/ic_baseline_chevron_left_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/textView51"
@@ -71,6 +73,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             android:text="@string/indietro"
+                            android:textColor="@color/darkblue"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView35"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView35"
@@ -86,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/anteprima"
+                android:textColor="@color/darkblue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
@@ -96,7 +100,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -108,6 +111,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/orange_200"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +129,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView56"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView56"
-                        app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+                        app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+                        app:tint="@color/darkblue" />
 
                     <TextView
                         android:id="@+id/textView56"
@@ -137,6 +142,7 @@
                         android:layout_marginBottom="8dp"
                         android:padding="4dp"
                         android:text="@string/aggiungi_un_immagine"
+                        android:textColor="@color/darkblue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView38"
@@ -240,7 +246,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_cake_24" />
+                            app:srcCompat="@drawable/ic_baseline_cake_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/textView37"
@@ -325,7 +332,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_add_location_alt_24" />
+                            app:srcCompat="@drawable/ic_baseline_add_location_alt_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/stand_event_place"
@@ -374,7 +382,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_date_range_24" />
+                            app:srcCompat="@drawable/ic_baseline_date_range_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/event_date_preview"
@@ -431,7 +440,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_access_time_24" />
+                            app:srcCompat="@drawable/ic_baseline_access_time_24"
+                            app:tint="@color/darkblue" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -475,7 +485,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_people_24" />
+                            app:srcCompat="@drawable/ic_baseline_people_24"
+                            app:tint="@color/darkblue" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -521,7 +532,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_groups_24" />
+                            app:srcCompat="@drawable/ic_baseline_groups_24"
+                            app:tint="@color/darkblue" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -537,7 +549,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/black"
+                app:cardBackgroundColor="@color/orange_500"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ghost_white">
+    android:background="@color/lightblue">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="0dp"
         android:backgroundTint="@color/ghost_white"
+        app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,6 +29,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/orange_200"
                 app:cardCornerRadius="32dp"
                 app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="false"
@@ -49,7 +50,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+                        app:srcCompat="@drawable/ic_baseline_chevron_left_24"
+                        app:tint="@color/darkblue" />
 
                     <TextView
                         android:id="@+id/textView51"
@@ -57,6 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:text="@string/indietro"
+                        android:textColor="@color/darkblue"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView35"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView35"
@@ -69,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cerca per categoria"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/search_back_button"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="0Km"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 app:layout_constraintBottom_toBottomOf="@+id/search_seek_bar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/search_seek_bar" />
@@ -108,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="100Km"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 app:layout_constraintBottom_toBottomOf="@+id/search_seek_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/search_seek_bar" />

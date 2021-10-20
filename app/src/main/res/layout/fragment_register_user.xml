@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/lightblue"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -215,6 +216,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:backgroundTint="@color/orange_500"
             app:layout_constraintTop_toBottomOf="@+id/register_error">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -231,6 +233,7 @@
                     android:layout_marginBottom="8dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
+                    android:textColor="@color/darkblue"
                     android:text="@string/registrati"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"

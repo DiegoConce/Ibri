@@ -52,7 +52,6 @@
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
@@ -61,6 +60,7 @@
             android:id="@+id/notification_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange_200"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="32dp"
             app:cardPreventCornerOverlap="true"
@@ -82,7 +82,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24"
+                    app:tint="@color/darkblue" />
 
                 <TextView
                     android:id="@+id/textView51"
@@ -90,6 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:text="@string/indietro"
+                    android:textColor="@color/darkblue"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView35"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView35"
@@ -105,6 +107,7 @@
             android:layout_marginEnd="16dp"
             android:text="Notifiche"
             android:textAlignment="center"
+            android:textColor="@color/darkblue"
             app:layout_constraintBottom_toBottomOf="@+id/notification_back_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/notification_back_button"
@@ -124,16 +127,18 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/question_toggle_button"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/MyOutlinedButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="150dp"
+            android:textColor="@color/darkblue"
             android:text="Domande"
             app:cornerRadius="10dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sub_request_toggle_button"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/MyOutlinedButtonStyle"
+            android:textColor="@color/darkblue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="150dp"

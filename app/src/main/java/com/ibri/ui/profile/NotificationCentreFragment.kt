@@ -37,7 +37,7 @@ class NotificationCentreFragment : Fragment(), NotificationClickListener {
         pref = PreferenceManager.getSharedPreferences(requireContext())
         viewModel.loadQuestions(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
         viewModel.loadSubscribeRequests(pref.getString(PreferenceManager.ACCOUNT_ID, "")!!)
-        subRequestAdapter = SubRequestAdapter(this)
+        subRequestAdapter = SubRequestAdapter(requireContext(),this)
         notificationAdapter = NotificationAdapter(requireContext(), this)
 
         setObservableVM()

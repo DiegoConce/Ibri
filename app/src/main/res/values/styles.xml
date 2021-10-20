@@ -3,4 +3,16 @@
     <style name="circle">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="MyOutlinedButtonStyle"
+        parent="Widget.MaterialComponents.Button.OutlinedButton">
+
+        <item name="materialThemeOverlay">@style/GreenButtonThemeOverlay</item>
+    </style>
+
+    <style name="GreenButtonThemeOverlay">
+        <item name="colorPrimary">@color/orange_200</item>
+        <item name="colorOnSurface">@color/orange_500</item>
+        <item name="checkedButton">@color/orange_500</item>
+    </style>
 </resources>

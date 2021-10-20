@@ -42,7 +42,7 @@ class RoomRepository {
                     map["name"] = name
                     map["description"] = description
                     map["maxMembers"] = maxMembers.toString()
-                    map["creator"] = userId
+                    map["userId"] = userId
                     map["media"] = media
                     return map
                 }

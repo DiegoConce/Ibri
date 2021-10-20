@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/lightblue"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +21,7 @@
             app:cardCornerRadius="32dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/orange_200"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -31,6 +33,7 @@
                     android:id="@+id/imageView35"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:tint="@color/darkblue"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -44,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:textColor="@color/darkblue"
                     android:text="@string/indietro"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView35"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="Domande e risposte"
+            android:textColor="@color/darkblue"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/qna_back_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -125,6 +130,7 @@
                 app:cardCornerRadius="32dp"
                 app:cardElevation="0dp"
                 app:cardMaxElevation="0dp"
+                app:cardBackgroundColor="@color/orange_500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -133,9 +139,9 @@
                     android:id="@+id/qna_send_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:foreground="?attr/selectableItemBackground"
                     android:padding="8dp"
+                    app:tint="@color/darkblue"
                     app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
             </androidx.cardview.widget.CardView>
 

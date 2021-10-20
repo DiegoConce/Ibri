@@ -20,6 +20,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/orange_500"
+                app:cardCornerRadius="200dp"
+                app:layout_constraintBottom_toBottomOf="@+id/sub_req_user_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/sub_req_user_name"
+                tools:ignore="SpeakableTextPresentCheck">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="200dp">
+
+                    <ImageView
+                        android:id="@+id/user_avatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/default_avatar" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/textView31"
                 android:layout_width="0dp"
@@ -38,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="TextView"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/textView31"
@@ -49,21 +80,20 @@
                 android:id="@+id/sub_req_user_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="TextView"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardView7"
                 app:layout_constraintTop_toBottomOf="@+id/sub_req_event_title" />
 
             <TextView
                 android:id="@+id/sub_req_accept"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/black"
+                android:background="@color/orange_500"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
@@ -85,7 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/ghost_white"
+                android:background="@color/lightblue"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
@@ -107,6 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Vuole unirsi all'evento"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/sub_req_user_name"
                 app:layout_constraintTop_toBottomOf="@+id/sub_req_user_name" />
 

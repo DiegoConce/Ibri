@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ import com.ibri.ui.event.EventQuestionAnswerFragment
 import com.ibri.ui.profile.ProfileFragment
 import com.ibri.ui.viewmodel.StandardEventViewModel
 import com.ibri.utils.GET_MEDIA_ENDPOINT
+import com.ibri.utils.LOG_TEST
 import com.ibri.utils.PreferenceManager
 import java.text.SimpleDateFormat
 import java.util.*
@@ -160,6 +162,7 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
     private fun prepareStage(item: StandardEvent) {
         standEvent = item
         val myId = pref.getString(PreferenceManager.ACCOUNT_ID, "")
+        viewModel.isSubcribed.value = false
 
         if (standEvent.subscribers.isNullOrEmpty())
             viewModel.isSubcribed.value = false
@@ -170,10 +173,11 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
                 viewModel.isSubcribed.value = true
                 viewModel.isPending.value = false
             } else {
-                viewModel.isSubcribed.value = false
+               // viewModel.isSubcribed.value = false
             }
         }
         viewModel.isMyEvent.value = myId == standEvent.creator.id
+        Log.wtf(LOG_TEST, "isSubscribed = ${viewModel.isSubcribed.value.toString()}")
 
         if (standEvent.private)
             binding.standEventIsprivateMessage.visibility = View.VISIBLE
@@ -195,7 +199,7 @@ class StandardEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClickL
                 .error(R.drawable.default_avatar)
                 .into(binding.standEventDetailImage)
         } else {
-            binding.standEventDetailImage.setImageResource(R.drawable.app_logo)
+            binding.standEventDetailImage.setImageResource(R.drawable.default_background)
         }
 
         binding.standEventDetailTitle.text = standEvent.title

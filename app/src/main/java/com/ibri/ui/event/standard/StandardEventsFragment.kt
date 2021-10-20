@@ -114,7 +114,6 @@ class StandardEventsFragment : Fragment(), EventsOnClickListener {
                 )
             }
         }
-
     }
 
     private fun setRecyclerView(it: ArrayList<StandardEvent>) {

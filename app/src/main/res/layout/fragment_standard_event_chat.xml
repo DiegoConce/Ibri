@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chat"
-            android:textColor="@color/black"
+            android:textColor="@color/darkblue"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/chat_back_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +34,7 @@
             app:cardCornerRadius="32dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/orange_200"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -46,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    app:tint="@color/darkblue"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -59,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:text="@string/indietro"
+                    android:textColor="@color/darkblue"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView35"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView35"
@@ -127,6 +130,7 @@
                 app:cardCornerRadius="32dp"
                 app:cardElevation="0dp"
                 app:cardMaxElevation="0dp"
+                app:cardBackgroundColor="@color/orange_500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -135,9 +139,9 @@
                     android:id="@+id/chat_send_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:foreground="?attr/selectableItemBackground"
                     android:padding="8dp"
+                    app:tint="@color/darkblue"
                     app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
             </androidx.cardview.widget.CardView>
 
@@ -157,6 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ancora_nessun_messaggio"
+        android:textColor="@color/darkblue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -13,10 +13,16 @@
     <color name="light_grey">#efefee</color>
 
     <!-- palette -->
-    <color name="darkblue">#0E3854</color>
+    <color name="darkblue">#071B29</color> <!--FF103754   0E3854-->
+    <color name="darkblu2e">#052133</color>
     <color name="blue">#067EED</color>
-    <color name="orange">#FF7C1F</color>
-    <color name="lightblue">#73FFFF</color> <!-- #D9FFFF-->
+    <color name="orange_500">#FF7C1F</color>
+    <color name="orange_200">#FFCC80</color>
+    <color name="lightblue">#E6FFFF</color> <!-- #D9FFFF-->
+
+
+    <color name="lightblue_50">#37DEFF</color>
+    <color name="ligh2">#F5F9FF</color>
     <color name="grey_green">#f1faee</color>
 
 </resources>

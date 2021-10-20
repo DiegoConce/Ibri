@@ -1,5 +1,6 @@
 package com.ibri.model
 
+import com.ibri.model.events.CommercialEvent
 import com.ibri.model.events.StandardEvent
 import java.util.*
 
@@ -8,5 +9,6 @@ data class Question(
     var question: String,
     var answer: String?,
     var responseDate: Date?,
-    var privateEvent: StandardEvent
+    var privateEvent: StandardEvent?,
+    var commercialEvent: CommercialEvent?
 )

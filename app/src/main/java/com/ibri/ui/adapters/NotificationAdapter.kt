@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ibri.databinding.ItemNotificationQuestionBinding
 import com.ibri.model.Question
+import com.ibri.model.events.StandardEvent
 
 class NotificationAdapter(
     private val context: Context,
@@ -42,8 +43,10 @@ class NotificationAdapter(
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val item = questionsListAdapter[position]
         holder.binding.notificationQuestionText.text = item.question
-        holder.binding.notificationQuestionEventTitle.text = item.privateEvent.title
-
+        if (item.privateEvent != null)
+            holder.binding.notificationQuestionEventTitle.text = item.privateEvent?.title
+        else if (item.commercialEvent != null)
+            holder.binding.notificationQuestionEventTitle.text = item.commercialEvent?.title
 
         holder.binding.answerEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -63,7 +66,12 @@ class NotificationAdapter(
         holder.binding.notificationAnswerButton.setOnClickListener {
             holder.binding.answerProgressBar.visibility = View.GONE
             if (answer.isNotEmpty())
-                listener.onAnswerClickListener(item, answer, position, holder.binding.answerProgressBar)
+                listener.onAnswerClickListener(
+                    item,
+                    answer,
+                    position,
+                    holder.binding.answerProgressBar
+                )
         }
     }
 

@@ -22,7 +22,7 @@ import com.ibri.ui.viewmodel.CommercialEventViewModel
 import com.ibri.ui.viewmodel.SearchViewModel
 import com.ibri.ui.viewmodel.StandardEventViewModel
 
-class SearchDetailFragment : Fragment(), EventsOnClickListener {
+class    SearchDetailFragment : Fragment(), EventsOnClickListener {
     private lateinit var binding: FragmentSearchDetailBinding
     private lateinit var standardEventAdapter: StandardEventAdapter
     private lateinit var commercialEventAdapter: CommercialEventAdapter

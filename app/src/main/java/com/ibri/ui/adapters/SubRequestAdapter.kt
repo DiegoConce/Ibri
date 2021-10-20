@@ -1,13 +1,20 @@
 package com.ibri.ui.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.ibri.R
 import com.ibri.databinding.ItemSubscribeRequestBinding
 import com.ibri.model.events.SubscribeRequest
+import com.ibri.utils.GET_MEDIA_ENDPOINT
 
-class SubRequestAdapter(private val listener: NotificationClickListener) :
+class SubRequestAdapter(
+    private val context: Context,
+    private val listener: NotificationClickListener
+) :
     RecyclerView.Adapter<SubRequestAdapter.SubRequestViewHolder>() {
 
     val subRequestsList = ArrayList<SubscribeRequest>()
@@ -48,6 +55,16 @@ class SubRequestAdapter(private val listener: NotificationClickListener) :
             isAccepted = false
             listener.onAcceptSubRequestClickListener(item, isAccepted, position)
         }
+
+        if (item.user.avatar != null) {
+            val path = item.user.avatar!!.url
+            val url = "$GET_MEDIA_ENDPOINT/$path"
+            Glide.with(context)
+                .load(url)
+                .error(R.drawable.default_avatar)
+                .into(holder.binding.userAvatar)
+        } else
+            holder.binding.userAvatar.setImageResource(R.drawable.default_avatar)
     }
 
     override fun getItemCount(): Int {

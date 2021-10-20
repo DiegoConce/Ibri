@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
+import com.ibri.R
 import com.ibri.databinding.ActivityTagsBinding
 import com.ibri.model.Tag
 import com.ibri.utils.BASE_URL
@@ -67,6 +68,7 @@ class TagsActivity : AppCompatActivity() {
             val chip = Chip(this)
             chip.text = tag.name
             chip.isCheckable = true
+            chip.setChipBackgroundColorResource(R.color.orange_200)
             chip.setOnCheckedChangeListener { _, isChecked ->
                 chipClicked(
                     chip,

@@ -283,6 +283,7 @@ class NewCommercialEventActivity : AppCompatActivity() {
             val chip = Chip(this)
             chip.isCheckable = false
             chip.text = tag.name
+            chip.setChipBackgroundColorResource(R.color.orange_200)
             binding.eventSelectedTags.addView(chip)
         }
     }

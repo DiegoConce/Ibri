@@ -12,7 +12,7 @@
 
     <!--Login e Registrazione -->
     <string name="login">Login</string>
-    <string name="non_sei_ancora_iscritto_crea_un_nuovo_account">Non sei ancora iscritto? Crea un nuovo account</string>
+    <string name="non_sei_ancora_iscritto_crea_un_nuovo_account">Non sei ancora iscritto? <font color="#FF7C1F">Crea un nuovo account</font></string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="conferma_password">Conferma Password</string>

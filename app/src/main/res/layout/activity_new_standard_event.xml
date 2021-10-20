@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ghost_white"
+    android:background="@color/white"
     tools:context=".ui.activity.NewStandardEventActivity">
 
     <ScrollView
         android:id="@+id/new_stand_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/lightblue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/anteprima"
+                android:textColor="@color/darkblue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +38,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,10 +50,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                app:cardCornerRadius="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/orange_200"
+                app:cardCornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/item_standard_event">
@@ -69,7 +71,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textView56"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView56"
-                        app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24" />
+                        app:srcCompat="@drawable/ic_baseline_add_photo_alternate_24"
+                        app:tint="@color/darkblue" />
 
                     <TextView
                         android:id="@+id/textView56"
@@ -81,6 +84,7 @@
                         android:layout_marginBottom="8dp"
                         android:padding="4dp"
                         android:text="@string/aggiungi_un_immagine"
+                        android:textColor="@color/darkblue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView38"
@@ -187,18 +191,20 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/public_event_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/MyOutlinedButtonStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/pubblico"
+                                android:textColor="@color/darkblue"
                                 app:cornerRadius="10dp" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/private_event_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/MyOutlinedButtonStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/privato"
+                                android:textColor="@color/darkblue"
                                 app:cornerRadius="10dp" />
 
                         </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -227,7 +233,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_cake_24" />
+                            app:srcCompat="@drawable/ic_baseline_cake_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/textView37"
@@ -312,7 +319,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_add_location_alt_24" />
+                            app:srcCompat="@drawable/ic_baseline_add_location_alt_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/stand_event_place"
@@ -356,12 +364,14 @@
                         <ImageView
                             android:id="@+id/imageView2"
                             android:layout_width="wrap_content"
+
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_date_range_24" />
+                            app:srcCompat="@drawable/ic_baseline_date_range_24"
+                            app:tint="@color/darkblue" />
 
                         <TextView
                             android:id="@+id/event_date_preview"
@@ -418,7 +428,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_access_time_24" />
+                            app:srcCompat="@drawable/ic_baseline_access_time_24"
+                            app:tint="@color/darkblue" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -465,7 +476,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_baseline_people_24" />
+                            app:srcCompat="@drawable/ic_baseline_people_24"
+                            app:tint="@color/darkblue" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -482,7 +494,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/black"
+                app:cardBackgroundColor="@color/orange_500"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true"
@@ -597,7 +609,7 @@
         android:id="@+id/new_stand_event_top_layout"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:background="@color/lightblue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -607,7 +619,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nuovo_evento"
-            android:textColor="@color/black"
+            android:textColor="@color/darkblue"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/new_stand_event_back_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -618,6 +630,7 @@
             android:id="@+id/new_stand_event_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/orange_200"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="32dp"
             app:cardPreventCornerOverlap="true"
@@ -647,6 +660,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:text="@string/indietro"
+                    android:textColor="@color/darkblue"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView35"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView35"

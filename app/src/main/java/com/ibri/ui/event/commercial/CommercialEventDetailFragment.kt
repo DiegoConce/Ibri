@@ -105,6 +105,9 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
             if (it) {
                 binding.comEventSubscribeButton.visibility = View.GONE
                 binding.comEventEditButton.visibility = View.VISIBLE
+                binding.comEventDetailNewRoom.alpha = 0.80F
+                binding.comEventDetailNewRoom.isFocusable = false
+                binding.comEventDetailNewRoom.isClickable = false
             } else {
                 binding.comEventSubscribeButton.visibility = View.VISIBLE
                 binding.comEventEditButton.visibility = View.GONE
@@ -169,6 +172,7 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
     private fun prepareStage(item: CommercialEvent) {
         comEvent = item
         val myId = pref.getString(PreferenceManager.ACCOUNT_ID, "")
+        viewModel.isSubcribed.value = false
 
         if (comEvent.subscribers.isNullOrEmpty())
             viewModel.isSubcribed.value = false
@@ -178,7 +182,7 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
                 viewModel.isMyEvent.value = false
                 viewModel.isSubcribed.value = true
             } else {
-                viewModel.isSubcribed.value = false
+              //  viewModel.isSubcribed.value = false
             }
         }
         viewModel.isMyEvent.value = myId == comEvent.creator.id
@@ -192,7 +196,7 @@ class CommercialEventDetailFragment : Fragment(), OnMapReadyCallback, UserOnClic
                 .error(R.drawable.default_avatar)
                 .into(binding.comEventDetailImage)
         } else {
-            binding.comEventDetailImage.setImageResource(R.drawable.app_logo)
+            binding.comEventDetailImage.setImageResource(R.drawable.default_background)
         }
 
         binding.comEventDetailTitle.text = comEvent.title

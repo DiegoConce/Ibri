@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
+                app:tint="@color/darkblue"
                 android:foreground="?attr/selectableItemBackground"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="Modifica il tuo profilo"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/settings_back_button"
@@ -112,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/orange_500"
                     app:layout_constraintBottom_toBottomOf="@+id/creatorCard"
                     app:layout_constraintEnd_toEndOf="@+id/creatorCard"
                     app:srcCompat="@drawable/ic_baseline_edit_24" />
@@ -162,6 +164,7 @@
                     android:text="Descrizione"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textSize="20sp"
+                    android:textColor="@color/darkblue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -200,6 +203,7 @@
             app:cardElevation="5dp"
             android:clickable="true"
             android:focusable="true"
+            android:backgroundTint="@color/orange_200"
             android:background="?attr/selectableItemBackground"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -218,6 +222,7 @@
                     android:layout_marginBottom="8dp"
                     android:text="@string/salva_le_modifiche"
                     android:textSize="18sp"
+                    android:textColor="@color/darkblue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -227,6 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    app:tint="@color/darkblue"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView17"
                     app:layout_constraintEnd_toStartOf="@+id/textView17"
@@ -247,6 +253,7 @@
             app:cardUseCompatPadding="true"
             android:clickable="true"
             android:focusable="true"
+            android:backgroundTint="@color/orange_500"
             android:background="?attr/selectableItemBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView6">
@@ -264,7 +271,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/logout"
-                    android:textColor="#B10000"
+                    android:textColor="@color/darkblue"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

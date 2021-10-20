@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:background="@color/lightblue"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -75,7 +76,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/orange_500">
 
             <TextView
                 android:id="@+id/textView6"
@@ -88,6 +90,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/login"
+                android:textColor="@color/darkblue"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -101,13 +104,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         android:padding="5dp"
         android:text="@string/non_sei_ancora_iscritto_crea_un_nuovo_account"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/login_sign_in_button"
         app:layout_constraintStart_toStartOf="@+id/login_sign_in_button"
         app:layout_constraintTop_toBottomOf="@+id/login_sign_in_button" />

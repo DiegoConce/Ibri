@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Nome stanza"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/room_avatar_card"
@@ -69,7 +69,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/room_partecipants"
                 app:layout_constraintStart_toStartOf="@+id/item_room_name"
                 app:layout_constraintTop_toTopOf="@+id/room_partecipants"
-                app:srcCompat="@drawable/ic_baseline_people_24" />
+                app:srcCompat="@drawable/ic_baseline_people_24"
+                app:tint="@color/darkblue" />
 
             <ImageView
                 android:id="@+id/imageView16"
@@ -79,7 +80,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
+                app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+                app:tint="@color/darkblue" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

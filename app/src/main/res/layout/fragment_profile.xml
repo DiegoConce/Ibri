@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/lightblue"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,7 +16,7 @@
             android:id="@+id/profile_top_layout"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/white"
+            android:background="@color/lightblue"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
             <ImageView
@@ -28,7 +29,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/profile_name"
                 app:layout_constraintStart_toEndOf="@+id/profile_name"
                 app:layout_constraintTop_toTopOf="@+id/profile_name"
-                app:srcCompat="@drawable/ic_baseline_verified_24" />
+                app:srcCompat="@drawable/ic_baseline_verified_24"
+                app:tint="@color/darkblue" />
 
             <ImageView
                 android:id="@+id/profile_settings_button"
@@ -44,7 +46,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_settings_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck"
+                app:tint="@color/darkblue" />
 
             <ImageView
                 android:id="@+id/profile_notification_button"
@@ -61,7 +64,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/profile_settings_button"
                 app:layout_constraintTop_toTopOf="@+id/profile_settings_button"
                 app:srcCompat="@drawable/ic_round_notifications_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck"
+                app:tint="@color/darkblue" />
 
             <ImageView
                 android:id="@+id/profile_back_button"
@@ -86,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="TextView"
-                android:textColor="@color/black"
+                android:textColor="@color/darkblue"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_notification_button"
                 app:layout_constraintStart_toEndOf="@+id/profile_back_button"
@@ -106,6 +110,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:background="@color/lightblue"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -117,6 +122,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:text="TextView"
+                        android:textColor="@color/darkblue"
                         android:textAlignment="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -137,12 +143,14 @@
                         <TextView
                             android:id="@+id/profile_numberOfEvents"
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_height="wrap_content"
                             android:text="TextView" />
 
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
+                            android:textColor="@color/darkblue"
                             android:layout_height="wrap_content"
                             android:text="Eventi" />
                     </LinearLayout>
@@ -159,33 +167,44 @@
                         <TextView
                             android:id="@+id/textView9"
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_height="wrap_content"
                             android:text="0" />
 
                         <TextView
                             android:id="@+id/textView8"
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_height="wrap_content"
                             android:text="Seguiti" />
                     </LinearLayout>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/stand_event_avatar_card"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/orange_500"
                         app:cardCornerRadius="200dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="SpeakableTextPresentCheck">
 
-                        <ImageView
-                            android:id="@+id/profile_avatar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/default_avatar" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_gravity="center"
+                            app:cardCornerRadius="200dp">
+
+                            <ImageView
+                                android:id="@+id/profile_avatar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/default_avatar" />
+                        </androidx.cardview.widget.CardView>
+
                     </androidx.cardview.widget.CardView>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -193,7 +212,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="@color/ghost_white"
+                        android:background="@color/lightblue"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/stand_event_avatar_card">
 
@@ -207,6 +226,7 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:foreground="?attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/orange_200"
                             app:cardCornerRadius="20dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -224,9 +244,9 @@
                                     android:layout_marginTop="4dp"
                                     android:layout_marginEnd="24dp"
                                     android:layout_marginBottom="4dp"
-                                    android:padding="8dp"
+                                    android:padding="4dp"
                                     android:text="@string/altri_obiettivi"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/darkblue"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -318,6 +338,7 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/profile_new_event_button"
                 android:layout_width="wrap_content"
+                android:backgroundTint="@color/orange_500"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -329,6 +350,7 @@
                 android:id="@+id/profile_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/lightblue"
                 app:tabIndicatorHeight="0dp">
 
                 <com.google.android.material.tabs.TabItem
